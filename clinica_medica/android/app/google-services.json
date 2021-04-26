@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "969186977413",
+    "project_id": "clinica-medica-61036",
+    "storage_bucket": "clinica-medica-61036.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969186977413:android:ac0c3ea5829cc8824aabec",
+        "android_client_info": {
+          "package_name": "br.com.ufs.clinica_medica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969186977413-r1mvpmturm8m8bhhqjru0l3v22gujr0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeAi1cLctRPaKLLLzxYJBwSiU-R_OXmog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969186977413-r1mvpmturm8m8bhhqjru0l3v22gujr0h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
