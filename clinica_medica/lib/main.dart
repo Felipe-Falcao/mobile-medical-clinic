@@ -24,11 +24,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         backgroundColor: Colors.blue,
-        accentColor: Colors.purple,
+        accentColor: Colors.blueAccent,
         accentColorBrightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         buttonTheme: ButtonTheme.of(context).copyWith(
-          buttonColor: Colors.pink,
+          buttonColor: Colors.blue,
           textTheme: ButtonTextTheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
@@ -50,7 +50,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  // int _counter = 0;
 
   // void _incrementCounter() {
   //   setState(() {
