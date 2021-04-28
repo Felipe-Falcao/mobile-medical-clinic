@@ -1,3 +1,4 @@
+import 'package:clinica_medica/screens/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -5,12 +6,12 @@ import 'package:flutter/material.dart';
 bool USE_FIRESTORE_EMULATOR = false;
 
 Future<void> main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  // if (USE_FIRESTORE_EMULATOR) {
-  //   FirebaseFirestore.instance.settings = const Settings(
-  //       host: 'localhost:8080', sslEnabled: false, persistenceEnabled: false);
-  // }
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  if (USE_FIRESTORE_EMULATOR) {
+    FirebaseFirestore.instance.settings = const Settings(
+        host: 'localhost:8080', sslEnabled: false, persistenceEnabled: false);
+  }
   runApp(MyApp());
 }
 
@@ -22,8 +23,19 @@ class MyApp extends StatelessWidget {
       title: 'Integração Firebase',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        backgroundColor: Colors.blue,
+        accentColor: Colors.purple,
+        accentColorBrightness: Brightness.dark,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        buttonTheme: ButtonTheme.of(context).copyWith(
+          buttonColor: Colors.pink,
+          textTheme: ButtonTextTheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
       ),
-      home: MyHomePage(title: 'Integração Firebase'),
+      home: AuthScreen(),
     );
   }
 }
