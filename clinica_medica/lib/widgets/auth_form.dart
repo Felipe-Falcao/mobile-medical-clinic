@@ -13,6 +13,13 @@ class AuthForm extends StatefulWidget {
 class _AuthFormState extends State<AuthForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final AuthData _authData = AuthData();
+  bool _hidePassword = true;
+
+  _toggleHide() {
+    setState(() {
+      _hidePassword = !_hidePassword;
+    });
+  }
 
   _submit() {
     bool isValid = _formKey.currentState.validate();
@@ -66,9 +73,18 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                   TextFormField(
                     key: ValueKey('password'),
-                    obscureText: true,
+                    obscureText: _hidePassword,
                     decoration: InputDecoration(
                       labelText: 'Senha',
+                      suffixIcon: GestureDetector(
+                        onTap: _toggleHide,
+                        child: Icon(
+                          _hidePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.grey[350],
+                        ),
+                      ),
                     ),
                     onChanged: (value) => _authData.password = value,
                     validator: (value) {

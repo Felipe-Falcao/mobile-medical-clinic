@@ -35,7 +35,7 @@ class _AuthScreenState extends State<AuthScreen> {
         );
 
         final userData = {
-          'name': authData.name,
+          'nome': authData.name,
           'carteiraTrabalho': '123456',
           'dataContratacao': DateTime.now(),
           'email': authData.email,

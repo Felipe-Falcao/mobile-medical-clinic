@@ -1,4 +1,5 @@
 import 'package:clinica_medica/screens/auth_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Integração Firebase',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         backgroundColor: Colors.blue,
@@ -35,7 +37,17 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: AuthScreen(),
+      // home: AuthScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (ctx, userSnapshot) {
+          if (userSnapshot.hasData) {
+            return MyHomePage();
+          } else {
+            return AuthScreen();
+          }
+        },
+      ),
     );
   }
 }
@@ -62,7 +74,37 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Integração Firebase'),
+        actions: [
+          DropdownButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Theme.of(context).primaryIconTheme.color,
+            ),
+            items: [
+              DropdownMenuItem(
+                value: 'logout',
+                child: Container(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.exit_to_app,
+                        color: Colors.black,
+                      ),
+                      SizedBox(width: 8),
+                      Text('Sair'),
+                    ],
+                  ),
+                ),
+              )
+            ],
+            onChanged: (item) {
+              if (item == 'logout') {
+                FirebaseAuth.instance.signOut();
+              }
+            },
+          )
+        ],
       ),
       body: StreamBuilder(
         stream:
@@ -73,7 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
               child: CircularProgressIndicator(),
             );
           }
-
           final documents = snapshot.data;
           return ListView.builder(
             itemCount: documents.size,
@@ -86,13 +127,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          FirebaseFirestore.instance.collection('funcionario').add({
-            'nome': 'TesteFlutter2',
-            'email': 'testeflutter@teste',
-            'carteiraTrabalho': 'teste',
-            'telefone': '9999999',
-            'dataContratacao': DateTime.now()
-          });
+          // FirebaseFirestore.instance.collection('funcionario').add({
+          //   'nome': 'TesteFlutter2',
+          //   'email': 'testeflutter@teste',
+          //   'carteiraTrabalho': 'teste',
+          //   'telefone': '9999999',
+          //   'dataContratacao': DateTime.now()
+          // });
           // .snapshots()
           //     .listen((querySnapshot) {
           //   // print(querySnapshot.docs[0]['nome']);
