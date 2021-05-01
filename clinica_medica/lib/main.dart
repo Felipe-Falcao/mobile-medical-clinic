@@ -1,9 +1,11 @@
 import 'package:clinica_medica/firebase/auth_connect.dart';
+import 'package:clinica_medica/firebase/funcionario_connect.dart';
 import 'package:clinica_medica/screens/auth_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import 'firebase/funcionario_connect.dart';
 
 bool USE_FIRESTORE_EMULATOR = false;
 
@@ -130,7 +132,11 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
+          // FuncionarioFB func = new FuncionarioFB();
+          // var a = await func.read('23IfKpVrq7RLOzmunlDOCV9YQdu1');
+          // print(a['nome']);
+
           // FirebaseFirestore.instance.collection('funcionario').add({
           //   'nome': 'TesteFlutter2',
           //   'email': 'testeflutter@teste',

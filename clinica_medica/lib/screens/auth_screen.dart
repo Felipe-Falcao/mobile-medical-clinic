@@ -30,7 +30,7 @@ class _AuthScreenState extends State<AuthScreen> {
         userCredential = await auth.signIn(authData);
       } else {
         userCredential = await auth.signUp(authData);
-        await funcionarioFB.create(authData, userCredential);
+        await funcionarioFB.create(authData, userCredential, 'null', 'null');
       }
     } on PlatformException catch (err) {
       final msg = err.message ?? 'Ocorreu um erro! Verifique suas credenciais!';
