@@ -26,13 +26,31 @@ class FuncionarioFB {
 
   /*
    * Função responsável por modificar dados do funcionário.
+   * Exemplo de chamada:
+   * await func.update(authData, 'BYo4qMI6ZTQkVK4fKhcwCLQuJyP2', 'null', 'null');
    */
-  Future<void> update() async {}
+  Future<void> update(
+      authData, funcionarioId, enderecoId, especialidadeId) async {
+    final userData = {
+      'nome': authData.name,
+      'carteiraTrabalho': '1234567',
+      'dataContratacao': DateTime.now(),
+      'email': authData.email,
+      'refEndereco': 'endereco/' + enderecoId,
+      'refEspecialidade': 'especialidade/' + especialidadeId,
+      'telefone': '79 99999999'
+    };
+
+    await db.collection("funcionario").doc(funcionarioId).update(userData);
+  }
 
   /*
    * Função responsável por deletar funcionário.
+   * Exemplo de chamada: await func.delete("muhwBIA3yyO8lGLB4fuepl2YpPD2");
    */
-  Future<void> delete() async {}
+  Future<void> delete(funcionarioId) async {
+    await db.collection('funcionario').doc(funcionarioId).delete();
+  }
 
   /*
    * Função responsável por pegar dados de funcionários.
@@ -43,5 +61,14 @@ class FuncionarioFB {
   Future<Map<String, dynamic>> read(funcionarioId) async {
     var doc = await db.collection('funcionario').doc(funcionarioId).get();
     return doc.data();
+  }
+
+  /*
+   * Função responsável por ler todos os funcionarios existentes e retornar um Stream de
+   * documentos da coleção funcionário.
+   */
+  Stream readAll() {
+    var doc = db.collection('funcionario').snapshots();
+    return doc;
   }
 }

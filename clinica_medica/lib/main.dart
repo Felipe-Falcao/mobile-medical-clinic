@@ -4,8 +4,9 @@ import 'package:clinica_medica/screens/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+//https://saveyourtime.medium.com/firebase-cloud-firestore-add-set-update-delete-get-data-6da566513b1b
 import 'firebase/funcionario_connect.dart';
+import 'models/auth_data.dart';
 
 bool USE_FIRESTORE_EMULATOR = false;
 
@@ -67,14 +68,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // int _counter = 0;
-
-  // void _incrementCounter() {
-  //   setState(() {
-  //     _counter++;
-  //   });
-  // }
   AuthenticationFB auth = new AuthenticationFB();
+  FuncionarioFB func = new FuncionarioFB();
 
   @override
   Widget build(BuildContext context) {
@@ -113,8 +108,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: StreamBuilder(
-        stream:
-            FirebaseFirestore.instance.collection('funcionario').snapshots(),
+        // READ ALL
+        stream: func.readAll(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -134,23 +129,18 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // FuncionarioFB func = new FuncionarioFB();
+          //// DELETE
+          // await func.delete("muhwBIA3yyO8lGLB4fuepl2YpPD2");
+          //// READ
           // var a = await func.read('23IfKpVrq7RLOzmunlDOCV9YQdu1');
           // print(a['nome']);
-
-          // FirebaseFirestore.instance.collection('funcionario').add({
-          //   'nome': 'TesteFlutter2',
-          //   'email': 'testeflutter@teste',
-          //   'carteiraTrabalho': 'teste',
-          //   'telefone': '9999999',
-          //   'dataContratacao': DateTime.now()
-          // });
-          // .snapshots()
-          //     .listen((querySnapshot) {
-          //   // print(querySnapshot.docs[0]['nome']);
-          //   querySnapshot.docs.forEach((element) {
-          //     print(element['nome']);
-          //   });
-          // });
+          //// UPDATE
+          // AuthData authData = new AuthData();
+          // authData.name = "Teste3";
+          // authData.email = "teste3@teste";
+          // authData.password = "1234567";
+          // await func.update(
+          //     authData, 'BYo4qMI6ZTQkVK4fKhcwCLQuJyP2', 'null', 'null');
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
