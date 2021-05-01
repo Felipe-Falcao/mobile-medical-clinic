@@ -1,3 +1,4 @@
+import 'package:clinica_medica/firebase/auth_connect.dart';
 import 'package:clinica_medica/models/auth_data.dart';
 import 'package:clinica_medica/widgets/auth_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,7 +12,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final _auth = FirebaseAuth.instance;
+  AuthenticationFB auth = new AuthenticationFB();
 
   bool _isLoading = false;
 
@@ -24,15 +25,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
     try {
       if (authData.isLogin) {
-        userCredential = await _auth.signInWithEmailAndPassword(
-          email: authData.email.trim(),
-          password: authData.password,
-        );
+        userCredential = await auth.signin(authData);
       } else {
-        userCredential = await _auth.createUserWithEmailAndPassword(
-          email: authData.email.trim(),
-          password: authData.password,
-        );
+        userCredential = await auth.signup(authData);
 
         final userData = {
           'nome': authData.name,

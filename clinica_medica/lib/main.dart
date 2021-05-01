@@ -1,3 +1,4 @@
+import 'package:clinica_medica/firebase/auth_connect.dart';
 import 'package:clinica_medica/screens/auth_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,6 +18,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  AuthenticationFB auth = new AuthenticationFB();
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: AuthScreen(),
       home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
+        stream: auth.isLogged(),
         builder: (ctx, userSnapshot) {
           if (userSnapshot.hasData) {
             return MyHomePage();
@@ -69,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //     _counter++;
   //   });
   // }
+  AuthenticationFB auth = new AuthenticationFB();
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
             onChanged: (item) {
               if (item == 'logout') {
-                FirebaseAuth.instance.signOut();
+                auth.signout();
               }
             },
           )
