@@ -8,7 +8,7 @@ class AuthenticationFB {
   /*
    * Função responsável por fazer login do usuário.
    */
-  Future<UserCredential> signin(AuthData authData) async {
+  Future<UserCredential> signIn(AuthData authData) async {
     userCredential = await _auth.signInWithEmailAndPassword(
       email: authData.email.trim(),
       password: authData.password,
@@ -19,7 +19,7 @@ class AuthenticationFB {
   /*
    * Função responsável por cadastrar usuário.
    */
-  Future<UserCredential> signup(AuthData authData) async {
+  Future<UserCredential> signUp(AuthData authData) async {
     userCredential = await _auth.createUserWithEmailAndPassword(
       email: authData.email.trim(),
       password: authData.password,
@@ -30,7 +30,7 @@ class AuthenticationFB {
   /*
    * Função responsável por deslogar usuário.
    */
-  Future<void> signout() async {
+  Future<void> signOut() async {
     _auth.signOut();
   }
 

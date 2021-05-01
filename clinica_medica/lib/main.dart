@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
             onChanged: (item) {
               if (item == 'logout') {
-                auth.signout();
+                auth.signOut();
               }
             },
           )

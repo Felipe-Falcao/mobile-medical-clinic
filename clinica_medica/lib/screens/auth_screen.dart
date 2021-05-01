@@ -1,4 +1,5 @@
 import 'package:clinica_medica/firebase/auth_connect.dart';
+import 'package:clinica_medica/firebase/funcionario_connect.dart';
 import 'package:clinica_medica/models/auth_data.dart';
 import 'package:clinica_medica/widgets/auth_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +14,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   AuthenticationFB auth = new AuthenticationFB();
+  FuncionarioFB funcionarioFB = new FuncionarioFB();
 
   bool _isLoading = false;
 
@@ -25,24 +27,10 @@ class _AuthScreenState extends State<AuthScreen> {
 
     try {
       if (authData.isLogin) {
-        userCredential = await auth.signin(authData);
+        userCredential = await auth.signIn(authData);
       } else {
-        userCredential = await auth.signup(authData);
-
-        final userData = {
-          'nome': authData.name,
-          'carteiraTrabalho': '123456',
-          'dataContratacao': DateTime.now(),
-          'email': authData.email,
-          'refEndereco': 'endereco/null',
-          'refEspecialidade': 'endereco/null',
-          'telefone': '79 99999999'
-        };
-
-        await FirebaseFirestore.instance
-            .collection('funcionario')
-            .doc(userCredential.user.uid)
-            .set(userData);
+        userCredential = await auth.signUp(authData);
+        await funcionarioFB.create(authData, userCredential);
       }
     } on PlatformException catch (err) {
       final msg = err.message ?? 'Ocorreu um erro! Verifique suas credenciais!';
