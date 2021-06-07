@@ -1,6 +1,7 @@
 import 'package:clinica_medica/firebase/auth_connect.dart';
 import 'package:clinica_medica/firebase/funcionario_connect.dart';
 import 'package:clinica_medica/screens/auth_screen.dart';
+import 'package:clinica_medica/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -29,20 +30,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Integração Firebase',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        backgroundColor: Colors.blue,
-        accentColor: Colors.blueAccent,
-        accentColorBrightness: Brightness.dark,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        buttonTheme: ButtonTheme.of(context).copyWith(
-          buttonColor: Colors.blue,
-          textTheme: ButtonTextTheme.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+      theme: appTheme,
+      /*ThemeData(
+          //primarySwatch: Colors.blue,
+          primaryColor: Color(0xFF72D5BF),
+          backgroundColor: Colors.white,
+          accentColor: Color(0xFF001524),
+          accentColorBrightness: Brightness.dark,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          buttonTheme: ButtonTheme.of(context).copyWith(
+            buttonColor: Color(0xFF001524),
+            textTheme: ButtonTextTheme.primary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
           ),
-        ),
-      ),
+          appBarTheme: AppBarTheme(centerTitle: true)),*/
       // home: AuthScreen(),
       home: StreamBuilder(
         stream: auth.isLogged(),
