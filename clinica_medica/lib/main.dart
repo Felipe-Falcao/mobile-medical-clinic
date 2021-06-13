@@ -1,12 +1,15 @@
-import 'package:clinica_medica/firebase/auth_connect.dart';
-import 'package:clinica_medica/firebase/funcionario_connect.dart';
+import 'package:clinica_medica/infra/auth_connect.dart';
+import 'package:clinica_medica/infra/funcionario_connect.dart';
 import 'package:clinica_medica/screens/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 //https://saveyourtime.medium.com/firebase-cloud-firestore-add-set-update-delete-get-data-6da566513b1b
-import 'firebase/funcionario_connect.dart';
 import 'models/auth_data.dart';
+
+import 'package:clinica_medica/controllers/agendamento_controller.dart';
+import 'package:clinica_medica/controllers/funcionario_controller.dart';
+import 'package:clinica_medica/infra/atendente_connect.dart';
 
 bool USE_FIRESTORE_EMULATOR = false;
 
@@ -128,19 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // FuncionarioFB func = new FuncionarioFB();
-          //// DELETE
-          // await func.delete("muhwBIA3yyO8lGLB4fuepl2YpPD2");
-          //// READ
-          // var a = await func.read('23IfKpVrq7RLOzmunlDOCV9YQdu1');
-          // print(a['nome']);
-          //// UPDATE
-          // AuthData authData = new AuthData();
-          // authData.name = "Teste3";
-          // authData.email = "teste3@teste";
-          // authData.password = "1234567";
-          // await func.update(
-          //     authData, 'BYo4qMI6ZTQkVK4fKhcwCLQuJyP2', 'null', 'null');
+          // AtendenteFB atendenteFB = new AtendenteFB();
+          // atendenteFB.create(6000, 'VzOkRMHXQkOOAgAMqfnXmw60N9p1', 'Manhã');
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
