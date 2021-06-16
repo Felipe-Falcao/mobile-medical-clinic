@@ -6,14 +6,18 @@ class MedicoFB {
   /*
    * Função responsável por criar um medico.
    */
-  Future<void> create(crm, funcionarioId, salario) async {
+  Future<void> create(crm, funcionarioId, salario, especialidade) async {
     final userData = {
       'crm': crm,
       'refFuncionario': db.doc('funcionario/' + funcionarioId),
       'salario': salario,
+      'refEspecialidade': especialidade,
     };
 
-    await FirebaseFirestore.instance.collection('medico').doc().set(userData);
+    await FirebaseFirestore.instance
+        .collection('medico')
+        .doc(funcionarioId)
+        .set(userData);
   }
 
   /*

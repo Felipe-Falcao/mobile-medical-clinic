@@ -6,15 +6,13 @@ class FuncionarioFB {
   /*
    * Função responsável por criar um funcionário.
    */
-  Future<void> create(
-      authData, userCredential, enderecoId, especialidadeId) async {
+  Future<void> create(authData, userCredential, enderecoId) async {
     final userData = {
       'nome': authData.name,
       'carteiraTrabalho': '123456',
       'dataContratacao': DateTime.now(),
       'email': authData.email,
-      'refEndereco': db.doc('endereco/' + enderecoId),
-      'refEspecialidade': db.doc('especialidade/' + especialidadeId),
+      'refEndereco': enderecoId,
       'telefone': '79 99999999'
     };
 
@@ -29,15 +27,13 @@ class FuncionarioFB {
    * Exemplo de chamada:
    * await func.update(authData, 'BYo4qMI6ZTQkVK4fKhcwCLQuJyP2', 'null', 'null');
    */
-  Future<void> update(
-      authData, funcionarioId, enderecoId, especialidadeId) async {
+  Future<void> update(authData, funcionarioId, enderecoId) async {
     final userData = {
       'nome': authData.name,
       'carteiraTrabalho': '1234567',
       'dataContratacao': DateTime.now(),
       'email': authData.email,
       'refEndereco': db.doc('endereco/' + enderecoId),
-      'refEspecialidade': db.doc('especialidade/' + especialidadeId),
       'telefone': '79 99999999'
     };
 

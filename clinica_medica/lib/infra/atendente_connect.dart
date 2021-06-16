@@ -15,7 +15,7 @@ class AtendenteFB {
     print(userData);
     await FirebaseFirestore.instance
         .collection('atendente')
-        .doc()
+        .doc(funcionarioId)
         .set(userData);
   }
 
@@ -53,6 +53,11 @@ class AtendenteFB {
    */
   Stream readAll() {
     var doc = db.collection('atendente').snapshots();
+    return doc;
+  }
+
+  DocumentReference getDocRef(funcionarioId) {
+    var doc = db.collection('atendente').doc(funcionarioId);
     return doc;
   }
 }
