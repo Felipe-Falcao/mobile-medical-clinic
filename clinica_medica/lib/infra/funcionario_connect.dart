@@ -13,8 +13,8 @@ class FuncionarioFB {
       'carteiraTrabalho': '123456',
       'dataContratacao': DateTime.now(),
       'email': authData.email,
-      'refEndereco': 'endereco/' + enderecoId,
-      'refEspecialidade': 'especialidade/' + especialidadeId,
+      'refEndereco': db.doc('endereco/' + enderecoId),
+      'refEspecialidade': db.doc('especialidade/' + especialidadeId),
       'telefone': '79 99999999'
     };
 
@@ -36,8 +36,8 @@ class FuncionarioFB {
       'carteiraTrabalho': '1234567',
       'dataContratacao': DateTime.now(),
       'email': authData.email,
-      'refEndereco': 'endereco/' + enderecoId,
-      'refEspecialidade': 'especialidade/' + especialidadeId,
+      'refEndereco': db.doc('endereco/' + enderecoId),
+      'refEspecialidade': db.doc('especialidade/' + especialidadeId),
       'telefone': '79 99999999'
     };
 

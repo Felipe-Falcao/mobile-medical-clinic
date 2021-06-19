@@ -1,11 +1,13 @@
-import 'package:clinica_medica/firebase/auth_connect.dart';
-import 'package:clinica_medica/firebase/funcionario_connect.dart';
+import 'package:clinica_medica/infra/auth_connect.dart';
+import 'package:clinica_medica/infra/funcionario_connect.dart';
 import 'package:clinica_medica/models/auth_data.dart';
 import 'package:clinica_medica/widgets/auth_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:clinica_medica/controllers/funcionario_controller.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -15,6 +17,8 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   AuthenticationFB auth = new AuthenticationFB();
   FuncionarioFB funcionarioFB = new FuncionarioFB();
+
+  FuncionarioController funcionarioController = new FuncionarioController();
 
   bool _isLoading = false;
 
@@ -30,7 +34,9 @@ class _AuthScreenState extends State<AuthScreen> {
         userCredential = await auth.signIn(authData);
       } else {
         userCredential = await auth.signUp(authData);
-        await funcionarioFB.create(authData, userCredential, 'null', 'null');
+        // await funcionarioFB.create(authData, userCredential, 'null', 'null');
+        await funcionarioController.createFuncAtendente(
+            authData, userCredential, 'null', 'null', 10000, 'Manhã');
       }
     } on PlatformException catch (err) {
       final msg = err.message ?? 'Ocorreu um erro! Verifique suas credenciais!';
