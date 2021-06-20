@@ -17,7 +17,6 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   AuthenticationFB auth = new AuthenticationFB();
   FuncionarioFB funcionarioFB = new FuncionarioFB();
-
   FuncionarioController funcionarioController = new FuncionarioController();
 
   bool _isLoading = false;
@@ -35,17 +34,17 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         userCredential = await auth.signUp(authData);
         // await funcionarioFB.create(authData, userCredential, 'null', 'null');
-        await funcionarioController.createfuncMedico(
-            authData,
-            userCredential,
-            '4900000',
-            'Aracaju',
-            'SE',
-            'logradouro',
-            '12',
-            'Ortopedista',
-            12000,
-            '1111');
+        // await funcionarioController.createfuncMedico(
+        //     authData,
+        //     userCredential,
+        //     '4900000',
+        //     'Aracaju',
+        //     'SE',
+        //     'logradouro',
+        //     '12',
+        //     'Ortopedista',
+        //     12000,
+        //     '1111');
         // await funcionarioController.createFuncAtendente(
         //     authData,
         //     userCredential,

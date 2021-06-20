@@ -6,12 +6,13 @@ class FuncionarioFB {
   /*
    * Função responsável por criar um funcionário.
    */
-  Future<void> create(authData, userCredential, enderecoId) async {
+  Future<void> create(infoFuncionario, userCredential, enderecoId) async {
     final userData = {
-      'nome': authData.name,
+      'nome': infoFuncionario.nome,
+      'cpf': infoFuncionario.cpf,
       'carteiraTrabalho': '123456',
       'dataContratacao': DateTime.now(),
-      'email': authData.email,
+      'email': infoFuncionario.email,
       'refEndereco': enderecoId,
       'telefone': '79 99999999'
     };
@@ -27,12 +28,13 @@ class FuncionarioFB {
    * Exemplo de chamada:
    * await func.update(authData, 'BYo4qMI6ZTQkVK4fKhcwCLQuJyP2', 'null', 'null');
    */
-  Future<void> update(authData, funcionarioId, enderecoId) async {
+  Future<void> update(infoFuncionario, funcionarioId, enderecoId) async {
     final userData = {
-      'nome': authData.name,
+      'nome': infoFuncionario.name,
+      'cpf': infoFuncionario.cpf,
       'carteiraTrabalho': '1234567',
       'dataContratacao': DateTime.now(),
-      'email': authData.email,
+      'email': infoFuncionario.email,
       'refEndereco': db.doc('endereco/' + enderecoId),
       'telefone': '79 99999999'
     };
@@ -67,4 +69,22 @@ class FuncionarioFB {
     var doc = db.collection('funcionario').snapshots();
     return doc;
   }
+
+  Future<String> getFuncionarioId(data) async {
+    var querySnapshot =
+        await db.collection('funcionario').where('cpf', isEqualTo: data).get();
+    return querySnapshot.docs[0].id;
+
+    // db
+    //     .collection('funcionario')
+    //     .where('cpf', isEqualTo: data)
+    //     .get()
+    //     .then((value) => {
+    //           value.docs.forEach((doc) {
+    //             print(doc.id);
+    //             // print(doc.data());
+    //           })
+    //         });
+  }
+  //https://petercoding.com/firebase/2020/04/04/using-cloud-firestore-in-flutter/
 }

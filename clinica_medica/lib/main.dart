@@ -4,6 +4,9 @@ import 'package:clinica_medica/screens/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:clinica_medica/models/endereco_data.dart';
+import 'package:clinica_medica/models/funcionario_data.dart';
+import 'package:clinica_medica/models/medico_data.dart';
 //https://saveyourtime.medium.com/firebase-cloud-firestore-add-set-update-delete-get-data-6da566513b1b
 import 'models/auth_data.dart';
 
@@ -133,6 +136,32 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () async {
           // AtendenteFB atendenteFB = new AtendenteFB();
           // atendenteFB.create(6000, 'VzOkRMHXQkOOAgAMqfnXmw60N9p1', 'Manhã');
+
+          InfoEndereco infoEndereco = new InfoEndereco();
+          infoEndereco.cep = '4900000';
+          infoEndereco.cidade = 'Aracaju';
+          infoEndereco.estado = 'SE';
+          infoEndereco.logradouro = 'Rua Nova';
+          infoEndereco.numero = '15';
+
+          InfoFuncionario infoFuncionario = new InfoFuncionario();
+          infoFuncionario.cpf = '000.000.000-00';
+          infoFuncionario.email = 'testemain@gmail.com';
+          infoFuncionario.senha = '1234567';
+          infoFuncionario.carteiraTrabalho = '32.165.4';
+          infoFuncionario.dataContratacao = '10/02/2021';
+          infoFuncionario.nome = 'Teste Main';
+          infoFuncionario.telefone = '79 99999999';
+
+          InfoMedico infoMedico = new InfoMedico();
+          infoMedico.crm = '111.111.111';
+          infoMedico.salario = '10000';
+          infoMedico.nomeEspecialidade = 'Obstetra';
+
+          FuncionarioController funcionarioController =
+              new FuncionarioController();
+          funcionarioController.cadastrarMedico(
+              infoFuncionario, infoMedico, infoEndereco);
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
