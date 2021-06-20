@@ -50,7 +50,6 @@ class FuncionarioController {
       // Obter referência de endereço
       DocumentReference enderecoId = enderecoFB.getDocRef(
           infoEndereco.cidade, infoEndereco.cep, infoEndereco.numero);
-      print(enderecoId);
       // Cadastrar Funcionario
       await funcionarioFB.create(infoFuncionario, userCredential, enderecoId);
       // Obter referência de Funcionario
