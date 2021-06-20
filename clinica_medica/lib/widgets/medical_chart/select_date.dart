@@ -16,8 +16,8 @@ class _SelectDateState extends State<SelectDate> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime d = await showDatePicker(
       context: context,
-      initialDate: widget._formData['birthDate'] != null
-          ? widget._formData['birthDate']
+      initialDate: widget._formData['date'] != null
+          ? widget._formData['date']
           : DateTime.now(),
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),
@@ -37,7 +37,7 @@ class _SelectDateState extends State<SelectDate> {
         );
       },
     );
-    widget._formData['birthDate'] = d;
+    widget._formData['date'] = d;
     if (d != null)
       setState(() {
         _selectedDate = new DateFormat('dd/MM/yyyy').format(d);
@@ -46,9 +46,9 @@ class _SelectDateState extends State<SelectDate> {
 
   @override
   Widget build(BuildContext context) {
-    _selectedDate = widget._formData['birthDate'] != null
-        ? new DateFormat('dd/MM/yyyy').format(widget._formData['birthDate'])
-        : 'Seleciona a data de nascimento';
+    _selectedDate = widget._formData['date'] != null
+        ? new DateFormat('dd/MM/yyyy').format(widget._formData['date'])
+        : 'Data de Cadastro';
 
     return Container(
       height: 50,

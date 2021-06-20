@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'new_text_form_field.dart';
+import '../../new_text_form_field.dart';
 
 class PatientFormStep2 extends StatelessWidget {
   final GlobalKey<FormState> _form;

@@ -1,7 +1,7 @@
 import 'package:clinica_medica/widgets/patient/select_date.dart';
 import 'package:flutter/material.dart';
 
-import 'new_text_form_field.dart';
+import '../../new_text_form_field.dart';
 
 class PatientFormStep1 extends StatelessWidget {
   final GlobalKey<FormState> form;

@@ -1,8 +1,8 @@
 import 'package:clinica_medica/models/address.dart';
 import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/providers/patient/patients.dart';
-import 'package:clinica_medica/widgets/patient/buttons_alerts/alerts.dart';
-import 'package:clinica_medica/widgets/patient/buttons_alerts/buttons.dart';
+import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
+import 'package:clinica_medica/widgets/buttons_alerts/buttons.dart';
 import 'package:clinica_medica/widgets/patient/patient_timeline.dart';
 import 'package:clinica_medica/widgets/patient/forms/patient_form_step1.dart';
 import 'package:clinica_medica/widgets/patient/forms/patient_form_step2.dart';
@@ -28,7 +28,6 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-      centerTitle: true,
       title: Text(_titleScreen),
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),

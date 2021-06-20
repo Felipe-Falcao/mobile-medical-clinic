@@ -1,27 +1,26 @@
-import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/providers/medical_chart/charts.dart';
+import 'package:clinica_medica/widgets/medical_chart/chart_item.dart';
 import 'package:clinica_medica/widgets/new_text_form_field.dart';
-import 'package:clinica_medica/widgets/patient/patient_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class FindPatientScreen extends StatefulWidget {
+class FindChartScreen extends StatefulWidget {
   @override
-  _FindPatientScreenState createState() => _FindPatientScreenState();
+  _FindChartScreenState createState() => _FindChartScreenState();
 }
 
-class _FindPatientScreenState extends State<FindPatientScreen> {
+class _FindChartScreenState extends State<FindChartScreen> {
   final _formData = Map<String, Object>();
   String _filter;
 
   @override
   Widget build(BuildContext context) {
     _filter = _formData['filter'] != null ? _formData['filter'] : null;
-    final Patients patientsProvider = Provider.of<Patients>(context);
-    final List<Patient> patients = patientsProvider.getItemsWith(_filter);
+    final Charts chartsProvider = Provider.of<Charts>(context);
+    // final List<Charts> patients = patientsProvider.getItemsWith(_filter);
 
     final appBar = AppBar(
-      title: const Text('Pacientes'),
+      title: const Text('Prontuários'),
     );
 
     final availableHeight = MediaQuery.of(context).size.height -
@@ -57,8 +56,9 @@ class _FindPatientScreenState extends State<FindPatientScreen> {
             Container(
               height: availableHeight - 90,
               child: ListView.builder(
-                itemCount: patients.length,
-                itemBuilder: (ctx, i) => PatientItem(patient: patients[i]),
+                itemCount: chartsProvider.items.length,
+                itemBuilder: (ctx, i) =>
+                    ChartItem(chart: chartsProvider.items[i]),
               ),
             ),
           ],

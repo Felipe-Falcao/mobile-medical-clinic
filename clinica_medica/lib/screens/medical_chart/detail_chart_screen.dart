@@ -1,45 +1,45 @@
-import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
-import 'package:clinica_medica/widgets/patient/popup_menu.dart';
+import 'package:clinica_medica/models/chart.dart';
+import 'package:clinica_medica/providers/medical_chart/charts.dart';
+import 'package:clinica_medica/widgets/medical_chart/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DetailPatientScreen extends StatefulWidget {
+class DetailChartScreen extends StatefulWidget {
   @override
-  _DetailPatientScreenState createState() => _DetailPatientScreenState();
+  _DetailChartScreenState createState() => _DetailChartScreenState();
 }
 
-class _DetailPatientScreenState extends State<DetailPatientScreen> {
-  Patient patient;
+class _DetailChartScreenState extends State<DetailChartScreen> {
+  Chart chart;
   bool isLoading = false;
 
   @override
   void didChangeDependencies() {
-    patient = ModalRoute.of(context).settings.arguments as Patient;
+    chart = ModalRoute.of(context).settings.arguments as Chart;
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    Patients patients = Provider.of<Patients>(context);
+    Charts charts = Provider.of<Charts>(context);
     if (!isLoading) {
       setState(() {
-        patient = patients.getItemById(patient.id);
+        chart = charts.getItemById(chart.id);
       });
     }
 
     final appBar = AppBar(
-      title: const Text('Paciente'),
+      title: const Text('Prontuário'),
       actions: [
         PopupMenu(
-          patient: patient,
+          chart: chart,
           callback: (bool value) {
             if (value) {
               setState(() {
                 isLoading = true;
               });
               Navigator.of(context).pop();
-              patients.removePatient(patient);
+              charts.removeChart(chart);
             }
           },
           icon: Icon(Icons.more_vert_rounded),
@@ -64,7 +64,7 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                   const Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: const Text(
-                      'Informações Pessoais',
+                      'Informações do Prontuário',
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
@@ -72,7 +72,7 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                   Container(
                     height: availableHeight * 0.22,
                     child: ListView.builder(
-                      itemCount: patient.values().length,
+                      itemCount: chart.values().length,
                       itemBuilder: (ctx, i) => Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,14 +80,14 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                patient.keys()[i],
+                                chart.keys()[i],
                                 style: TextStyle(color: Colors.black54),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                patient.values()[i],
+                                chart.values()[i],
                                 style: TextStyle(
                                     color: Theme.of(context).accentColor),
                               ),
@@ -98,42 +98,6 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Text(
-                      'Endereço',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  const Divider(),
-                  Container(
-                    height: availableHeight * 0.54,
-                    child: ListView.builder(
-                      itemCount: patient.address.values().length,
-                      itemBuilder: (ctx, i) => Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                patient.address.keys()[i],
-                                style: TextStyle(color: Colors.black54),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                patient.address.values()[i],
-                                style: TextStyle(
-                                    color: Theme.of(context).accentColor),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),

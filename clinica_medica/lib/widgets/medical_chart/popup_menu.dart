@@ -1,13 +1,13 @@
-import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/screens/patient/register_patient_screen.dart';
+import 'package:clinica_medica/models/chart.dart';
+import 'package:clinica_medica/screens/medical_chart/register_chart_screen.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:flutter/material.dart';
 
 class PopupMenu extends StatelessWidget {
-  final Patient patient;
+  final Chart chart;
   final Function callback;
   final Icon icon;
-  PopupMenu({@required this.patient, @required this.callback, this.icon});
+  PopupMenu({@required this.chart, @required this.callback, this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +24,8 @@ class PopupMenu extends StatelessWidget {
               Navigator.of(context).pop();
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  settings: RouteSettings(arguments: patient),
-                  builder: (context) => RegisterPatientScreen(),
+                  settings: RouteSettings(arguments: chart),
+                  builder: (context) => RegisterChartScreen(),
                 ),
               );
             },
@@ -48,7 +48,7 @@ class PopupMenu extends StatelessWidget {
                 context: context,
                 builder: (ctx) => aletDialogRemove(
                   context: ctx,
-                  message: 'Tem certeza que deseja excluir esse paciente?',
+                  message: 'Tem certeza que deseja excluir esse prontuário?',
                   callback: callback,
                 ),
               );
