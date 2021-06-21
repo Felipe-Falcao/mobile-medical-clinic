@@ -47,10 +47,6 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
       ],
     );
 
-    final availableHeight = MediaQuery.of(context).size.height -
-        appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
-
     return Scaffold(
       appBar: appBar,
       body: isLoading
@@ -61,82 +57,74 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20),
-                  const Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Text(
-                      'Informações Pessoais',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  const Divider(),
                   Container(
-                    height: availableHeight * 0.22,
-                    child: ListView.builder(
-                      itemCount: patient.values().length,
-                      itemBuilder: (ctx, i) => Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                patient.keys()[i],
-                                style: TextStyle(color: Colors.black54),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                patient.values()[i],
-                                style: TextStyle(
-                                    color: Theme.of(context).accentColor),
-                              ),
-                            ),
-                          ],
-                        ),
+                    height: 40,
+                    child: const Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Text(
+                        'Informações Pessoais',
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
+                  ),
+                  const Divider(height: 10),
+                  Container(
+                    height: 130,
+                    child: ListView.builder(
+                        itemCount: patient.values().length,
+                        itemBuilder: (ctx, i) =>
+                            _itemList(patient.keys()[i], patient.values()[i])),
                   ),
                   const SizedBox(height: 20),
-                  const Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Text(
-                      'Endereço',
-                      style: const TextStyle(fontSize: 16),
+                  Container(
+                    height: 40,
+                    child: const Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Text('Endereço',
+                          style: const TextStyle(fontSize: 16)),
                     ),
                   ),
-                  const Divider(),
+                  const Divider(height: 10),
                   Container(
-                    height: availableHeight * 0.54,
+                    height: 170,
                     child: ListView.builder(
                       itemCount: patient.address.values().length,
-                      itemBuilder: (ctx, i) => Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                patient.address.keys()[i],
-                                style: TextStyle(color: Colors.black54),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                patient.address.values()[i],
-                                style: TextStyle(
-                                    color: Theme.of(context).accentColor),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      itemBuilder: (ctx, i) => _itemList(
+                          patient.address.keys()[i],
+                          patient.address.values()[i]),
                     ),
                   ),
                 ],
               ),
             ),
+    );
+  }
+
+  Widget _itemList(String key, String value) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              key,
+              style: TextStyle(color: Colors.black54),
+            ),
+          ),
+          Container(
+            width: 150,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                value,
+                overflow: TextOverflow.fade,
+                style: TextStyle(color: Theme.of(context).accentColor),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

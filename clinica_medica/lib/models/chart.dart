@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
 
 class Chart {
   String id;
@@ -12,18 +11,6 @@ class Chart {
       @required this.patientId,
       @required this.entryDate,
       @required this.note});
-
-  List<String> keys() {
-    return ['ID do paciente', 'Data de cadastro', 'Nota'];
-  }
-
-  List<String> values() {
-    return [
-      patientId,
-      new DateFormat('dd/MM/yyyy').format(entryDate),
-      note,
-    ];
-  }
 
   @override
   String toString() {
