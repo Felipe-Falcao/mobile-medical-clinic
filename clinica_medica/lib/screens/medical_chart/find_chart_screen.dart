@@ -1,7 +1,5 @@
 import 'package:clinica_medica/models/chart.dart';
-import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/providers/medical_chart/charts.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/widgets/medical_chart/chart_item.dart';
 import 'package:clinica_medica/widgets/new_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -16,25 +14,11 @@ class _FindChartScreenState extends State<FindChartScreen> {
   final _formData = Map<String, Object>();
   String _filter;
 
-  List<Chart> _filterCharts(
-    List<Chart> charts,
-    List<Patient> filteredPatients,
-  ) {
-    return charts
-        .where((c) => filteredPatients.any((p) => p.id == c.patientId))
-        .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     _filter = _formData['filter'] != null ? _formData['filter'] : null;
     final Charts chartsProvider = Provider.of<Charts>(context);
-    final List<Patient> filteredPatients =
-        Provider.of<Patients>(context).getItemsWith(_filter);
-    final List<Chart> charts =
-        _filterCharts(chartsProvider.items, filteredPatients);
-
-    print(filteredPatients.length);
+    final List<Chart> charts = chartsProvider.getItemsWith(_filter);
 
     final appBar = AppBar(
       title: const Text('Prontuários'),

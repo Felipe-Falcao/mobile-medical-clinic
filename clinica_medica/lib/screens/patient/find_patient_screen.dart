@@ -1,5 +1,5 @@
 import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/new_text_form_field.dart';
 import 'package:clinica_medica/widgets/patient/patient_item.dart';
 import 'package:flutter/material.dart';

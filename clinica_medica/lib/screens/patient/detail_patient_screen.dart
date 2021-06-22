@@ -1,5 +1,6 @@
 import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/providers/patients.dart';
+import 'package:clinica_medica/screens/patient/charts_patient_screen.dart';
 import 'package:clinica_medica/widgets/patient/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
     Patients patients = Provider.of<Patients>(context);
     if (!isLoading) {
       setState(() {
+        //atualiza o paciente apos edicao
         patient = patients.getItemById(patient.id);
       });
     }
@@ -94,6 +96,29 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                           patient.address.values()[i]),
                     ),
                   ),
+                  const Divider(height: 20),
+                  const SizedBox(height: 10),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        color: Theme.of(context).accentColor,
+                      ),
+                      child: TextButton(
+                        child: Text(
+                          'Mostrar prontuário cadastrados',
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  ChartsPatientScreen(patient)));
+                        },
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

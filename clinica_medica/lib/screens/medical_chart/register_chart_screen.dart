@@ -1,5 +1,5 @@
 import 'package:clinica_medica/models/chart.dart';
-import 'package:clinica_medica/providers/medical_chart/charts.dart';
+import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/buttons.dart';
 import 'package:clinica_medica/widgets/medical_chart/chart_form.dart';
@@ -72,7 +72,7 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
           _titleScreen = 'Editar Prontuário';
         });
         _formData['id'] = chart.id;
-        _formData['patientId'] = chart.patientId;
+        _formData['patient'] = chart.patient;
         _formData['date'] = chart.entryDate;
         _formData['note'] = chart.note;
       }
@@ -82,14 +82,14 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
   Future<void> _saveForm() async {
     var isValid = _form.currentState.validate();
     setState(() {
-      _isValidPatient = _formData['patientId'] != null;
+      _isValidPatient = _formData['patient'] != null;
       _isValidDate = _formData['date'] != null;
     });
     if (!isValid) return;
     _form.currentState.save();
     final chart = Chart(
       id: _formData['id'],
-      patientId: _formData['patientId'],
+      patient: _formData['patient'],
       entryDate: _formData['date'],
       note: _formData['note'],
     );

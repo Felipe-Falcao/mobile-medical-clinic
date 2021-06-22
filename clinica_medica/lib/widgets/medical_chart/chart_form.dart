@@ -1,5 +1,5 @@
 import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/medical_chart/select_date.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,10 +27,9 @@ class _ChartFormState extends State<ChartForm> {
 
   @override
   void initState() {
-    Patients patients = Provider.of<Patients>(context, listen: false);
-    if (widget.formData['patientId'] != null)
+    if (widget.formData['patient'] != null)
       setState(() {
-        selectedValue = patients.getItemById(widget.formData['patientId']);
+        selectedValue = widget.formData['patient'];
       });
     super.initState();
   }
@@ -51,7 +50,7 @@ class _ChartFormState extends State<ChartForm> {
                 color: Theme.of(context).inputDecorationTheme.fillColor,
               ),
               child: SearchableDropdown(
-                key: ValueKey('patientId'),
+                key: ValueKey('patient'),
                 iconSize: 30,
                 hint: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -74,7 +73,7 @@ class _ChartFormState extends State<ChartForm> {
                 onChanged: (value) {
                   setState(() {
                     selectedValue = value;
-                    widget.formData['patientId'] = selectedValue.id;
+                    widget.formData['patient'] = selectedValue;
                   });
                 },
               ),

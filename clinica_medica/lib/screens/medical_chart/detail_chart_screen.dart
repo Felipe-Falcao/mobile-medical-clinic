@@ -1,5 +1,5 @@
 import 'package:clinica_medica/models/chart.dart';
-import 'package:clinica_medica/providers/medical_chart/charts.dart';
+import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/widgets/medical_chart/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +25,7 @@ class _DetailChartScreenState extends State<DetailChartScreen> {
     Charts charts = Provider.of<Charts>(context);
     if (!isLoading) {
       setState(() {
+        //atualiza o prontuario apos edicao
         chart = charts.getItemById(chart.id);
       });
     }
@@ -77,7 +78,7 @@ class _DetailChartScreenState extends State<DetailChartScreen> {
                     height: availableHeight - 70,
                     child: Column(
                       children: [
-                        _itemList('ID do paciente', chart.patientId),
+                        _itemList('Paciente', chart.patient.name),
                         _itemList(
                           'Data de cadastro',
                           new DateFormat('dd/MM/yyyy').format(chart.entryDate),

@@ -10,15 +10,15 @@ class Charts with ChangeNotifier {
     return [..._items];
   }
 
-  // List<Patient> getItemsWith(String filter) {
-  //   if (filter == null) return [..._items];
-  //   filter = filter.toLowerCase();
-  //   return _items
-  //       .where((patient) =>
-  //           patient.name.toLowerCase().contains(filter) ||
-  //           patient.cpf.toLowerCase().contains(filter))
-  //       .toList();
-  // }
+  List<Chart> getItemsWith(String filter) {
+    if (filter == null) return [..._items];
+    filter = filter.toLowerCase();
+    return _items
+        .where((chart) =>
+            chart.patient.name.toLowerCase().contains(filter) ||
+            chart.patient.cpf.toLowerCase().contains(filter))
+        .toList();
+  }
 
   Chart getItemById(String id) {
     return _items.singleWhere((item) => item.id == id);
@@ -31,7 +31,7 @@ class Charts with ChangeNotifier {
   void addChart(Chart chart) {
     _items.add(Chart(
       id: Random().nextDouble().toString(),
-      patientId: chart.patientId,
+      patient: chart.patient,
       entryDate: chart.entryDate,
       note: chart.note,
     ));

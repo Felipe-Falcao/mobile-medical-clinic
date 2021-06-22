@@ -1,6 +1,6 @@
 import 'package:clinica_medica/models/address.dart';
 import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/buttons.dart';
 import 'package:clinica_medica/widgets/patient/patient_timeline.dart';

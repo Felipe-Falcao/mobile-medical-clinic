@@ -1,19 +1,20 @@
+import 'package:clinica_medica/models/patient.dart';
 import 'package:flutter/foundation.dart';
 
 class Chart {
   String id;
-  String patientId;
+  Patient patient;
   DateTime entryDate;
   String note;
 
   Chart(
       {this.id,
-      @required this.patientId,
+      @required this.patient,
       @required this.entryDate,
       @required this.note});
 
   @override
   String toString() {
-    return '{id: $id, patientId: $patientId, entryDate: $entryDate, note: $note}';
+    return '{id: $id, patientId: $patient, entryDate: $entryDate, note: $note}';
   }
 }

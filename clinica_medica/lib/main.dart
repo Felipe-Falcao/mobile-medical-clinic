@@ -4,8 +4,8 @@
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 //https://saveyourtime.medium.com/firebase-cloud-firestore-add-set-update-delete-get-data-6da566513b1b
-import 'package:clinica_medica/providers/medical_chart/charts.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/providers/charts.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/screens/home_screen.dart';
 import 'package:clinica_medica/screens/medical_chart/chart_screen.dart';
 import 'package:clinica_medica/screens/patient/patient_screen.dart';
