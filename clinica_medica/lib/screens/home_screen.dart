@@ -28,6 +28,13 @@ class HomeScreen extends StatelessWidget {
                     .pushReplacementNamed(AppRoutes.CHART_SCREEN);
               },
             ),
+            TextButton(
+              child: Text('Gerenciar Consulta'),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(AppRoutes.APPOINTMENT_SCREEN);
+              },
+            ),
           ],
         ),
       ),

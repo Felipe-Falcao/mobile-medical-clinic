@@ -41,6 +41,15 @@ class AppDrawer extends StatelessWidget {
                   .pushReplacementNamed(AppRoutes.CHART_SCREEN);
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.chat_rounded),
+            title: const Text('Gerenciar Consulta'),
+            enabled: currentRoute != AppRoutes.APPOINTMENT_SCREEN,
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(AppRoutes.APPOINTMENT_SCREEN);
+            },
+          ),
         ],
       ),
     );

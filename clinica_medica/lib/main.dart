@@ -7,6 +7,7 @@
 import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/screens/home_screen.dart';
+import 'package:clinica_medica/screens/medical_appointment/appointment_screen.dart';
 import 'package:clinica_medica/screens/medical_chart/chart_screen.dart';
 import 'package:clinica_medica/screens/patient/patient_screen.dart';
 import 'package:clinica_medica/screens/splash_screen.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.HOME_SCREEN: (ctx) => HomeScreen(),
           AppRoutes.PATIENT_SCREEN: (ctx) => PatientScreen(),
           AppRoutes.CHART_SCREEN: (ctx) => ChartScreen(),
+          AppRoutes.APPOINTMENT_SCREEN: (ctx) => AppointmentScreen(),
         },
       ),
     );
