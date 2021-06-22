@@ -10,11 +10,11 @@ class FuncionarioFB {
     final userData = {
       'nome': infoFuncionario.nome,
       'cpf': infoFuncionario.cpf,
-      'carteiraTrabalho': '123456',
+      'carteiraTrabalho': infoFuncionario.carteiraTrabalho,
       'dataContratacao': DateTime.now(),
       'email': infoFuncionario.email,
       'refEndereco': enderecoId,
-      'telefone': '79 99999999'
+      'telefone': infoFuncionario.telefone,
     };
 
     await FirebaseFirestore.instance
@@ -32,14 +32,35 @@ class FuncionarioFB {
     final userData = {
       'nome': infoFuncionario.name,
       'cpf': infoFuncionario.cpf,
-      'carteiraTrabalho': '1234567',
-      'dataContratacao': DateTime.now(),
+      'carteiraTrabalho': infoFuncionario.carteiraTrabalho,
+      'dataContratacao': infoFuncionario.dataContratacao,
       'email': infoFuncionario.email,
       'refEndereco': db.doc('endereco/' + enderecoId),
-      'telefone': '79 99999999'
+      'telefone': infoFuncionario.telefone,
     };
 
     await db.collection("funcionario").doc(funcionarioId).update(userData);
+  }
+
+  Future<void> updatePersonalData(infoFuncionario) async {
+    final userData = {
+      'nome': infoFuncionario.nome,
+      'cpf': infoFuncionario.cpf,
+      'email': infoFuncionario.email,
+      'telefone': infoFuncionario.telefone,
+    };
+
+    await db.collection("funcionario").doc(infoFuncionario.id).update(userData);
+  }
+
+  Future<void> updateWorkData(
+      carteiraTrabalho, dataContratacao, idFuncionario) async {
+    final userData = {
+      'carteiraTrabalho': carteiraTrabalho,
+      'dataContratacao': dataContratacao,
+    };
+
+    await db.collection("funcionario").doc(idFuncionario).update(userData);
   }
 
   /*
@@ -68,6 +89,11 @@ class FuncionarioFB {
   Stream readAll() {
     var doc = db.collection('funcionario').snapshots();
     return doc;
+  }
+
+  Future<QuerySnapshot> getFuncionarios() async {
+    var querySnapshot = await db.collection('funcionario').get();
+    return querySnapshot;
   }
 
   Future<String> getFuncionarioId(data) async {

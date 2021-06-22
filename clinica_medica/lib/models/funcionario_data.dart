@@ -1,9 +1,10 @@
 class InfoFuncionario {
+  String id;
   String email;
   String cpf;
   String senha;
   String carteiraTrabalho;
-  String dataContratacao;
+  DateTime dataContratacao;
   String nome;
   String telefone;
 }

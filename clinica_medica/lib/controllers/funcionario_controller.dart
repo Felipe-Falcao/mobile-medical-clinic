@@ -16,28 +16,29 @@ class FuncionarioController {
   AuthenticationFB auth = new AuthenticationFB();
   UserCredential userCredential;
 
-  // Future<void> createFuncAtendente(authData, userCredential, salario, turno,
-  //     cep, cidade, estado, logradouro, numero) async {
-  //   try {
-  //     // Cadastrar usuário
-  //     userCredential = await auth.signUp(authData);
-  //     // Cadastrar endereço
-
-  //     // Obter referência de endereço
-
-  //     // Cadastrar Funcionario
-
-  //     // Obter referência de Funcionario
-
-  //     // Cadastrar Médico
-  //     await enderecoFB.create(cep, cidade, estado, logradouro, numero);
-  //     DocumentReference enderecoId = enderecoFB.getDocRef(cidade, cep, numero);
-  //     await funcionarioFB.create(authData, userCredential, enderecoId);
-  //     await atendenteFB.create(salario, userCredential.user.uid, turno);
-  //   } catch (err) {
-  //     print(err);
-  //   }
-  // }
+  Future<void> cadastrarAtendente(
+      infoFuncionario, infoAtendente, infoEndereco) async {
+    try {
+      // Cadastrar usuário
+      userCredential = await auth.signUpFuncionario(infoFuncionario);
+      // Cadastrar endereço
+      await enderecoFB.create(infoEndereco.cep, infoEndereco.cidade,
+          infoEndereco.estado, infoEndereco.logradouro, infoEndereco.numero);
+      // Obter referência de endereço
+      DocumentReference enderecoId = enderecoFB.getDocRef(
+          infoEndereco.cidade, infoEndereco.cep, infoEndereco.numero);
+      // Cadastrar Funcionario
+      await funcionarioFB.create(infoFuncionario, userCredential, enderecoId);
+      // Obter referência de Funcionario
+      String funcionarioId =
+          await funcionarioFB.getFuncionarioId(infoFuncionario.cpf);
+      // Cadastrar Atendente
+      await atendenteFB.create(
+          infoAtendente.salario, funcionarioId, infoAtendente.turno);
+    } catch (err) {
+      print(err);
+    }
+  }
 
   Future<void> cadastrarMedico(
       infoFuncionario, infoMedico, infoEndereco) async {
@@ -68,24 +69,54 @@ class FuncionarioController {
     }
   }
 
-  Future<void> update(
-      infoFuncionario, funcionarioId, enderecoId, especialidadeId) async {
-    await funcionarioFB.update(infoFuncionario, funcionarioId, enderecoId);
+  Future<List<dynamic>> buscarFuncionarios() async {
+    var result = [];
+    var data;
+    QuerySnapshot funcionarios = await funcionarioFB.getFuncionarios();
+
+    for (int i = 0; i < funcionarios.size; i++) {
+      data = funcionarios.docs[i].data();
+      result.add([
+        funcionarios.docs[i].id,
+        data['email'],
+        data['carteiraTrabalho'],
+        data['cpf'],
+        data['refEndereco'].id,
+        data['dataContratacao'],
+        data['nome'],
+        data['telefone'],
+      ]);
+    }
+    return result;
   }
 
-  Future<void> delete(funcionarioId) async {
-    await funcionarioFB.delete(funcionarioId);
+  Future<void> atualizarEndereco(infoEndereco) async {
+    try {
+      await enderecoFB.update(
+          infoEndereco.cep,
+          infoEndereco.cidade,
+          infoEndereco.estado,
+          infoEndereco.logradouro,
+          infoEndereco.numero,
+          infoEndereco.id);
+    } catch (err) {
+      print(err);
+    }
   }
 
-  Future<Map<String, dynamic>> read(funcionarioId) async {
-    await funcionarioFB.read(funcionarioId);
+  void editarDadosPessoais(infoFuncionario) {
+    funcionarioFB.updatePersonalData(infoFuncionario);
   }
 
-  Stream readAll() {
-    funcionarioFB.readAll();
+  void editarDadosTrabalho(infoFuncionario) {
+    funcionarioFB.updateWorkData(infoFuncionario.carteiraTrabalho,
+        infoFuncionario.dataContratacao, infoFuncionario.id);
+  }
+
+  Future<void> editarAtendente(
+      infoFuncionario, infoMedico, infoEndereco) async {
+    try {} catch (err) {
+      print(err);
+    }
   }
 }
-
-// TESTES
-// await funcionarioController.createFuncAtendente(
-// authData, userCredential, 'null', 'null', 10000, 'Manhã');

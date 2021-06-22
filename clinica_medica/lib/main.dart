@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:clinica_medica/models/endereco_data.dart';
 import 'package:clinica_medica/models/funcionario_data.dart';
 import 'package:clinica_medica/models/medico_data.dart';
+import 'package:clinica_medica/models/atendente_data.dart';
 //https://saveyourtime.medium.com/firebase-cloud-firestore-add-set-update-delete-get-data-6da566513b1b
 import 'models/auth_data.dart';
 
-import 'package:clinica_medica/controllers/agendamento_controller.dart';
 import 'package:clinica_medica/controllers/funcionario_controller.dart';
-import 'package:clinica_medica/infra/atendente_connect.dart';
 
 bool USE_FIRESTORE_EMULATOR = false;
 
@@ -134,9 +133,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // AtendenteFB atendenteFB = new AtendenteFB();
-          // atendenteFB.create(6000, 'VzOkRMHXQkOOAgAMqfnXmw60N9p1', 'Manhã');
-
           InfoEndereco infoEndereco = new InfoEndereco();
           infoEndereco.cep = '4900000';
           infoEndereco.cidade = 'Aracaju';
@@ -146,22 +142,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
           InfoFuncionario infoFuncionario = new InfoFuncionario();
           infoFuncionario.cpf = '000.000.000-00';
-          infoFuncionario.email = 'testemain@gmail.com';
+          infoFuncionario.email = 'testeatendente@gmail.com';
           infoFuncionario.senha = '1234567';
           infoFuncionario.carteiraTrabalho = '32.165.4';
-          infoFuncionario.dataContratacao = '10/02/2021';
-          infoFuncionario.nome = 'Teste Main';
-          infoFuncionario.telefone = '79 99999999';
+          infoFuncionario.dataContratacao = DateTime.now();
+          infoFuncionario.nome = 'Teste Atendente';
+          infoFuncionario.telefone = '79 99999997';
 
           InfoMedico infoMedico = new InfoMedico();
           infoMedico.crm = '111.111.111';
           infoMedico.salario = '10000';
           infoMedico.nomeEspecialidade = 'Obstetra';
 
+          InfoAtendente infoAtendente = new InfoAtendente();
+          infoAtendente.salario = '3500';
+          infoAtendente.turno = 'Manhã';
+
+          // EDITAR DADOS TRABALHO
           FuncionarioController funcionarioController =
               new FuncionarioController();
-          funcionarioController.cadastrarMedico(
-              infoFuncionario, infoMedico, infoEndereco);
+          var lista = await funcionarioController.buscarFuncionarios();
+          infoFuncionario.id = lista[3][0];
+          funcionarioController.editarDadosTrabalho(infoFuncionario);
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
