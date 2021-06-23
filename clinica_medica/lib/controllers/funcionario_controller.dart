@@ -76,16 +76,16 @@ class FuncionarioController {
 
     for (int i = 0; i < funcionarios.size; i++) {
       data = funcionarios.docs[i].data();
-      result.add([
-        funcionarios.docs[i].id,
-        data['email'],
-        data['carteiraTrabalho'],
-        data['cpf'],
-        data['refEndereco'].id,
-        data['dataContratacao'],
-        data['nome'],
-        data['telefone'],
-      ]);
+      result.add({
+        'id': funcionarios.docs[i].id,
+        'email': data['email'],
+        'carteiraTrabalho': data['carteiraTrabalho'],
+        'cpf': data['cpf'],
+        'refEndereco': data['refEndereco'].id,
+        'dataContratacao': data['dataContratacao'],
+        'nome': data['nome'],
+        'telefone': data['telefone'],
+      });
     }
     return result;
   }
@@ -113,9 +113,19 @@ class FuncionarioController {
         infoFuncionario.dataContratacao, infoFuncionario.id);
   }
 
-  Future<void> editarAtendente(
-      infoFuncionario, infoMedico, infoEndereco) async {
-    try {} catch (err) {
+  Future<void> editarAtendente(infoAtendente) async {
+    try {
+      await atendenteFB.update(
+          infoAtendente.salario, infoAtendente.turno, infoAtendente.id);
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<void> editarMedico(infoMedico) async {
+    try {
+      await medicoFB.update(infoMedico.crm, infoMedico.salario, infoMedico.id);
+    } catch (err) {
       print(err);
     }
   }

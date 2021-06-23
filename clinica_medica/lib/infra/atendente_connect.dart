@@ -22,10 +22,9 @@ class AtendenteFB {
   /*
    * Função responsável por modificar dados do atendente.
    */
-  Future<void> update(salario, funcionarioId, turno, atendenteId) async {
+  Future<void> update(salario, turno, atendenteId) async {
     final userData = {
       'salario': salario,
-      'refFuncionario': db.doc('funcionario/' + funcionarioId),
       'turno': turno,
     };
 

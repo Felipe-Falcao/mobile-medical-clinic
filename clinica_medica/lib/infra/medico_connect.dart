@@ -23,10 +23,9 @@ class MedicoFB {
   /*
    * Função responsável por modificar dados do medico.
    */
-  Future<void> update(crm, funcionarioId, salario, medicoId) async {
+  Future<void> update(crm, salario, medicoId) async {
     final userData = {
       'crm': crm,
-      'refFuncionario': db.doc('funcionario/' + funcionarioId),
       'salario': salario,
     };
 

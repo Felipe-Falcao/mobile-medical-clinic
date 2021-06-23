@@ -134,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           InfoEndereco infoEndereco = new InfoEndereco();
-          infoEndereco.cep = '4900000';
+          infoEndereco.cep = '4900002';
           infoEndereco.cidade = 'Aracaju';
           infoEndereco.estado = 'SE';
           infoEndereco.logradouro = 'Rua Nova';
@@ -142,28 +142,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
           InfoFuncionario infoFuncionario = new InfoFuncionario();
           infoFuncionario.cpf = '000.000.000-00';
-          infoFuncionario.email = 'testeatendente@gmail.com';
+          infoFuncionario.email = 'testemedico@gmail.com';
           infoFuncionario.senha = '1234567';
           infoFuncionario.carteiraTrabalho = '32.165.4';
           infoFuncionario.dataContratacao = DateTime.now();
-          infoFuncionario.nome = 'Teste Atendente';
+          infoFuncionario.nome = 'Teste Medico';
           infoFuncionario.telefone = '79 99999997';
 
           InfoMedico infoMedico = new InfoMedico();
           infoMedico.crm = '111.111.111';
-          infoMedico.salario = '10000';
+          infoMedico.salario = '14000';
           infoMedico.nomeEspecialidade = 'Obstetra';
 
           InfoAtendente infoAtendente = new InfoAtendente();
-          infoAtendente.salario = '3500';
+          infoAtendente.salario = '3550';
           infoAtendente.turno = 'Manhã';
 
-          // EDITAR DADOS TRABALHO
+          // EDITAR MEDICO
           FuncionarioController funcionarioController =
               new FuncionarioController();
           var lista = await funcionarioController.buscarFuncionarios();
-          infoFuncionario.id = lista[3][0];
-          funcionarioController.editarDadosTrabalho(infoFuncionario);
+          infoMedico.id = lista[3]['id'];
+          funcionarioController.editarMedico(infoMedico);
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
