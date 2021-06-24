@@ -1,5 +1,8 @@
+import 'package:clinica_medica/controllers/endereco_controller.dart';
+import 'package:clinica_medica/controllers/paciente_controller.dart';
 import 'package:clinica_medica/infra/auth_connect.dart';
 import 'package:clinica_medica/infra/funcionario_connect.dart';
+import 'package:clinica_medica/models/paciente_data.dart';
 import 'package:clinica_medica/screens/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +11,7 @@ import 'package:clinica_medica/models/endereco_data.dart';
 import 'package:clinica_medica/models/funcionario_data.dart';
 import 'package:clinica_medica/models/medico_data.dart';
 import 'package:clinica_medica/models/atendente_data.dart';
+import 'package:clinica_medica/models/paciente_data.dart';
 //https://saveyourtime.medium.com/firebase-cloud-firestore-add-set-update-delete-get-data-6da566513b1b
 import 'models/auth_data.dart';
 
@@ -150,20 +154,24 @@ class _MyHomePageState extends State<MyHomePage> {
           infoFuncionario.telefone = '79 99999997';
 
           InfoMedico infoMedico = new InfoMedico();
-          infoMedico.crm = '111.111.111';
+          infoMedico.crm = '111.111.112';
           infoMedico.salario = '14000';
-          infoMedico.nomeEspecialidade = 'Obstetra';
+          infoMedico.nomeEspecialidade = 'Pediatra';
 
           InfoAtendente infoAtendente = new InfoAtendente();
           infoAtendente.salario = '3550';
           infoAtendente.turno = 'Manhã';
 
-          // EDITAR MEDICO
-          FuncionarioController funcionarioController =
-              new FuncionarioController();
-          var lista = await funcionarioController.buscarFuncionarios();
-          infoMedico.id = lista[3]['id'];
-          funcionarioController.editarMedico(infoMedico);
+          InfoPaciente infoPaciente = new InfoPaciente();
+          infoPaciente.cpf = '999.999.999-98';
+          infoPaciente.dataNascimento = DateTime.now();
+          infoPaciente.nome = 'Teste Paciente';
+          infoPaciente.telefone = '(99) 9 9999-9998';
+
+          PacienteController pacienteController = new PacienteController();
+          var pacientes = await pacienteController.buscarPacientes();
+          infoPaciente.id = pacientes[0]['id'];
+          pacienteController.editarPaciente(infoPaciente);
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),

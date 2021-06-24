@@ -90,20 +90,6 @@ class FuncionarioController {
     return result;
   }
 
-  Future<void> atualizarEndereco(infoEndereco) async {
-    try {
-      await enderecoFB.update(
-          infoEndereco.cep,
-          infoEndereco.cidade,
-          infoEndereco.estado,
-          infoEndereco.logradouro,
-          infoEndereco.numero,
-          infoEndereco.id);
-    } catch (err) {
-      print(err);
-    }
-  }
-
   void editarDadosPessoais(infoFuncionario) {
     funcionarioFB.updatePersonalData(infoFuncionario);
   }
@@ -124,7 +110,40 @@ class FuncionarioController {
 
   Future<void> editarMedico(infoMedico) async {
     try {
-      await medicoFB.update(infoMedico.crm, infoMedico.salario, infoMedico.id);
+      // Cadastrar especialidade
+      await especialidadeFB.create(infoMedico.nomeEspecialidade);
+      // Obter referencia especialidade
+      DocumentReference especialidade =
+          especialidadeFB.getDocRef(infoMedico.nomeEspecialidade);
+      // Atualizar Medico
+      await medicoFB.update(
+          infoMedico.crm, infoMedico.salario, especialidade, infoMedico.id);
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<void> excluirMedico(infoMedico, infoFuncionario) async {
+    try {
+      // Excluir funcionário
+      await funcionarioFB.delete(infoMedico.id);
+      // Excluir médico
+      await medicoFB.delete(infoMedico.id);
+      // Excluir endereco
+      await enderecoFB.delete(infoFuncionario.refEndereco);
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<void> excluirAtendente(infoAtendente, infoFuncionario) async {
+    try {
+      // Excluir funcionário
+      await funcionarioFB.delete(infoAtendente.id);
+      // Excluir atendente
+      await medicoFB.delete(infoAtendente.id);
+      // Excluir endereco
+      await enderecoFB.delete(infoFuncionario.refEndereco);
     } catch (err) {
       print(err);
     }

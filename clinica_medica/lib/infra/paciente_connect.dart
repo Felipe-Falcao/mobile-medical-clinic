@@ -21,13 +21,11 @@ class PacienteFB {
   /*
    * Função responsável por modificar dados do paciente.
    */
-  Future<void> update(
-      cpf, dataNascimento, nome, enderecoId, telefone, pacienteId) async {
+  Future<void> update(cpf, dataNascimento, nome, telefone, pacienteId) async {
     final userData = {
       'cpf': cpf,
       'dataNascimento': dataNascimento,
       'nome': nome,
-      'refEndereco': db.doc('endereco/' + enderecoId),
       'telefone': telefone,
     };
 
@@ -56,5 +54,16 @@ class PacienteFB {
   Stream readAll() {
     var doc = db.collection('paciente').snapshots();
     return doc;
+  }
+
+  Future<QuerySnapshot> getPacientes() async {
+    var querySnapshot = await db.collection('paciente').get();
+    return querySnapshot;
+  }
+
+  Future<String> getPacienteId(data) async {
+    var querySnapshot =
+        await db.collection('paciente').where('cpf', isEqualTo: data).get();
+    return querySnapshot.docs[0].id;
   }
 }

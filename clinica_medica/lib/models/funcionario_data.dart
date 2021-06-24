@@ -7,4 +7,5 @@ class InfoFuncionario {
   DateTime dataContratacao;
   String nome;
   String telefone;
+  String refEndereco;
 }
