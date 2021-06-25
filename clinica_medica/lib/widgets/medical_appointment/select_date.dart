@@ -51,30 +51,27 @@ class _SelectDateState extends State<SelectDate> {
         : 'Selecione uma data';
 
     return Container(
-      height: 50,
+      height: 36,
       decoration: BoxDecoration(
-          color: Theme.of(context).inputDecorationTheme.fillColor,
-          borderRadius: BorderRadius.all(Radius.circular(8))),
+          border: Border.all(width: 0.7, color: Theme.of(context).accentColor),
+          // color: Theme.of(context).inputDecorationTheme.fillColor,
+          borderRadius: BorderRadius.all(Radius.circular(6))),
       child: TextButton(
         onPressed: () {
           _selectDate(context);
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.only(left: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               widget._formData['date'] == null
-                  ? Text(_selectedDate,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black54))
-                  : Text(_selectedDate,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black)),
+                  ? Text(_selectedDate, style: TextStyle(color: Colors.black54))
+                  : Text(_selectedDate, style: TextStyle(color: Colors.black)),
               IconButton(
                 padding: EdgeInsets.all(0),
                 color: Theme.of(context).primaryColor,
-                icon: Icon(Icons.calendar_today),
+                icon: Icon(Icons.calendar_today, size: 17),
                 onPressed: () {
                   _selectDate(context);
                 },

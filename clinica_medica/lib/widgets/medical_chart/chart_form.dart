@@ -1,9 +1,8 @@
-import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/medical_chart/select_date.dart';
+import 'package:clinica_medica/widgets/searchable_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class ChartForm extends StatefulWidget {
   final GlobalKey<FormState> form;
@@ -23,17 +22,6 @@ class ChartForm extends StatefulWidget {
 }
 
 class _ChartFormState extends State<ChartForm> {
-  Patient selectedValue;
-
-  @override
-  void initState() {
-    if (widget.formData['patient'] != null)
-      setState(() {
-        selectedValue = widget.formData['patient'];
-      });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     Patients patients = Provider.of<Patients>(context, listen: false);
@@ -44,40 +32,8 @@ class _ChartFormState extends State<ChartForm> {
         child: Column(
           children: <Widget>[
             const SizedBox(height: 15),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-                color: Theme.of(context).inputDecorationTheme.fillColor,
-              ),
-              child: SearchableDropdown(
-                key: ValueKey('patient'),
-                iconSize: 30,
-                hint: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text("Selecione"),
-                ),
-                style: TextStyle(fontSize: 15, color: Colors.black87),
-                underline: SizedBox(),
-                items: patients.items.map((item) {
-                  return new DropdownMenuItem<Patient>(
-                      child: Text(item.name), value: item);
-                }).toList(),
-                closeButton: 'Fechar',
-                isExpanded: true,
-                isCaseSensitiveSearch: false,
-                value: selectedValue,
-                searchHint: new Text(
-                  'Selecione ',
-                  style: new TextStyle(fontSize: 20),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    selectedValue = value;
-                    widget.formData['patient'] = selectedValue;
-                  });
-                },
-              ),
-            ),
+            _searchableDropdown(
+                patients.items, 'patient', 'Selecione o paciente'),
             if (!widget.isValidPatient)
               Row(
                 children: [
@@ -85,7 +41,7 @@ class _ChartFormState extends State<ChartForm> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Text(
-                      'Selecione um paciente!',
+                      'Nenhum paciente selecionado!',
                       style: TextStyle(color: Colors.red[600], fontSize: 13),
                     ),
                   ),
@@ -140,6 +96,65 @@ class _ChartFormState extends State<ChartForm> {
             const SizedBox(height: 15),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _searchableDropdown(List<dynamic> items, String key, String label) {
+    return Container(
+      constraints: BoxConstraints(minHeight: 50),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        color: Theme.of(context).inputDecorationTheme.fillColor,
+      ),
+      child: SearchableDropdown(
+        key: ValueKey(key),
+        iconSize: 30,
+        hint: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text(label),
+        ),
+        style: TextStyle(fontSize: 15, color: Colors.black87),
+        underline: SizedBox(),
+        items: items.map((item) {
+          return new DropdownMenuItemDiff<dynamic>(
+              child: Text(item.name), value: item);
+        }).toList(),
+        searchFn: (String keyword, items) {
+          List<int> ret = [];
+          if (keyword != null && items != null && keyword.isNotEmpty) {
+            keyword.split(" ").forEach((k) {
+              int i = 0;
+              items.forEach((item) {
+                if (k.isNotEmpty &&
+                    (item.value.name
+                        .toString()
+                        .toLowerCase()
+                        .contains(k.toLowerCase()))) {
+                  ret.add(i);
+                }
+                i++;
+              });
+            });
+          }
+          if (keyword.isEmpty) {
+            ret = Iterable<int>.generate(items.length).toList();
+          }
+          return (ret);
+        },
+        closeButton: 'Fechar',
+        isExpanded: true,
+        value: widget.formData[key],
+        searchHint: new Text(
+          'Selecione',
+          style: new TextStyle(fontSize: 20),
+        ),
+        onChanged: (value) {
+          setState(() {
+            widget.formData[key] = value;
+          });
+        },
       ),
     );
   }

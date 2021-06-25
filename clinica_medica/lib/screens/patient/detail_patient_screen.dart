@@ -107,7 +107,7 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                       ),
                       child: TextButton(
                         child: Text(
-                          'Mostrar prontuário cadastrados',
+                          'Mostrar prontuários cadastrados',
                           style:
                               TextStyle(color: Theme.of(context).primaryColor),
                         ),
