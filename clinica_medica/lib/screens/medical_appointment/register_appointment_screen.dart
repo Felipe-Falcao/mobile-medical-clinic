@@ -30,13 +30,13 @@ List<String> timeBlocks = [
   '17:30'
 ];
 
-class ScheduleAppointmentScreen extends StatefulWidget {
+class RegisterAppointmentScreen extends StatefulWidget {
   @override
-  _ScheduleAppointmentScreenState createState() =>
-      _ScheduleAppointmentScreenState();
+  _RegisterAppointmentScreenState createState() =>
+      _RegisterAppointmentScreenState();
 }
 
-class _ScheduleAppointmentScreenState extends State<ScheduleAppointmentScreen> {
+class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
   String _titleScreen = 'Agendar Consulta';
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
@@ -100,7 +100,6 @@ class _ScheduleAppointmentScreenState extends State<ScheduleAppointmentScreen> {
                           cancelButton(
                               context, () => Navigator.of(context).pop()),
                           finishButton(context, _saveForm),
-                          // finishButton(context, () {}),
                         ],
                       ),
                     ),
@@ -213,7 +212,7 @@ class _ScheduleAppointmentScreenState extends State<ScheduleAppointmentScreen> {
         context: context,
         builder: (ctx) => aletDialogSuccess(
           context: ctx,
-          message: 'A consulta foi cadastrada com sucesso.',
+          message: 'A Consulta foi cadastrada com sucesso.',
         ),
       );
       Navigator.of(context).pop();

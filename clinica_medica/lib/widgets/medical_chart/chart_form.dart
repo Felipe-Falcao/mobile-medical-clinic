@@ -1,3 +1,4 @@
+import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/medical_chart/select_date.dart';
 import 'package:clinica_medica/widgets/searchable_dropdown.dart';
@@ -22,6 +23,8 @@ class ChartForm extends StatefulWidget {
 }
 
 class _ChartFormState extends State<ChartForm> {
+  Patient patientSelected;
+
   @override
   Widget build(BuildContext context) {
     Patients patients = Provider.of<Patients>(context, listen: false);
@@ -33,7 +36,11 @@ class _ChartFormState extends State<ChartForm> {
           children: <Widget>[
             const SizedBox(height: 15),
             _searchableDropdown(
-                patients.items, 'patient', 'Selecione o paciente'),
+              items: patients.items,
+              key: 'patient',
+              label: 'Selecione o paciente',
+              patientSelected: patientSelected,
+            ),
             if (!widget.isValidPatient)
               Row(
                 children: [
@@ -65,7 +72,6 @@ class _ChartFormState extends State<ChartForm> {
             const SizedBox(height: 15),
             TextFormField(
               key: ValueKey('note'),
-              autofocus: true,
               initialValue: widget.formData['note'],
               maxLines: 10,
               minLines: 4,
@@ -100,7 +106,11 @@ class _ChartFormState extends State<ChartForm> {
     );
   }
 
-  Widget _searchableDropdown(List<dynamic> items, String key, String label) {
+  Widget _searchableDropdown(
+      {List<dynamic> items,
+      String key,
+      String label,
+      Patient patientSelected}) {
     return Container(
       constraints: BoxConstraints(minHeight: 50),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -145,7 +155,7 @@ class _ChartFormState extends State<ChartForm> {
         },
         closeButton: 'Fechar',
         isExpanded: true,
-        value: widget.formData[key],
+        value: patientSelected,
         searchHint: new Text(
           'Selecione',
           style: new TextStyle(fontSize: 20),
@@ -153,6 +163,7 @@ class _ChartFormState extends State<ChartForm> {
         onChanged: (value) {
           setState(() {
             widget.formData[key] = value;
+            patientSelected = value;
           });
         },
       ),

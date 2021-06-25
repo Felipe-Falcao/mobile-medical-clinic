@@ -17,9 +17,7 @@ class _SelectDateState extends State<SelectDate> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime d = await showDatePicker(
       context: context,
-      initialDate: widget._formData['date'] != null
-          ? widget._formData['date']
-          : DateTime.now(),
+      initialDate: widget._formData['date'] ?? DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2050),
       builder: (BuildContext context, Widget child) {
@@ -56,7 +54,6 @@ class _SelectDateState extends State<SelectDate> {
       height: 38,
       decoration: BoxDecoration(
           border: Border.all(width: 1, color: Colors.black12),
-          // color: Theme.of(context).inputDecorationTheme.fillColor,
           borderRadius: BorderRadius.all(Radius.circular(6))),
       child: TextButton(
         onPressed: () {

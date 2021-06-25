@@ -1,27 +1,28 @@
-import 'package:clinica_medica/models/chart.dart';
-import 'package:clinica_medica/providers/charts.dart';
-import 'package:clinica_medica/widgets/medical_chart/chart_item.dart';
+import 'package:clinica_medica/models/appointment.dart';
+import 'package:clinica_medica/providers/appointments.dart';
+import 'package:clinica_medica/widgets/medical_appointment/appointment_item.dart';
 import 'package:clinica_medica/widgets/new_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class FindChartScreen extends StatefulWidget {
+class FindAppointmentScreen extends StatefulWidget {
   @override
-  _FindChartScreenState createState() => _FindChartScreenState();
+  _FindAppointmentScreenState createState() => _FindAppointmentScreenState();
 }
 
-class _FindChartScreenState extends State<FindChartScreen> {
+class _FindAppointmentScreenState extends State<FindAppointmentScreen> {
   final _formData = Map<String, Object>();
   String _filter;
 
   @override
   Widget build(BuildContext context) {
     _filter = _formData['filter'];
-    final Charts chartsProvider = Provider.of<Charts>(context);
-    final List<Chart> charts = chartsProvider.getItemsWith(_filter);
+    final Appointments appointmentProvider = Provider.of<Appointments>(context);
+    final List<Appointment> appointments =
+        appointmentProvider.getItemsWith(_filter);
 
     final appBar = AppBar(
-      title: const Text('Prontuários'),
+      title: const Text('Buscar Consultas'),
     );
 
     final availableHeight = MediaQuery.of(context).size.height -
@@ -56,8 +57,9 @@ class _FindChartScreenState extends State<FindChartScreen> {
             Container(
               height: availableHeight - 90,
               child: ListView.builder(
-                itemCount: charts.length,
-                itemBuilder: (ctx, i) => ChartItem(chart: charts[i]),
+                itemCount: appointments.length,
+                itemBuilder: (ctx, i) =>
+                    AppointmentItem(appointment: appointments[i]),
               ),
             ),
           ],

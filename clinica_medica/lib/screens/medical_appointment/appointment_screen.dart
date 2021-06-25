@@ -1,8 +1,8 @@
-import 'package:clinica_medica/screens/medical_appointment/schedule_appointment_screen.dart';
-import 'package:clinica_medica/screens/medical_appointment/show_schedule_screen.dart';
+import 'package:clinica_medica/screens/medical_appointment/register_appointment_screen.dart';
+import 'package:clinica_medica/screens/medical_appointment/find_appointment_screen.dart';
 import 'package:clinica_medica/widgets/app_drawer.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
-import 'package:clinica_medica/widgets/patient/menu_tile.dart';
+import 'package:clinica_medica/widgets/menu_tile.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentScreen extends StatelessWidget {
@@ -21,14 +21,14 @@ class AppointmentScreen extends StatelessWidget {
             MenuTile(
               title: 'Agendar Consulta',
               nav: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ScheduleAppointmentScreen(),
+                builder: (context) => RegisterAppointmentScreen(),
               )),
             ),
             const SizedBox(height: 20),
             MenuTile(
-              title: 'Consultar Agendamento',
+              title: 'Buscar Consulta',
               nav: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ShowScheduleScreen(),
+                builder: (context) => FindAppointmentScreen(),
               )),
             ),
           ],

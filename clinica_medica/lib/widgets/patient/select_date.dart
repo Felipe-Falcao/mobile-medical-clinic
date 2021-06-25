@@ -16,9 +16,7 @@ class _SelectDateState extends State<SelectDate> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime d = await showDatePicker(
       context: context,
-      initialDate: widget._formData['birthDate'] != null
-          ? widget._formData['birthDate']
-          : DateTime.now(),
+      initialDate: widget._formData['birthDate'] ?? DateTime.now(),
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),
       builder: (BuildContext context, Widget child) {

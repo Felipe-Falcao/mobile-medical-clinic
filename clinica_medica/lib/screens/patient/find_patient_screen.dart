@@ -16,7 +16,7 @@ class _FindPatientScreenState extends State<FindPatientScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _filter = _formData['filter'] != null ? _formData['filter'] : null;
+    _filter = _formData['filter'];
     final Patients patientsProvider = Provider.of<Patients>(context);
     final List<Patient> patients = patientsProvider.getItemsWith(_filter);
 

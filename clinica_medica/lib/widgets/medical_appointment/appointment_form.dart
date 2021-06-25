@@ -99,7 +99,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
       decoration: BoxDecoration(
         border: Border.all(width: 1, color: Colors.black12),
         borderRadius: BorderRadius.all(Radius.circular(4)),
-        // color: Theme.of(context).inputDecorationTheme.fillColor,
       ),
       child: SearchableDropdown(
         key: ValueKey(key),
