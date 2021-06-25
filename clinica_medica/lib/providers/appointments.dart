@@ -24,6 +24,16 @@ class Appointments with ChangeNotifier {
     return _items.singleWhere((item) => item.id == id);
   }
 
+  Appointment getByTimeBlock(String timeBlock, Doctor doctor, DateTime date) {
+    if (timeBlock == null || doctor == null || date == null) return null;
+    return _items.singleWhere(
+        (item) =>
+            item.schedule.timeBlock == timeBlock &&
+            item.doctor.name == doctor.name &&
+            item.schedule.date == date,
+        orElse: () => null);
+  }
+
   int get itemsCount {
     return _items.length;
   }

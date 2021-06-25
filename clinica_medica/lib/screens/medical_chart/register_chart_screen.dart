@@ -85,7 +85,7 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
       _isValidPatient = _formData['patient'] != null;
       _isValidDate = _formData['date'] != null;
     });
-    if (!isValid) return;
+    if (!isValid || !_isValidPatient || !_isValidDate) return;
     _form.currentState.save();
     final chart = Chart(
       id: _formData['id'],

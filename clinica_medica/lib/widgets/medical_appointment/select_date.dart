@@ -3,8 +3,9 @@ import 'package:intl/intl.dart';
 
 class SelectDate extends StatefulWidget {
   final _formData;
+  final Function callback;
 
-  const SelectDate(this._formData);
+  const SelectDate(this._formData, this.callback);
 
   @override
   _SelectDateState createState() => _SelectDateState();
@@ -19,8 +20,8 @@ class _SelectDateState extends State<SelectDate> {
       initialDate: widget._formData['date'] != null
           ? widget._formData['date']
           : DateTime.now(),
-      firstDate: DateTime(1970),
-      lastDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2050),
       builder: (BuildContext context, Widget child) {
         return Theme(
           data: ThemeData.light().copyWith(
@@ -42,6 +43,7 @@ class _SelectDateState extends State<SelectDate> {
       setState(() {
         _selectedDate = new DateFormat('dd/MM/yyyy').format(d);
       });
+    widget.callback();
   }
 
   @override
@@ -51,9 +53,9 @@ class _SelectDateState extends State<SelectDate> {
         : 'Selecione uma data';
 
     return Container(
-      height: 36,
+      height: 38,
       decoration: BoxDecoration(
-          border: Border.all(width: 0.7, color: Theme.of(context).accentColor),
+          border: Border.all(width: 1, color: Colors.black12),
           // color: Theme.of(context).inputDecorationTheme.fillColor,
           borderRadius: BorderRadius.all(Radius.circular(6))),
       child: TextButton(

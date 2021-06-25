@@ -4,6 +4,7 @@
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 //https://saveyourtime.medium.com/firebase-cloud-firestore-add-set-update-delete-get-data-6da566513b1b
+import 'package:clinica_medica/providers/appointments.dart';
 import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/screens/home_screen.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => new Charts(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => new Appointments(),
         ),
       ],
       child: MaterialApp(
