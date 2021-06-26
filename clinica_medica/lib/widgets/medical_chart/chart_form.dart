@@ -10,12 +10,14 @@ class ChartForm extends StatefulWidget {
   final Map<String, Object> formData;
   final bool isValidDate;
   final bool isValidPatient;
+  final String currentMode;
 
   const ChartForm({
     @required this.formData,
     @required this.form,
     @required this.isValidDate,
     @required this.isValidPatient,
+    @required this.currentMode,
   });
 
   @override
@@ -24,6 +26,14 @@ class ChartForm extends StatefulWidget {
 
 class _ChartFormState extends State<ChartForm> {
   Patient patientSelected;
+
+  @override
+  void initState() {
+    setState(() {
+      patientSelected = widget.formData['patient'];
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +121,7 @@ class _ChartFormState extends State<ChartForm> {
       String key,
       String label,
       Patient patientSelected}) {
+    final isEditing = widget.currentMode == 'Editar Prontuário';
     return Container(
       constraints: BoxConstraints(minHeight: 50),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -120,12 +131,15 @@ class _ChartFormState extends State<ChartForm> {
       ),
       child: SearchableDropdown(
         key: ValueKey(key),
+        readOnly: isEditing,
         iconSize: 30,
         hint: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(label),
         ),
-        style: TextStyle(fontSize: 15, color: Colors.black87),
+        style: !isEditing
+            ? TextStyle(fontSize: 15, color: Colors.black87)
+            : TextStyle(fontSize: 15, color: Colors.black38),
         underline: SizedBox(),
         items: items.map((item) {
           return new DropdownMenuItemDiff<dynamic>(

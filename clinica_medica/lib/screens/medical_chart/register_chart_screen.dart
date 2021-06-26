@@ -42,6 +42,7 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
                       form: _form,
                       isValidDate: _isValidDate,
                       isValidPatient: _isValidPatient,
+                      currentMode: _titleScreen,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(

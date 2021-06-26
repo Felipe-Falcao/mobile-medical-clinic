@@ -11,6 +11,7 @@ import 'package:clinica_medica/screens/home_screen.dart';
 import 'package:clinica_medica/screens/medical_appointment/appointment_screen.dart';
 import 'package:clinica_medica/screens/medical_chart/chart_screen.dart';
 import 'package:clinica_medica/screens/patient/patient_screen.dart';
+import 'package:clinica_medica/screens/schedule/schedule_screen.dart';
 import 'package:clinica_medica/screens/splash_screen.dart';
 import 'package:clinica_medica/theme/theme.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
@@ -36,15 +37,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => new Patients(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => new Charts(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => new Appointments(),
-        ),
+        ChangeNotifierProvider(create: (_) => new Patients()),
+        ChangeNotifierProvider(create: (_) => new Charts()),
+        ChangeNotifierProvider(create: (_) => new Appointments()),
       ],
       child: MaterialApp(
         title: 'Clinic+',
@@ -52,10 +47,11 @@ class MyApp extends StatelessWidget {
         theme: appTheme,
         home: SplashScreen(),
         routes: {
-          AppRoutes.HOME_SCREEN: (ctx) => HomeScreen(),
-          AppRoutes.PATIENT_SCREEN: (ctx) => PatientScreen(),
-          AppRoutes.CHART_SCREEN: (ctx) => ChartScreen(),
-          AppRoutes.APPOINTMENT_SCREEN: (ctx) => AppointmentScreen(),
+          AppRoutes.HOME_SCREEN: (_) => HomeScreen(),
+          AppRoutes.PATIENT_SCREEN: (_) => PatientScreen(),
+          AppRoutes.CHART_SCREEN: (_) => ChartScreen(),
+          AppRoutes.APPOINTMENT_SCREEN: (_) => AppointmentScreen(),
+          AppRoutes.SCHEDULE_SCREEN: (_) => ScheduleScreen(),
         },
       ),
     );

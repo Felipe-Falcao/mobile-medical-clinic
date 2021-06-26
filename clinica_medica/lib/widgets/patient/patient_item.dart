@@ -21,10 +21,7 @@ class PatientItem extends StatelessWidget {
               settings: RouteSettings(arguments: patient)));
         },
         leading: CircleAvatar(
-          child: Text(
-            '${patient.name[0]}',
-            style: TextStyle(color: Theme.of(context).accentColor),
-          ),
+          child: Icon(Icons.person, color: Theme.of(context).accentColor),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         title: Text(patient.name),

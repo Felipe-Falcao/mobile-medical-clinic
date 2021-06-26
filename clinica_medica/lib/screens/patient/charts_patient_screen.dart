@@ -53,7 +53,11 @@ class ChartsPatientScreen extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: CircleAvatar(
-          child: Icon(Icons.note_alt),
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Icon(
+            Icons.note_alt,
+            color: Theme.of(context).accentColor,
+          ),
         ),
         title: Text(DateFormat('dd/MM/yyyy').format(chart.entryDate)),
         onTap: () {

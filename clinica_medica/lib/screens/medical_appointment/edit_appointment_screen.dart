@@ -3,6 +3,7 @@ import 'package:clinica_medica/providers/appointments.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class EditAppointmentScreen extends StatefulWidget {
@@ -11,6 +12,7 @@ class EditAppointmentScreen extends StatefulWidget {
 }
 
 class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
+  Appointment appointment;
   final _formData = new Map<String, Object>();
   final _form = GlobalKey<FormState>();
   bool _isLoading = false;
@@ -26,7 +28,15 @@ class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
                 key: _form,
                 child: Column(
                   children: <Widget>[
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 10),
+                    _itemList('Paciente', appointment.patient.name),
+                    _itemList(
+                        'Data da consulta',
+                        new DateFormat('dd/MM/yyyy')
+                            .format(appointment.schedule.date)),
+                    _itemList('Horário', appointment.schedule.timeBlock),
+                    _itemList('Médico', appointment.doctor.name),
+                    const SizedBox(height: 15),
                     _textBox(
                       key: 'result',
                       label: 'Resultado',
@@ -63,8 +73,7 @@ class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_formData.isEmpty) {
-      final Appointment appointment =
-          ModalRoute.of(context).settings.arguments as Appointment;
+      appointment = ModalRoute.of(context).settings.arguments as Appointment;
       if (appointment != null) {
         _formData['id'] = appointment.id;
         _formData['patient'] = appointment.patient;
@@ -109,6 +118,28 @@ class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
         }
         return null;
       },
+    );
+  }
+
+  Widget _itemList(String key, String value) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(key, style: TextStyle(color: Colors.black54)),
+          ),
+          Container(
+            width: 200,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(value,
+                  style: TextStyle(color: Theme.of(context).accentColor)),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

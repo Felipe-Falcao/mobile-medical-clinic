@@ -50,6 +50,15 @@ class AppDrawer extends StatelessWidget {
                   .pushReplacementNamed(AppRoutes.APPOINTMENT_SCREEN);
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.format_list_bulleted_rounded),
+            title: const Text('Gerenciar Agendamento'),
+            enabled: currentRoute != AppRoutes.SCHEDULE_SCREEN,
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(AppRoutes.SCHEDULE_SCREEN);
+            },
+          ),
         ],
       ),
     );
