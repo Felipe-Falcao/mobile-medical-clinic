@@ -24,7 +24,7 @@ class AppointmentItem extends StatelessWidget {
         },
         leading: CircleAvatar(
           child: Icon(
-            Icons.alarm_on_rounded,
+            Icons.event_available_rounded,
             color: Theme.of(context).accentColor,
           ),
           backgroundColor: Theme.of(context).primaryColor,

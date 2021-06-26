@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             TextButton(
-              child: Text('Gerenciar Agendamento'),
+              child: Text('Agendamentos'),
               onPressed: () {
                 Navigator.of(context)
                     .pushReplacementNamed(AppRoutes.SCHEDULE_SCREEN);

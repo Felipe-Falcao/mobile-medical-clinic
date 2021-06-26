@@ -65,12 +65,13 @@ class _SelectDateState extends State<SelectDate> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               widget._formData['date'] == null
-                  ? Text(_selectedDate, style: TextStyle(color: Colors.black54))
-                  : Text(_selectedDate, style: TextStyle(color: Colors.black)),
+                  ? Text(_selectedDate, style: TextStyle(color: Colors.black45))
+                  : Text(_selectedDate,
+                      style: TextStyle(color: Colors.black87, fontSize: 13)),
               IconButton(
                 padding: EdgeInsets.all(0),
                 color: Theme.of(context).primaryColor,
-                icon: Icon(Icons.calendar_today, size: 17),
+                icon: Icon(Icons.calendar_today, size: 16),
                 onPressed: () {
                   _selectDate(context);
                 },

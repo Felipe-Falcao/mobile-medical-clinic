@@ -148,7 +148,8 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
                         !hasPatient
                             ? Icon(Icons.radio_button_off_rounded,
                                 color: Colors.black87)
-                            : Icon(Icons.push_pin_sharp, color: Colors.black45),
+                            : Icon(Icons.event_available_rounded,
+                                color: Colors.black45),
                         const SizedBox(width: 10),
                         !hasPatient
                             ? Text('${timeBlocks[index]} $patientName',

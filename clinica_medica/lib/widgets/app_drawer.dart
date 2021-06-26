@@ -33,7 +33,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.chat_rounded),
+            leading: const Icon(Icons.note_alt_rounded),
             title: const Text('Gerenciar Prontuário'),
             enabled: currentRoute != AppRoutes.CHART_SCREEN,
             onTap: () {
@@ -42,7 +42,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.alarm_on_rounded),
+            leading: const Icon(Icons.event_available_rounded),
             title: const Text('Gerenciar Consulta'),
             enabled: currentRoute != AppRoutes.APPOINTMENT_SCREEN,
             onTap: () {
@@ -51,8 +51,8 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.format_list_bulleted_rounded),
-            title: const Text('Gerenciar Agendamento'),
+            leading: const Icon(Icons.event_note_rounded),
+            title: const Text('Agendamentos'),
             enabled: currentRoute != AppRoutes.SCHEDULE_SCREEN,
             onTap: () {
               Navigator.of(context)
