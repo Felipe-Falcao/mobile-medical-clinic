@@ -15,52 +15,64 @@ class AppDrawer extends StatelessWidget {
             automaticallyImplyLeading: false,
           ),
           const SizedBox(height: 8),
-          ListTile(
-            leading: const Icon(Icons.home_rounded),
-            title: const Text('Home'),
-            enabled: currentRoute != AppRoutes.HOME_SCREEN,
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.HOME_SCREEN);
-            },
+          _listTile(
+            context: context,
+            icon: Icons.home_rounded,
+            label: 'Home',
+            route: AppRoutes.HOME_SCREEN,
           ),
-          ListTile(
-            leading: const Icon(Icons.people_alt_rounded),
-            title: const Text('Gerenciar Pacientes'),
-            enabled: currentRoute != AppRoutes.PATIENT_SCREEN,
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(AppRoutes.PATIENT_SCREEN);
-            },
+          _listTile(
+            context: context,
+            icon: Icons.people_alt_rounded,
+            label: 'Gerenciar Pacientes',
+            route: AppRoutes.PATIENT_SCREEN,
           ),
-          ListTile(
-            leading: const Icon(Icons.note_alt_rounded),
-            title: const Text('Gerenciar Prontuário'),
-            enabled: currentRoute != AppRoutes.CHART_SCREEN,
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(AppRoutes.CHART_SCREEN);
-            },
+          _listTile(
+            context: context,
+            icon: Icons.note_alt_rounded,
+            label: 'Gerenciar Prontuário',
+            route: AppRoutes.CHART_SCREEN,
           ),
-          ListTile(
-            leading: const Icon(Icons.event_available_rounded),
-            title: const Text('Gerenciar Consulta'),
-            enabled: currentRoute != AppRoutes.APPOINTMENT_SCREEN,
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(AppRoutes.APPOINTMENT_SCREEN);
-            },
+          _listTile(
+            context: context,
+            icon: Icons.event_available_rounded,
+            label: 'Gerenciar Consulta',
+            route: AppRoutes.APPOINTMENT_SCREEN,
           ),
-          ListTile(
-            leading: const Icon(Icons.event_note_rounded),
-            title: const Text('Agendamentos'),
-            enabled: currentRoute != AppRoutes.SCHEDULE_SCREEN,
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(AppRoutes.SCHEDULE_SCREEN);
-            },
+          _listTile(
+            context: context,
+            icon: Icons.event_note_rounded,
+            label: 'Agendamentos',
+            route: AppRoutes.SCHEDULE_SCREEN,
           ),
         ],
       ),
+    );
+  }
+
+  Widget _listTile({
+    @required BuildContext context,
+    @required IconData icon,
+    @required String label,
+    @required String route,
+  }) {
+    return ListTile(
+      selected: currentRoute == route,
+      selectedTileColor: Colors.teal[50],
+      leading: Icon(icon,
+          color: currentRoute == route
+              ? Theme.of(context).accentColor
+              : Theme.of(context).primaryColor),
+      title: Text(label,
+          style: TextStyle(
+              color: currentRoute == route
+                  ? Theme.of(context).accentColor
+                  : Colors.black54)),
+      onTap: currentRoute == route
+          ? null
+          : () {
+              Navigator.of(context).pushReplacementNamed(route);
+            },
     );
   }
 }
