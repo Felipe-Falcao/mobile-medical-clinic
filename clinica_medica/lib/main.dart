@@ -1,7 +1,9 @@
+import 'package:clinica_medica/controllers/consulta_controller.dart';
 import 'package:clinica_medica/controllers/endereco_controller.dart';
 import 'package:clinica_medica/controllers/paciente_controller.dart';
 import 'package:clinica_medica/infra/auth_connect.dart';
 import 'package:clinica_medica/infra/funcionario_connect.dart';
+import 'package:clinica_medica/models/consulta_data.dart';
 import 'package:clinica_medica/models/paciente_data.dart';
 import 'package:clinica_medica/screens/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,10 +14,12 @@ import 'package:clinica_medica/models/funcionario_data.dart';
 import 'package:clinica_medica/models/medico_data.dart';
 import 'package:clinica_medica/models/atendente_data.dart';
 import 'package:clinica_medica/models/paciente_data.dart';
+import 'package:clinica_medica/models/medicamento_data.dart';
 //https://saveyourtime.medium.com/firebase-cloud-firestore-add-set-update-delete-get-data-6da566513b1b
 import 'models/auth_data.dart';
 
 import 'package:clinica_medica/controllers/funcionario_controller.dart';
+import 'package:clinica_medica/controllers/medicamento_controller.dart';
 
 bool USE_FIRESTORE_EMULATOR = false;
 
@@ -168,10 +172,43 @@ class _MyHomePageState extends State<MyHomePage> {
           infoPaciente.nome = 'Teste Paciente';
           infoPaciente.telefone = '(99) 9 9999-9998';
 
-          PacienteController pacienteController = new PacienteController();
-          var pacientes = await pacienteController.buscarPacientes();
-          infoPaciente.id = pacientes[0]['id'];
-          pacienteController.editarPaciente(infoPaciente);
+          InfoMedicamento infoMedicamento = new InfoMedicamento();
+          infoMedicamento.dataPrescricao = DateTime.now();
+          infoMedicamento.dose = '2 por dia';
+          infoMedicamento.nome = 'Remédio';
+
+          InfoConsulta infoConsulta = new InfoConsulta();
+          infoConsulta.data = DateTime.now();
+          infoConsulta.refAtendente = 'hOh7kICXf8RgUjyFwfAGjxIIgpq1';
+          infoConsulta.refMedico = 'LTdA4c79HYVZqw1QFDF656QsXQt1';
+          infoConsulta.refPaciente = 'U1GctzEfIuVWVYrKafGl';
+
+          // // AGENDAR CONSULTA
+          // ConsultaController consultaController = new ConsultaController();
+          // consultaController.agendarConsulta(infoConsulta);
+
+          // // EDITAR CONSULTA
+          // ConsultaController consultaController = new ConsultaController();
+          // infoConsulta.id = 'rLl8UNwCvYDVbJpSmsl0';
+          // infoConsulta.atestado = 'Ok';
+          // infoConsulta.resultado = 'Teste positivo';
+          // infoConsulta.refAgendamento =
+          //     'hOh7kICXf8RgUjyFwfAGjxIIgpq12021.06.27;10:59;PM';
+          // consultaController.editarConsulta(infoConsulta);
+
+          // // BUSCAR CONSULTAS
+          // ConsultaController consultaController = new ConsultaController();
+          // var lista = await consultaController.buscarConsultas();
+          // print(lista[1]['refAgendamento']);
+          // infoConsulta.refAgendamento = lista[1]['refAgendamento'].id;
+          // var consulta = await consultaController
+          //     .buscarAgendamento(infoConsulta.refAgendamento);
+          // print(consulta['data']);
+
+          // DELETAR CONSULTA
+          ConsultaController consultaController = new ConsultaController();
+          consultaController.excluirConsulta('rLl8UNwCvYDVbJpSmsl0',
+              'hOh7kICXf8RgUjyFwfAGjxIIgpq12021.06.27;10:59;PM');
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),

@@ -32,7 +32,7 @@ class PacienteController {
       result.add({
         'id': pacientes.docs[i].id,
         'cpf': data['cpf'],
-        'dataNascumento': data['dataNascimento'],
+        'dataNascimento': data['dataNascimento'],
         'nome': data['nome'],
         'refEndereco': data['refEndereco'],
         'telefone': data['telefone'],

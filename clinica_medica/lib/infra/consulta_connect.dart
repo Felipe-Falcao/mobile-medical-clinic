@@ -22,13 +22,12 @@ class ConsultaFB {
   /*
    * Função responsável por modificar dados da consulta.
    */
-  Future<void> update(atestado, agendamentoId, medicoId, pacienteId, resultado,
-      consultaId) async {
+  Future<void> update(atestado, resultado, consultaId) async {
     final userData = {
       'atestado': atestado,
-      'refAgendamento': db.doc('agendamento/' + agendamentoId),
-      'refMedico': db.doc('medico/' + medicoId),
-      'refPaciente': db.doc('paciente/' + pacienteId),
+      // 'refAgendamento': db.doc('agendamento/' + agendamentoId),
+      // 'refMedico': db.doc('medico/' + medicoId),
+      // 'refPaciente': db.doc('paciente/' + pacienteId),
       'resultado': resultado,
     };
 
@@ -57,5 +56,10 @@ class ConsultaFB {
   Stream readAll() {
     var doc = db.collection('consulta').snapshots();
     return doc;
+  }
+
+  Future<QuerySnapshot> getConsultas() async {
+    var querySnapshot = await db.collection('consulta').get();
+    return querySnapshot;
   }
 }
