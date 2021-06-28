@@ -1,0 +1,47 @@
+import 'package:clinica_medica/infra/prontuario_connect.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class ProntuarioController {
+  ProntuarioFB prontuarioFB = new ProntuarioFB();
+
+  Future<void> cadastrarProntuario(infoProntuario) async {
+    try {
+      prontuarioFB.create(infoProntuario.refPaciente,
+          infoProntuario.refMedicamento, infoProntuario.nota);
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<List<dynamic>> buscarProntuarios() async {
+    var result = [];
+    var data;
+    QuerySnapshot prontuarios = await prontuarioFB.getProntuarios();
+
+    for (int i = 0; i < prontuarios.size; i++) {
+      data = prontuarios.docs[i].data();
+      result.add({
+        'id': prontuarios.docs[i].id,
+        'dataAtualizacao': data['dataAtualizacao'],
+        'dataCadastro': data['dataCadastro'],
+        'nota': data['nota'],
+        'refMedicamento': data['refMedicamento'],
+        'refPaciente': data['refPaciente'],
+      });
+    }
+    return result;
+  }
+
+  void editarProntuario(infoProntuario) {
+    prontuarioFB.update(
+        infoProntuario.refMedicamento, infoProntuario.id, infoProntuario.nota);
+  }
+
+  Future<void> excluirProntuario(prontuarioId) async {
+    try {
+      prontuarioFB.delete(prontuarioId);
+    } catch (err) {
+      print(err);
+    }
+  }
+}

@@ -1,10 +1,12 @@
 import 'package:clinica_medica/controllers/consulta_controller.dart';
 import 'package:clinica_medica/controllers/endereco_controller.dart';
 import 'package:clinica_medica/controllers/paciente_controller.dart';
+import 'package:clinica_medica/controllers/prontuario_controller.dart';
 import 'package:clinica_medica/infra/auth_connect.dart';
 import 'package:clinica_medica/infra/funcionario_connect.dart';
 import 'package:clinica_medica/models/consulta_data.dart';
 import 'package:clinica_medica/models/paciente_data.dart';
+import 'package:clinica_medica/models/prontuario_data.dart';
 import 'package:clinica_medica/screens/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -183,32 +185,19 @@ class _MyHomePageState extends State<MyHomePage> {
           infoConsulta.refMedico = 'LTdA4c79HYVZqw1QFDF656QsXQt1';
           infoConsulta.refPaciente = 'U1GctzEfIuVWVYrKafGl';
 
-          // // AGENDAR CONSULTA
-          // ConsultaController consultaController = new ConsultaController();
-          // consultaController.agendarConsulta(infoConsulta);
+          InfoProntuario infoProntuario = new InfoProntuario();
+          infoProntuario.nota = 'Medicamento receitado. Dor de barriga.';
 
-          // // EDITAR CONSULTA
-          // ConsultaController consultaController = new ConsultaController();
-          // infoConsulta.id = 'rLl8UNwCvYDVbJpSmsl0';
-          // infoConsulta.atestado = 'Ok';
-          // infoConsulta.resultado = 'Teste positivo';
-          // infoConsulta.refAgendamento =
-          //     'hOh7kICXf8RgUjyFwfAGjxIIgpq12021.06.27;10:59;PM';
-          // consultaController.editarConsulta(infoConsulta);
+          PacienteController pacienteController = new PacienteController();
+          var listaPacientes = await pacienteController.buscarPacientes();
+          infoProntuario.refPaciente = listaPacientes[1]['id'];
+          infoProntuario.refMedicamento = 'ItD7VrH3rOoKZ8hySMKF';
 
-          // // BUSCAR CONSULTAS
-          // ConsultaController consultaController = new ConsultaController();
-          // var lista = await consultaController.buscarConsultas();
-          // print(lista[1]['refAgendamento']);
-          // infoConsulta.refAgendamento = lista[1]['refAgendamento'].id;
-          // var consulta = await consultaController
-          //     .buscarAgendamento(infoConsulta.refAgendamento);
-          // print(consulta['data']);
-
-          // DELETAR CONSULTA
-          ConsultaController consultaController = new ConsultaController();
-          consultaController.excluirConsulta('rLl8UNwCvYDVbJpSmsl0',
-              'hOh7kICXf8RgUjyFwfAGjxIIgpq12021.06.27;10:59;PM');
+          ProntuarioController prontuarioController =
+              new ProntuarioController();
+          var listaProntuarios = await prontuarioController.buscarProntuarios();
+          infoProntuario.id = listaProntuarios[0]['id'];
+          prontuarioController.editarProntuario(infoProntuario);
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
