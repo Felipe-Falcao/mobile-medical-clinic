@@ -56,4 +56,9 @@ class MedicoFB {
     var doc = db.collection('medico').snapshots();
     return doc;
   }
+
+  Future<QuerySnapshot> getMedicos() async {
+    var querySnapshot = await db.collection('medico').get();
+    return querySnapshot;
+  }
 }

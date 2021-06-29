@@ -59,6 +59,16 @@ class ConsultaController {
       return await agendamentoFB.read(agendamentoId);
     } catch (err) {
       print(err);
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>> buscarConsulta(consultaId) async {
+    try {
+      return await consultaFB.read(consultaId);
+    } catch (err) {
+      print(err);
+      return null;
     }
   }
 

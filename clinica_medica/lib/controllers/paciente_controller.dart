@@ -56,4 +56,13 @@ class PacienteController {
       print(err);
     }
   }
+
+  Future<Map<String, dynamic>> buscarPaciente(pacienteId) async {
+    try {
+      return await pacienteFB.read(pacienteId);
+    } catch (err) {
+      print(err);
+      return null;
+    }
+  }
 }

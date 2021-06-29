@@ -1,4 +1,5 @@
 class InfoMedicamento {
+  String id;
   DateTime dataPrescricao;
   String dose;
   String nome;

@@ -42,11 +42,11 @@ class MedicamentoController {
         infoMedicamento.nome, infoMedicamento.id);
   }
 
-  // Future<void> excluirMedicamento(medicamentoId) async {
-  //   try {
-  //     medicamentoFB.delete(medicamentoId);
-  //   } catch (err) {
-  //     print(err);
-  //   }
-  // }
+  Future<void> excluirMedicamento(medicamentoId) async {
+    try {
+      medicamentoFB.delete(medicamentoId);
+    } catch (err) {
+      print(err);
+    }
+  }
 }

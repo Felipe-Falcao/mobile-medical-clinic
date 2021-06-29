@@ -59,4 +59,9 @@ class AtendenteFB {
     var doc = db.collection('atendente').doc(funcionarioId);
     return doc;
   }
+
+  Future<QuerySnapshot> getAtendentes() async {
+    var querySnapshot = await db.collection('atendente').get();
+    return querySnapshot;
+  }
 }

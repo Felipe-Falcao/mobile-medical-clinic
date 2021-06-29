@@ -176,28 +176,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
           InfoMedicamento infoMedicamento = new InfoMedicamento();
           infoMedicamento.dataPrescricao = DateTime.now();
-          infoMedicamento.dose = '2 por dia';
-          infoMedicamento.nome = 'Remédio';
+          infoMedicamento.dose = '7 por dia';
+          infoMedicamento.nome = 'Remédiso';
 
           InfoConsulta infoConsulta = new InfoConsulta();
           infoConsulta.data = DateTime.now();
-          infoConsulta.refAtendente = 'hOh7kICXf8RgUjyFwfAGjxIIgpq1';
-          infoConsulta.refMedico = 'LTdA4c79HYVZqw1QFDF656QsXQt1';
-          infoConsulta.refPaciente = 'U1GctzEfIuVWVYrKafGl';
 
           InfoProntuario infoProntuario = new InfoProntuario();
           infoProntuario.nota = 'Medicamento receitado. Dor de barriga.';
-
-          PacienteController pacienteController = new PacienteController();
-          var listaPacientes = await pacienteController.buscarPacientes();
-          infoProntuario.refPaciente = listaPacientes[1]['id'];
-          infoProntuario.refMedicamento = 'ItD7VrH3rOoKZ8hySMKF';
-
-          ProntuarioController prontuarioController =
-              new ProntuarioController();
-          var listaProntuarios = await prontuarioController.buscarProntuarios();
-          infoProntuario.id = listaProntuarios[0]['id'];
-          prontuarioController.editarProntuario(infoProntuario);
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),

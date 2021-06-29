@@ -90,6 +90,41 @@ class FuncionarioController {
     return result;
   }
 
+  Future<List<dynamic>> buscarMedicos() async {
+    var result = [];
+    var data;
+    QuerySnapshot medicos = await medicoFB.getMedicos();
+
+    for (int i = 0; i < medicos.size; i++) {
+      data = medicos.docs[i].data();
+      result.add({
+        'id': medicos.docs[i].id,
+        'crm': data['crm'],
+        'refEspecialidade': data['refEspecialidade'].id,
+        'refFuncionario': data['refFuncionario'].id,
+        'salario': data['salario'],
+      });
+    }
+    return result;
+  }
+
+  Future<List<dynamic>> buscarAtendentes() async {
+    var result = [];
+    var data;
+    QuerySnapshot atendentes = await atendenteFB.getAtendentes();
+
+    for (int i = 0; i < atendentes.size; i++) {
+      data = atendentes.docs[i].data();
+      result.add({
+        'id': atendentes.docs[i].id,
+        'refFuncionario': data['refFuncionario'].id,
+        'salario': data['salario'],
+        'turno': data['turno'],
+      });
+    }
+    return result;
+  }
+
   void editarDadosPessoais(infoFuncionario) {
     funcionarioFB.updatePersonalData(infoFuncionario);
   }
