@@ -42,6 +42,13 @@ class HomeScreen extends StatelessWidget {
             nav: () => Navigator.of(context)
                 .pushReplacementNamed(AppRoutes.SCHEDULE_SCREEN),
           ),
+          _item(
+            context: context,
+            icons: Icons.medication,
+            label: 'Gerenciar Medicamento',
+            nav: () => Navigator.of(context)
+                .pushReplacementNamed(AppRoutes.MEDICAMENTO_SCREEN),
+          ),
         ],
       ),
     );

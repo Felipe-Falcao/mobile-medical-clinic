@@ -10,6 +10,7 @@ import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/screens/home_screen.dart';
 import 'package:clinica_medica/screens/medical_appointment/appointment_screen.dart';
 import 'package:clinica_medica/screens/medical_chart/chart_screen.dart';
+import 'package:clinica_medica/screens/medication/medication_screen.dart';
 import 'package:clinica_medica/screens/patient/patient_screen.dart';
 import 'package:clinica_medica/screens/schedule/schedule_screen.dart';
 import 'package:clinica_medica/screens/splash_screen.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.CHART_SCREEN: (_) => ChartScreen(),
           AppRoutes.APPOINTMENT_SCREEN: (_) => AppointmentScreen(),
           AppRoutes.SCHEDULE_SCREEN: (_) => ScheduleScreen(),
+          AppRoutes.MEDICAMENTO_SCREEN: (_) => MedicamentoScreen(),
         },
       ),
     );
@@ -67,7 +69,7 @@ class MyApp extends StatelessWidget {
 //       title: 'Integração Firebase',
 //       debugShowCheckedModeBanner: false,
 //       theme: appTheme,
-          /*ThemeData(
+/*ThemeData(
             primarySwatch: Colors.blue,
             primaryColor: Color(0xFF72D5BF),
             backgroundColor: Colors.white,
