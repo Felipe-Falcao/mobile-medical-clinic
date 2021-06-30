@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 class SelectDate extends StatefulWidget {
   final _formData;
   final Function callback;
-
   const SelectDate(this._formData, this.callback);
 
   @override

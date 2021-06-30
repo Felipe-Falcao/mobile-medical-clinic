@@ -27,6 +27,7 @@ class _FindChartScreenState extends State<FindChartScreen> {
     final availableHeight = MediaQuery.of(context).size.height -
         appBar.preferredSize.height -
         MediaQuery.of(context).padding.top;
+
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(

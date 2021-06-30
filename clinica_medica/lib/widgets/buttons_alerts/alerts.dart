@@ -44,7 +44,6 @@ AlertDialog aletDialogRemove(
   return AlertDialog(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20))),
-    // titlePadding: EdgeInsets.all(30),
     title: Column(
       children: [
         Icon(Icons.warning, size: 50, color: Colors.red[700]),

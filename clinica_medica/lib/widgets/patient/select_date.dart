@@ -65,11 +65,13 @@ class _SelectDateState extends State<SelectDate> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                _selectedDate,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black54),
-              ),
+              widget._formData['birthDate'] == null
+                  ? Text(_selectedDate,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black54))
+                  : Text(_selectedDate,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black87)),
               IconButton(
                 padding: EdgeInsets.all(0),
                 color: Theme.of(context).primaryColor,

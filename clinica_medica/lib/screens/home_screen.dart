@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
           _item(
             context: context,
             icons: Icons.event_note_rounded,
-            label: 'Agendamentos',
+            label: 'Gerenciar Agendamentos',
             nav: () => Navigator.of(context)
                 .pushReplacementNamed(AppRoutes.SCHEDULE_SCREEN),
           ),
@@ -56,12 +56,13 @@ class HomeScreen extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-              offset: Offset.fromDirection(8, 3),
-              color: Colors.grey[400],
-              blurRadius: 6)
+            offset: Offset.fromDirection(8, 4),
+            color: Colors.grey[350],
+            blurRadius: 15,
+          )
         ],
         borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: Colors.cyan[50],
+        color: Colors.white,
       ),
       child: TextButton(
         child: Column(

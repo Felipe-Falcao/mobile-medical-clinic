@@ -18,11 +18,9 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
   String _titleScreen = 'Cadastrar Paciente';
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
-
   bool _isValidDate = true;
   bool _isLoading = false;
   int _step = 1;
-
   int _processIndex = 0;
 
   @override

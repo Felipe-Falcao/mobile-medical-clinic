@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 
 class SelectDate extends StatefulWidget {
   final _formData;
-
   const SelectDate(this._formData);
 
   @override
@@ -68,7 +67,7 @@ class _SelectDateState extends State<SelectDate> {
                       style: TextStyle(color: Colors.black54))
                   : Text(_selectedDate,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black)),
+                      style: TextStyle(color: Colors.black87)),
               IconButton(
                 padding: EdgeInsets.all(0),
                 color: Theme.of(context).primaryColor,

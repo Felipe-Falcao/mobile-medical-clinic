@@ -15,7 +15,6 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
   String _titleScreen = 'Cadastrar Prontuário';
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
-
   bool _isValidDate = true;
   bool _isValidPatient = true;
   bool _isLoading = false;

@@ -8,12 +8,11 @@ import 'package:provider/provider.dart';
 
 class ChartItem extends StatelessWidget {
   final Chart chart;
-
   ChartItem({@required this.chart});
+
   @override
   Widget build(BuildContext context) {
     Charts charts = Provider.of<Charts>(context);
-
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: ListTile(
