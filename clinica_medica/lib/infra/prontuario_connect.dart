@@ -6,11 +6,13 @@ class ProntuarioFB {
   /*
    * Função responsável por criar um prontuario.
    */
-  Future<void> create(pacienteId) async {
+  Future<void> create(pacienteId, medicamentoId, nota) async {
     final userData = {
       'dataCadastro': DateTime.now(),
       'dataAtualizacao': DateTime.now(),
       'refPaciente': db.doc('paciente/' + pacienteId),
+      'refMedicamento': db.doc('medicamento/' + medicamentoId),
+      'nota': nota,
     };
 
     await FirebaseFirestore.instance
@@ -22,10 +24,11 @@ class ProntuarioFB {
   /*
    * Função responsável por modificar dados do prontuario.
    */
-  Future<void> update(pacienteId, prontuarioId) async {
+  Future<void> update(medicamentoId, prontuarioId, nota) async {
     final userData = {
       'dataAtualizacao': DateTime.now(),
-      'refPaciente': db.doc('paciente/' + pacienteId),
+      'refMedicamento': db.doc('medicamento/' + medicamentoId),
+      'nota': nota,
     };
 
     await db.collection('prontuario').doc(prontuarioId).update(userData);
@@ -53,5 +56,10 @@ class ProntuarioFB {
   Stream readAll() {
     var doc = db.collection('prontuario').snapshots();
     return doc;
+  }
+
+  Future<QuerySnapshot> getProntuarios() async {
+    var querySnapshot = await db.collection('prontuario').get();
+    return querySnapshot;
   }
 }

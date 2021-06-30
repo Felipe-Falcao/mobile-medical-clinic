@@ -15,7 +15,12 @@ class EnderecoFB {
       'numero': numero,
     };
 
-    await FirebaseFirestore.instance.collection('endereco').doc().set(userData);
+    String docId = cidade + cep + numero;
+
+    await FirebaseFirestore.instance
+        .collection('endereco')
+        .doc(docId)
+        .set(userData);
   }
 
   /*
@@ -55,6 +60,11 @@ class EnderecoFB {
    */
   Stream readAll() {
     var doc = db.collection('endereco').snapshots();
+    return doc;
+  }
+
+  DocumentReference getDocRef(cidade, cep, numero) {
+    var doc = db.collection('endereco').doc(cidade + cep + numero);
     return doc;
   }
 }

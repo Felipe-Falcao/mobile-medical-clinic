@@ -27,6 +27,14 @@ class AuthenticationFB {
     return userCredential;
   }
 
+  Future<UserCredential> signUpFuncionario(infoFuncionario) async {
+    userCredential = await _auth.createUserWithEmailAndPassword(
+      email: infoFuncionario.email.trim(),
+      password: infoFuncionario.senha,
+    );
+    return userCredential;
+  }
+
   /*
    * Função responsável por deslogar usuário.
    */
@@ -39,5 +47,9 @@ class AuthenticationFB {
    */
   Stream<User> isLogged() {
     return _auth.authStateChanges();
+  }
+
+  String getCurrentUser() {
+    return _auth.currentUser.uid;
   }
 }
