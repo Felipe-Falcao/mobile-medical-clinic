@@ -7,29 +7,6 @@ import 'package:clinica_medica/widgets/medical_appointment/appointment_form.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-List<String> timeBlocks = [
-  '8:00',
-  '8:30',
-  '9:00',
-  '9:30',
-  '10:00',
-  '10:30',
-  '11:00',
-  '11:30',
-  '12:00',
-  '12:30',
-  '13:00',
-  '13:30',
-  '14:00',
-  '14:30',
-  '15:00',
-  '15:30',
-  '16:00',
-  '16:30',
-  '17:00',
-  '17:30'
-];
-
 class RegisterAppointmentScreen extends StatefulWidget {
   @override
   _RegisterAppointmentScreenState createState() =>
@@ -40,12 +17,10 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
   String _titleScreen = 'Agendar Consulta';
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
-
   bool _isValidDate = true;
   bool _isValidPatient = true;
   bool _isValidDoctor = true;
   bool _isLoading = false;
-
   String _selectedTimeBlock;
   bool _isValidTimeBlock = true;
 
@@ -125,9 +100,8 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
             Appointment appointment = appointments.getByTimeBlock(
                 timeBlocks[index], _formData['doctor'], _formData['date']);
             bool hasPatient = appointment != null;
-            String patientName =
-                hasPatient ? '  -  ${appointment.patient.name}' : '';
             return Container(
+              height: 40,
               decoration: BoxDecoration(
                 color: isSelected ? Colors.teal[50] : null,
               ),
@@ -136,33 +110,35 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
                     ? Row(children: [
                         const SizedBox(width: 5),
                         Icon(Icons.radio_button_checked_rounded,
-                            color: Theme.of(context).accentColor),
+                            size: 18, color: Theme.of(context).accentColor),
                         const SizedBox(width: 10),
-                        Text('${timeBlocks[index]} $patientName',
-                            style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                                fontSize: 18))
+                        Text(
+                          timeBlocks[index],
+                          style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15),
+                        )
                       ])
                     : Row(children: [
                         const SizedBox(width: 5),
                         !hasPatient
                             ? Icon(Icons.radio_button_off_rounded,
-                                color: Colors.black87)
+                                size: 18, color: Colors.black87)
                             : Icon(Icons.event_available_rounded,
-                                color: Colors.black45),
+                                size: 18, color: Colors.black45),
                         const SizedBox(width: 10),
                         !hasPatient
-                            ? Text('${timeBlocks[index]} $patientName',
+                            ? Text(timeBlocks[index],
                                 style: TextStyle(color: Colors.black87))
-                            : Text('${timeBlocks[index]} $patientName',
-                                style: TextStyle(color: Colors.black45)),
+                            : Text(
+                                '${timeBlocks[index]}  -  ${appointment.patient.name}',
+                                style: TextStyle(color: Colors.black45),
+                                overflow: TextOverflow.ellipsis),
                       ]),
                 onPressed: !hasPatient
-                    ? () {
-                        setState(() {
-                          _selectedTimeBlock = timeBlocks[index];
-                        });
-                      }
+                    ? () =>
+                        setState(() => _selectedTimeBlock = timeBlocks[index])
                     : null,
               ),
             );

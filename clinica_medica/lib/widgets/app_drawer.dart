@@ -42,7 +42,7 @@ class AppDrawer extends StatelessWidget {
           _listTile(
             context: context,
             icon: Icons.event_note_rounded,
-            label: 'Agendamentos',
+            label: 'Gerenciar Agendamentos',
             route: AppRoutes.SCHEDULE_SCREEN,
           ),
         ],
@@ -56,23 +56,21 @@ class AppDrawer extends StatelessWidget {
     @required String label,
     @required String route,
   }) {
+    bool isSelected = currentRoute == route;
     return ListTile(
-      selected: currentRoute == route,
+      selected: isSelected,
       selectedTileColor: Colors.teal[50],
       leading: Icon(icon,
-          color: currentRoute == route
+          color: isSelected
               ? Theme.of(context).accentColor
               : Theme.of(context).primaryColor),
       title: Text(label,
           style: TextStyle(
-              color: currentRoute == route
-                  ? Theme.of(context).accentColor
-                  : Colors.black54)),
-      onTap: currentRoute == route
+              color:
+                  isSelected ? Theme.of(context).accentColor : Colors.black54)),
+      onTap: isSelected
           ? null
-          : () {
-              Navigator.of(context).pushReplacementNamed(route);
-            },
+          : () => Navigator.of(context).pushReplacementNamed(route),
     );
   }
 }

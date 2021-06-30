@@ -15,18 +15,14 @@ class Address {
     @required this.state,
   });
 
-  List<String> keys() {
-    return ['Rua', 'Número', 'CEP', 'Cidade', 'Estado'];
-  }
-
-  List<String> values() {
-    return [
-      street,
-      number,
-      zipCode,
-      city,
-      state,
-    ];
+  Map<String, String> get toMap {
+    return {
+      'Rua': street,
+      'Número': number,
+      'CEP': zipCode,
+      'Cidade': city,
+      'Estado': state
+    };
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:clinica_medica/models/appointment.dart';
+import 'package:clinica_medica/models/schedule.dart';
 import 'package:clinica_medica/providers/appointments.dart';
 import 'package:clinica_medica/screens/medical_appointment/detail_appointment_screen.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
@@ -6,29 +7,6 @@ import 'package:clinica_medica/widgets/app_drawer.dart';
 import 'package:clinica_medica/widgets/schedule/schedule_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-List<String> timeBlocks = [
-  '8:00',
-  '8:30',
-  '9:00',
-  '9:30',
-  '10:00',
-  '10:30',
-  '11:00',
-  '11:30',
-  '12:00',
-  '12:30',
-  '13:00',
-  '13:30',
-  '14:00',
-  '14:30',
-  '15:00',
-  '15:30',
-  '16:00',
-  '16:30',
-  '17:00',
-  '17:30'
-];
 
 class ScheduleScreen extends StatefulWidget {
   @override
@@ -38,15 +16,13 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleScreenState extends State<ScheduleScreen> {
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
-
   bool _isValidDate = true;
   bool _isValidDoctor = true;
-
   bool _isValidTimeBlock = true;
 
   @override
   Widget build(BuildContext context) {
-    final appointments = Provider.of<Appointments>(context, listen: false);
+    final appointments = Provider.of<Appointments>(context);
 
     final appBar = AppBar(
       title: Text('Agendamentos'),
@@ -103,9 +79,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             Appointment appointment = appointments.getByTimeBlock(
                 timeBlocks[index], _formData['doctor'], _formData['date']);
             bool hasPatient = appointment != null;
-            String patientName =
-                hasPatient ? '  -  ${appointment.patient.name}' : '';
             return Container(
+              height: 45,
               decoration: BoxDecoration(
                 color: hasPatient ? Colors.teal[50] : null,
               ),
@@ -116,7 +91,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         Icon(Icons.person_pin_rounded,
                             color: Theme.of(context).accentColor),
                         const SizedBox(width: 10),
-                        Text('${timeBlocks[index]} $patientName',
+                        Text(
+                            '${timeBlocks[index]}  -  ${appointment.patient.name}',
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: Theme.of(context).accentColor,
                                 fontSize: 15)),
@@ -128,7 +105,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         const SizedBox(width: 5),
                         Icon(Icons.event_note_rounded, color: Colors.black38),
                         const SizedBox(width: 10),
-                        Text('${timeBlocks[index]} $patientName',
+                        Text(timeBlocks[index],
                             style: TextStyle(color: Colors.black54))
                       ]),
                 onPressed: hasPatient

@@ -73,9 +73,10 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                   Container(
                     height: 130,
                     child: ListView.builder(
-                        itemCount: patient.values().length,
-                        itemBuilder: (ctx, i) =>
-                            _itemList(patient.keys()[i], patient.values()[i])),
+                        itemCount: patient.toMap.length,
+                        itemBuilder: (ctx, i) => _itemList(
+                            patient.toMap.keys.toList()[i],
+                            patient.toMap.values.toList()[i])),
                   ),
                   const SizedBox(height: 20),
                   Container(
@@ -90,10 +91,10 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                   Container(
                     height: 170,
                     child: ListView.builder(
-                      itemCount: patient.address.values().length,
+                      itemCount: patient.address.toMap.length,
                       itemBuilder: (ctx, i) => _itemList(
-                          patient.address.keys()[i],
-                          patient.address.values()[i]),
+                          patient.address.toMap.keys.toList()[i],
+                          patient.address.toMap.values.toList()[i]),
                     ),
                   ),
                   const Divider(height: 20),

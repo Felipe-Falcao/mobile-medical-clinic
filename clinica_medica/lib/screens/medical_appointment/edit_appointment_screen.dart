@@ -158,7 +158,6 @@ class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
       result: _formData['result'],
       certificate: _formData['certificate'],
     );
-
     final appointments = Provider.of<Appointments>(context, listen: false);
     try {
       if (_formData['id'] == null) {

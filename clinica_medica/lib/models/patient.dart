@@ -20,17 +20,13 @@ class Patient {
     @required this.address,
   });
 
-  List<String> keys() {
-    return ['Nome', 'Telefone', 'CPF', 'Data de Nascimento'];
-  }
-
-  List<String> values() {
-    return [
-      name,
-      phoneNumber,
-      cpf,
-      new DateFormat('dd/MM/yyyy').format(birthDate),
-    ];
+  Map<String, String> get toMap {
+    return {
+      'Nome': name,
+      'Telefone': phoneNumber,
+      'CPF': cpf,
+      'Data de Nascimento': new DateFormat('dd/MM/yyyy').format(birthDate),
+    };
   }
 
   @override
