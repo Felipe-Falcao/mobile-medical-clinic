@@ -1,5 +1,7 @@
 import 'package:clinica_medica/models/chart.dart';
+import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/providers/charts.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/medical_chart/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +25,9 @@ class _DetailChartScreenState extends State<DetailChartScreen> {
   @override
   Widget build(BuildContext context) {
     Charts charts = Provider.of<Charts>(context);
+    Patient patient = Provider.of<Patients>(context, listen: false)
+        .getItemById(chart.patientId);
+
     if (!isLoading) {
       setState(() {
         //atualiza o prontuario apos edicao
@@ -78,10 +83,14 @@ class _DetailChartScreenState extends State<DetailChartScreen> {
                     height: availableHeight - 70,
                     child: Column(
                       children: [
-                        _itemList('Paciente', chart.patient.name),
+                        _itemList('Paciente', patient.name),
                         _itemList(
                           'Data de cadastro',
                           new DateFormat('dd/MM/yyyy').format(chart.entryDate),
+                        ),
+                        _itemList(
+                          'Data de atualização',
+                          new DateFormat('dd/MM/yyyy').format(chart.updateDate),
                         ),
                         _itemList('Nota', ''),
                         Container(

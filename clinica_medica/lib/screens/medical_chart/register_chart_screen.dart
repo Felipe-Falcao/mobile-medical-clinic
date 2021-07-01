@@ -15,7 +15,6 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
   String _titleScreen = 'Cadastrar Prontuário';
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
-  bool _isValidDate = true;
   bool _isValidPatient = true;
   bool _isLoading = false;
 
@@ -39,7 +38,6 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
                     ChartForm(
                       formData: _formData,
                       form: _form,
-                      isValidDate: _isValidDate,
                       isValidPatient: _isValidPatient,
                       currentMode: _titleScreen,
                     ),
@@ -72,7 +70,9 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
           _titleScreen = 'Editar Prontuário';
         });
         _formData['id'] = chart.id;
-        _formData['patient'] = chart.patient;
+        _formData['patientId'] = chart.patientId;
+        _formData['medicineId'] = chart.medicineId;
+        _formData['updateDate'] = chart.updateDate;
         _formData['date'] = chart.entryDate;
         _formData['note'] = chart.note;
       }
@@ -82,15 +82,16 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
   Future<void> _saveForm() async {
     var isValid = _form.currentState.validate();
     setState(() {
-      _isValidPatient = _formData['patient'] != null;
-      _isValidDate = _formData['date'] != null;
+      _isValidPatient = _formData['patientId'] != null;
     });
-    if (!isValid || !_isValidPatient || !_isValidDate) return;
+    if (!isValid || !_isValidPatient) return;
     _form.currentState.save();
     final chart = Chart(
       id: _formData['id'],
-      patient: _formData['patient'],
+      patientId: _formData['patientId'],
+      medicineId: _formData['medicineId'],
       entryDate: _formData['date'],
+      updateDate: _formData['updateDate'],
       note: _formData['note'],
     );
     setState(() {
@@ -99,9 +100,9 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
     final charts = Provider.of<Charts>(context, listen: false);
     try {
       if (_formData['id'] == null) {
-        charts.addChart(chart);
+        await charts.addChart(chart);
       } else {
-        charts.updateChart(chart);
+        await charts.updateChart(chart);
       }
       await showDialog<Null>(
         context: context,
