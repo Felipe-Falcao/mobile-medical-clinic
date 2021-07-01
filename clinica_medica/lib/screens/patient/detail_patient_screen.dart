@@ -16,7 +16,8 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
 
   @override
   void didChangeDependencies() {
-    patient = ModalRoute.of(context).settings.arguments as Patient;
+    if (ModalRoute.of(context).settings.arguments != null)
+      patient = ModalRoute.of(context).settings.arguments as Patient;
     super.didChangeDependencies();
   }
 
@@ -40,8 +41,9 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
               setState(() {
                 isLoading = true;
               });
-              Navigator.of(context).pop();
-              patients.removePatient(patient);
+              patients
+                  .removePatient(patient)
+                  .then((_) => Navigator.of(context).pop());
             }
           },
           icon: Icon(Icons.more_vert_rounded),
@@ -76,7 +78,7 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                         itemCount: patient.toMap.length,
                         itemBuilder: (ctx, i) => _itemList(
                             patient.toMap.keys.toList()[i],
-                            patient.toMap.values.toList()[i])),
+                            patient.toMap.values.toList()[i].toString())),
                   ),
                   const SizedBox(height: 20),
                   Container(
@@ -94,7 +96,7 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                       itemCount: patient.address.toMap.length,
                       itemBuilder: (ctx, i) => _itemList(
                           patient.address.toMap.keys.toList()[i],
-                          patient.address.toMap.values.toList()[i]),
+                          patient.address.toMap.values.toList()[i].toString()),
                     ),
                   ),
                   const Divider(height: 20),

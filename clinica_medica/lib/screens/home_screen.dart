@@ -1,7 +1,21 @@
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    Patients patients = Provider.of<Patients>(context, listen: false);
+    patients.loadPatients();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -45,7 +45,7 @@ class NewTextFormField extends StatelessWidget {
       textInputAction: textInputAction,
       onChanged: (value) {
         formData[keyFormData] = value;
-        onChanged(value);
+        if (onChanged != null) onChanged(value);
       },
       onFieldSubmitted: onFieldSubmitted,
       validator: validator,
