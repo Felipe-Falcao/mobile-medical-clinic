@@ -26,7 +26,7 @@ class _DoctorStep4State extends State<DoctorStep4> {
   @override
   void initState() {
     _dropdownMenuItems = buildDropdownMenuItems(_specialties);
-    _selectedSpecialty = _dropdownMenuItems[0].value;
+    //_selectedSpecialty = _dropdownMenuItems[0].value;
     super.initState();
   }
 
@@ -48,7 +48,6 @@ class _DoctorStep4State extends State<DoctorStep4> {
 
   @override
   Widget build(BuildContext context) {
-    print(_specialties[0].name);
     Widget _dropdownSpecialty() {
       return Container(
           margin: EdgeInsets.only(bottom: 16.0),

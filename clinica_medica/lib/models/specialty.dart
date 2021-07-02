@@ -5,7 +5,7 @@ class Specialty {
   int id;
   String name;
 
-  Specialty({this.id, @required name});
+  Specialty({this.id, @required this.name});
 
   static List<Specialty> getSpecialty() {
     return <Specialty>[

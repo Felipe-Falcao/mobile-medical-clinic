@@ -339,13 +339,12 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
             Column(
               children: [
                 _step == 1
-                    ? DoctorStep4(
-                        _form, _formData) //EmployeeStep1(_form, _formData)
+                    ? EmployeeStep1(_form, _formData)
                     : (_step == 2)
                         ? EmployeeStep2(_form, _formData)
                         : (_step == 3)
                             ? EmployeeStep3(_form, _formData)
-                            : Text('OK') //DoctorStep4(_form, _formData)
+                            : DoctorStep4(_form, _formData)
               ],
             ),
             Padding(
