@@ -41,6 +41,15 @@ class AppDrawer extends StatelessWidget {
                   .pushReplacementNamed(AppRoutes.CHART_SCREEN);
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.chat_rounded),
+            title: const Text('Gerenciar Médico'),
+            enabled: currentRoute != AppRoutes.DOCTOR_SCREEN,
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(AppRoutes.DOCTOR_SCREEN);
+            },
+          ),
         ],
       ),
     );

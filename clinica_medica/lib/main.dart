@@ -4,8 +4,10 @@
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 //https://saveyourtime.medium.com/firebase-cloud-firestore-add-set-update-delete-get-data-6da566513b1b
+import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/providers/medical_chart/charts.dart';
 import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/screens/doctor/doctor_screen.dart';
 import 'package:clinica_medica/screens/home_screen.dart';
 import 'package:clinica_medica/screens/medical_chart/chart_screen.dart';
 import 'package:clinica_medica/screens/patient/patient_screen.dart';
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => new Charts(),
         ),
+        ChangeNotifierProvider(create: (_) => new DoctorProvider()),
       ],
       child: MaterialApp(
         title: 'Clinic+',
@@ -50,6 +53,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.HOME_SCREEN: (ctx) => HomeScreen(),
           AppRoutes.PATIENT_SCREEN: (ctx) => PatientScreen(),
           AppRoutes.CHART_SCREEN: (ctx) => ChartScreen(),
+          AppRoutes.DOCTOR_SCREEN: (ctx) => DoctorScreen()
         },
       ),
     );

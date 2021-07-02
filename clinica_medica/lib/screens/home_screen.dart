@@ -28,6 +28,13 @@ class HomeScreen extends StatelessWidget {
                     .pushReplacementNamed(AppRoutes.CHART_SCREEN);
               },
             ),
+            TextButton(
+              child: Text('Gerenciar Médico'),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(AppRoutes.DOCTOR_SCREEN);
+              },
+            ),
           ],
         ),
       ),
