@@ -1,5 +1,7 @@
 import 'package:clinica_medica/models/chart.dart';
+import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/providers/charts.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/screens/medical_chart/detail_chart_screen.dart';
 import 'package:clinica_medica/widgets/medical_chart/popup_menu.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,8 @@ class ChartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Patient patient = Provider.of<Patients>(context, listen: false)
+        .getItemById(chart.patientId);
     Charts charts = Provider.of<Charts>(context);
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -28,7 +32,7 @@ class ChartItem extends StatelessWidget {
           ),
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        title: Text(chart.patient.name),
+        title: Text(patient.name),
         subtitle: Text(
             'Cadastro: ${DateFormat('dd/MM/yyyy').format(chart.entryDate)}'),
         trailing: PopupMenu(

@@ -15,17 +15,16 @@ class AtendenteFB {
     print(userData);
     await FirebaseFirestore.instance
         .collection('atendente')
-        .doc()
+        .doc(funcionarioId)
         .set(userData);
   }
 
   /*
    * Função responsável por modificar dados do atendente.
    */
-  Future<void> update(salario, funcionarioId, turno, atendenteId) async {
+  Future<void> update(salario, turno, atendenteId) async {
     final userData = {
       'salario': salario,
-      'refFuncionario': db.doc('funcionario/' + funcionarioId),
       'turno': turno,
     };
 
@@ -54,5 +53,15 @@ class AtendenteFB {
   Stream readAll() {
     var doc = db.collection('atendente').snapshots();
     return doc;
+  }
+
+  DocumentReference getDocRef(funcionarioId) {
+    var doc = db.collection('atendente').doc(funcionarioId);
+    return doc;
+  }
+
+  Future<QuerySnapshot> getAtendentes() async {
+    var querySnapshot = await db.collection('atendente').get();
+    return querySnapshot;
   }
 }

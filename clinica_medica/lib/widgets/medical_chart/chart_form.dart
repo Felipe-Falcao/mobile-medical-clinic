@@ -1,6 +1,5 @@
 import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/providers/patients.dart';
-import 'package:clinica_medica/widgets/medical_chart/select_date.dart';
 import 'package:clinica_medica/widgets/searchable_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,14 +7,12 @@ import 'package:provider/provider.dart';
 class ChartForm extends StatefulWidget {
   final GlobalKey<FormState> form;
   final Map<String, Object> formData;
-  final bool isValidDate;
   final bool isValidPatient;
   final String currentMode;
 
   const ChartForm({
     @required this.formData,
     @required this.form,
-    @required this.isValidDate,
     @required this.isValidPatient,
     @required this.currentMode,
   });
@@ -29,8 +26,11 @@ class _ChartFormState extends State<ChartForm> {
 
   @override
   void initState() {
+    Patients patients = Provider.of<Patients>(context, listen: false);
     setState(() {
-      patientSelected = widget.formData['patient'];
+      patientSelected = widget.formData['patientId'] != null
+          ? patients.getItemById(widget.formData['patientId'])
+          : null;
     });
     super.initState();
   }
@@ -47,7 +47,7 @@ class _ChartFormState extends State<ChartForm> {
             const SizedBox(height: 15),
             _searchableDropdown(
               items: patients.items,
-              key: 'patient',
+              key: 'patientId',
               label: 'Selecione o paciente',
               patientSelected: patientSelected,
             ),
@@ -59,21 +59,6 @@ class _ChartFormState extends State<ChartForm> {
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Text(
                       'Nenhum paciente selecionado!',
-                      style: TextStyle(color: Colors.red[600], fontSize: 13),
-                    ),
-                  ),
-                ],
-              ),
-            const SizedBox(height: 15),
-            SelectDate(widget.formData),
-            if (!widget.isValidDate)
-              Row(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Text(
-                      'Informe uma data válida!',
                       style: TextStyle(color: Colors.red[600], fontSize: 13),
                     ),
                   ),
@@ -176,7 +161,7 @@ class _ChartFormState extends State<ChartForm> {
         ),
         onChanged: (value) {
           setState(() {
-            widget.formData[key] = value;
+            widget.formData[key] = value.id;
             patientSelected = value;
           });
         },

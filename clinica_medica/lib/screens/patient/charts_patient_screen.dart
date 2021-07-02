@@ -14,7 +14,7 @@ class ChartsPatientScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Charts charts = Provider.of<Charts>(context);
     List<Chart> filteredCharts =
-        charts.items.where((chart) => chart.patient.id == patient.id).toList();
+        charts.items.where((chart) => chart.patientId == patient.id).toList();
 
     return Scaffold(
       appBar: AppBar(title: Text(patient.name)),

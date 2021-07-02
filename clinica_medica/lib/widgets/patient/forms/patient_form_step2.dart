@@ -97,7 +97,7 @@ class PatientFormStep2 extends StatelessWidget {
                     textInputAction: TextInputAction.done,
                     validator: (value) {
                       bool isEmpty = value.trim().isEmpty;
-                      bool isInvalid = value.trim().length < 3;
+                      bool isInvalid = value.trim().length < 2;
                       if (isEmpty || isInvalid) {
                         return 'Informe um estado válido!';
                       }

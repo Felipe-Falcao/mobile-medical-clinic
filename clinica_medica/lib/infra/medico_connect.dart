@@ -6,24 +6,28 @@ class MedicoFB {
   /*
    * Função responsável por criar um medico.
    */
-  Future<void> create(crm, funcionarioId, salario) async {
+  Future<void> create(crm, funcionarioId, salario, especialidade) async {
     final userData = {
       'crm': crm,
       'refFuncionario': db.doc('funcionario/' + funcionarioId),
       'salario': salario,
+      'refEspecialidade': especialidade,
     };
 
-    await FirebaseFirestore.instance.collection('medico').doc().set(userData);
+    await FirebaseFirestore.instance
+        .collection('medico')
+        .doc(funcionarioId)
+        .set(userData);
   }
 
   /*
    * Função responsável por modificar dados do medico.
    */
-  Future<void> update(crm, funcionarioId, salario, medicoId) async {
+  Future<void> update(crm, salario, especialidade, medicoId) async {
     final userData = {
       'crm': crm,
-      'refFuncionario': db.doc('funcionario/' + funcionarioId),
       'salario': salario,
+      'refEspecialidade': especialidade,
     };
 
     await db.collection('medico').doc(medicoId).update(userData);
@@ -51,5 +55,10 @@ class MedicoFB {
   Stream readAll() {
     var doc = db.collection('medico').snapshots();
     return doc;
+  }
+
+  Future<QuerySnapshot> getMedicos() async {
+    var querySnapshot = await db.collection('medico').get();
+    return querySnapshot;
   }
 }

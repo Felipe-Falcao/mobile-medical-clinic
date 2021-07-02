@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class Address {
+  final String id;
   final String street;
   final String number;
   final String zipCode;
@@ -8,6 +9,7 @@ class Address {
   final String state;
 
   Address({
+    this.id,
     @required this.street,
     @required this.number,
     @required this.zipCode,

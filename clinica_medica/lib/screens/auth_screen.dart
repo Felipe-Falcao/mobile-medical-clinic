@@ -17,7 +17,6 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   AuthenticationFB auth = new AuthenticationFB();
   FuncionarioFB funcionarioFB = new FuncionarioFB();
-
   FuncionarioController funcionarioController = new FuncionarioController();
 
   bool _isLoading = false;
@@ -35,8 +34,27 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         userCredential = await auth.signUp(authData);
         // await funcionarioFB.create(authData, userCredential, 'null', 'null');
-        await funcionarioController.createFuncAtendente(
-            authData, userCredential, 'null', 'null', 10000, 'Manhã');
+        // await funcionarioController.createfuncMedico(
+        //     authData,
+        //     userCredential,
+        //     '4900000',
+        //     'Aracaju',
+        //     'SE',
+        //     'logradouro',
+        //     '12',
+        //     'Ortopedista',
+        //     12000,
+        //     '1111');
+        // await funcionarioController.createFuncAtendente(
+        //     authData,
+        //     userCredential,
+        //     999,
+        //     'manhã',
+        //     '49999',
+        //     'Aracaju',
+        //     'SE',
+        //     'Rua X',
+        //     '12');
       }
     } on PlatformException catch (err) {
       final msg = err.message ?? 'Ocorreu um erro! Verifique suas credenciais!';

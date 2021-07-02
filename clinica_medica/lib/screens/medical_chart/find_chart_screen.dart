@@ -1,5 +1,6 @@
 import 'package:clinica_medica/models/chart.dart';
 import 'package:clinica_medica/providers/charts.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/medical_chart/chart_item.dart';
 import 'package:clinica_medica/widgets/new_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,9 @@ class _FindChartScreenState extends State<FindChartScreen> {
   Widget build(BuildContext context) {
     _filter = _formData['filter'];
     final Charts chartsProvider = Provider.of<Charts>(context);
-    final List<Chart> charts = chartsProvider.getItemsWith(_filter);
+    final Patients patients = Provider.of<Patients>(context, listen: false);
+    final List<Chart> charts =
+        chartsProvider.getItemsWith(_filter, patients.items);
 
     final appBar = AppBar(
       title: const Text('Prontuários'),
