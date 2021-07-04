@@ -85,6 +85,7 @@ class FuncionarioController {
         'dataContratacao': data['dataContratacao'],
         'nome': data['nome'],
         'telefone': data['telefone'],
+        'tipoFuncionario': data['tipoFuncionario'],
       });
     }
     return result;
@@ -125,13 +126,21 @@ class FuncionarioController {
     return result;
   }
 
-  void editarDadosPessoais(infoFuncionario) {
-    funcionarioFB.updatePersonalData(infoFuncionario);
+  Future<void> editarDadosPessoais(infoFuncionario) async {
+    try {
+      funcionarioFB.updatePersonalData(infoFuncionario);
+    } catch (err) {
+      print(err);
+    }
   }
 
-  void editarDadosTrabalho(infoFuncionario) {
-    funcionarioFB.updateWorkData(infoFuncionario.carteiraTrabalho,
-        infoFuncionario.dataContratacao, infoFuncionario.id);
+  Future<void> editarDadosTrabalho(infoFuncionario) async {
+    try {
+      funcionarioFB.updateWorkData(infoFuncionario.carteiraTrabalho,
+          infoFuncionario.dataContratacao, infoFuncionario.id);
+    } catch (err) {
+      print(err);
+    }
   }
 
   Future<void> editarAtendente(infoAtendente) async {
@@ -181,6 +190,40 @@ class FuncionarioController {
       await enderecoFB.delete(infoFuncionario.refEndereco);
     } catch (err) {
       print(err);
+    }
+  }
+
+  Future<String> buscarTipoFuncionario(funcionarioId) async {
+    var funcionario = await funcionarioFB.read(funcionarioId);
+    return funcionario['tipoFuncionario'];
+  }
+
+  Future<Map<String, dynamic>> buscarFuncionario(funcionarioId) async {
+    try {
+      var funcionario = await funcionarioFB.read(funcionarioId);
+      return funcionario;
+    } catch (err) {
+      print(err);
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>> buscarMedico(medicoId) async {
+    try {
+      var medico = await medicoFB.read(medicoId);
+      return medico;
+    } catch (err) {
+      print(err);
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>> buscarAtendente(atendenteId) async {
+    try {
+      return await atendenteFB.read(atendenteId);
+    } catch (err) {
+      print(err);
+      return null;
     }
   }
 }

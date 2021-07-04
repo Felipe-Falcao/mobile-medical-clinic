@@ -22,8 +22,8 @@ class PacienteController {
     }
   }
 
-  Future<List<dynamic>> buscarPacientes() async {
-    var result = [];
+  Future<List<Map<String, dynamic>>> buscarPacientes() async {
+    List<Map<String, dynamic>> result = [];
     var data;
     QuerySnapshot pacientes = await pacienteFB.getPacientes();
 
@@ -34,16 +34,20 @@ class PacienteController {
         'cpf': data['cpf'],
         'dataNascimento': data['dataNascimento'],
         'nome': data['nome'],
-        'refEndereco': data['refEndereco'],
+        'refEndereco': data['refEndereco'].id,
         'telefone': data['telefone'],
       });
     }
     return result;
   }
 
-  void editarPaciente(infoPaciente) {
-    pacienteFB.update(infoPaciente.cpf, infoPaciente.dataNascimento,
-        infoPaciente.nome, infoPaciente.telefone, infoPaciente.id);
+  Future<void> editarPaciente(infoPaciente) async {
+    try {
+      await pacienteFB.update(infoPaciente.cpf, infoPaciente.dataNascimento,
+          infoPaciente.nome, infoPaciente.telefone, infoPaciente.id);
+    } catch (err) {
+      print(err);
+    }
   }
 
   Future<void> excluirPaciente(infoPaciente) async {
