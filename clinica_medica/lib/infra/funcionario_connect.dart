@@ -15,6 +15,7 @@ class FuncionarioFB {
       'email': infoFuncionario.email,
       'refEndereco': enderecoId,
       'telefone': infoFuncionario.telefone,
+      'tipoFuncionario': infoFuncionario.tipo,
     };
 
     await FirebaseFirestore.instance

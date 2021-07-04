@@ -8,4 +8,5 @@ class InfoFuncionario {
   String nome;
   String telefone;
   String refEndereco;
+  String tipo;
 }
