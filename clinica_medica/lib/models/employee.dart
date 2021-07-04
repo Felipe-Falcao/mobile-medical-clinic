@@ -25,15 +25,12 @@ class Employee {
 
   Map toMap() {
     return {
-      'id': id,
-      'workCard': workCard,
-      'hiringData': hiringDate,
-      'email': email,
-      'name': name,
-      'phoneNumber': phoneNumber,
-      'cpf': cpf,
-      'password': password,
-      'address': address
+      'Nome': name,
+      'Telefone': phoneNumber,
+      'E-mail': email,
+      'Carteira de Trabalho': workCard,
+      'Data de Contratação': hiringDate,
+      'CPF': cpf,
     };
   }
 

@@ -7,10 +7,9 @@ class Specialty {
 
   Specialty({this.id, @required this.name});
 
-  static List<Specialty> getSpecialty() {
-    return <Specialty>[
-      Specialty(id: 1, name: 'Clinico Geral'),
-      Specialty(id: 2, name: 'Ortopedista')
-    ];
+  Map toMap() {
+    return {
+      'Especialidade': name,
+    };
   }
 }

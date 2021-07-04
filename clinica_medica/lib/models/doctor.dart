@@ -18,18 +18,13 @@ class Doctor {
 
   Map toMap() {
     return {
-      'id': id,
-      'employee': employee,
-      'crm': crm,
-      'salary': salary,
-      'specialty': specialty
+      'CRM': crm,
+      'Salário': salary.toString(),
     };
   }
 
   Doctor.fromMap(Map json)
       : id = json['id'] as String,
-        employee = json['employee'] as Employee,
         crm = json['crm'] as String,
-        salary = json['salary'] as double,
-        specialty = json['specialty'] as Specialty;
+        salary = json['salary'] as double;
 }

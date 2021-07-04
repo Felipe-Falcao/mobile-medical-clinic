@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class EmployeeStep1 extends StatelessWidget {
   final GlobalKey<FormState> _form;
   final Map<String, Object> _formData;
+  final bool _isEdit;
 
-  const EmployeeStep1(this._form, this._formData);
+  const EmployeeStep1(this._form, this._formData, this._isEdit);
 
   @override
   Widget build(BuildContext context) {
@@ -81,11 +82,14 @@ class EmployeeStep1 extends StatelessWidget {
                   labelText: 'Informe uma senha',
                   obscureText: true,
                   validator: (value) {
-                    bool isEmpty = value.trim().isEmpty;
-                    bool isInvalid = value.trim().length < 9;
-                    if (isEmpty || isInvalid) {
-                      return 'Informe uma senha com 9 caracteres';
+                    if (!_isEdit) {
+                      bool isEmpty = value.trim().isEmpty;
+                      bool isInvalid = value.trim().length < 9;
+                      if (isEmpty || isInvalid) {
+                        return 'Informe uma senha com 9 caracteres';
+                      }
                     }
+
                     return null;
                   }),
             ),
@@ -97,9 +101,12 @@ class EmployeeStep1 extends StatelessWidget {
                 labelText: 'Confirme sua senha',
                 obscureText: true,
                 validator: (value) {
-                  if (value != _formData['password']) {
-                    return 'As senhas são diferente';
+                  if (!_isEdit) {
+                    if (value != _formData['password']) {
+                      return 'As senhas são diferente';
+                    }
                   }
+                  return null;
                 },
               ),
             ),

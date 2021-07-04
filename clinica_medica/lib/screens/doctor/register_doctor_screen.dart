@@ -26,6 +26,8 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
   final _formData = Map<String, Object>();
   final _form = GlobalKey<FormState>();
   bool isValidDate = true;
+  String _title = 'Cadastrar Médico';
+  bool _isEdit = false;
 
   @override
   void didChangeDependencies() {
@@ -33,17 +35,27 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
     if (_formData.isEmpty) {
       final Doctor doctor = ModalRoute.of(context).settings.arguments as Doctor;
 
+      setState(() {
+        _title = 'Editar Médico';
+        _isEdit = true;
+      });
+
       if (doctor != null) {
         _formData['id'] = doctor.id;
         _formData['name'] = doctor.employee.name;
         _formData['phoneNumber'] = doctor.employee.phoneNumber;
         _formData['email'] = doctor.employee.email;
+        _formData['cpf'] = doctor.employee.cpf;
+        _formData['workCard'] = doctor.employee.workCard;
+        _formData['hiringData'] = doctor.employee.hiringDate;
+        _formData['crm'] = doctor.crm;
+        _formData['salary'] = doctor.salary.toString();
+        _formData['specialty'] = doctor.specialty;
         _formData['street'] = doctor.employee.address.street;
         _formData['number'] = doctor.employee.address.number;
         _formData['zipCode'] = doctor.employee.address.zipCode;
         _formData['city'] = doctor.employee.address.city;
         _formData['state'] = doctor.employee.address.state;
-        _formData['specialty_name'] = doctor.specialty.name;
       }
     }
   }
@@ -84,7 +96,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
         city: _formData['city'],
         state: _formData['state']);
 
-    final specialty = Specialty(name: _formData['specialty_name']);
+    //final specialty = Specialty(name: _formData['specialty_name']);
 
     final employee = Employee(
         workCard: _formData['workCard'],
@@ -100,7 +112,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
         crm: _formData['crm'],
         salary: double.parse(_formData['salary']),
         employee: employee,
-        specialty: specialty);
+        specialty: _formData['specialty']);
 
     final doctorProvider = Provider.of<DoctorProvider>(context, listen: false);
 
@@ -178,7 +190,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
                     height: 10.0,
                   ),
                   Text(
-                    'O Médico não foi salvo!',
+                    'O Médico não foi cadastrado!',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   Divider()
@@ -215,7 +227,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-      title: Text('Cadastrar Médico'),
+      title: Text(_title),
       leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -226,10 +238,6 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
             }
           }),
     );
-
-    final availableHeight = MediaQuery.of(context).size.height -
-        appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
 
     return Scaffold(
         appBar: appBar,
@@ -336,16 +344,18 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
                         }
                       }),
                 )),
-            Column(
-              children: [
-                _step == 1
-                    ? EmployeeStep1(_form, _formData)
-                    : (_step == 2)
-                        ? EmployeeStep2(_form, _formData)
-                        : (_step == 3)
-                            ? EmployeeStep3(_form, _formData)
-                            : DoctorStep4(_form, _formData)
-              ],
+            Container(
+              child: Column(
+                children: [
+                  _step == 1
+                      ? EmployeeStep1(_form, _formData, _isEdit)
+                      : (_step == 2)
+                          ? EmployeeStep2(_form, _formData)
+                          : (_step == 3)
+                              ? EmployeeStep3(_form, _formData)
+                              : DoctorStep4(_form, _formData, _isEdit)
+                ],
+              ),
             ),
             Padding(
                 padding: EdgeInsets.only(right: 20, left: 20),

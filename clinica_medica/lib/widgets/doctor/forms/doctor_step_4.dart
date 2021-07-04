@@ -6,8 +6,9 @@ import 'dart:core';
 class DoctorStep4 extends StatefulWidget {
   final GlobalKey<FormState> _form;
   final Map<String, Object> _formData;
+  final bool _isEdit;
 
-  const DoctorStep4(this._form, this._formData);
+  const DoctorStep4(this._form, this._formData, this._isEdit);
 
   @override
   _DoctorStep4State createState() => _DoctorStep4State();
@@ -26,7 +27,9 @@ class _DoctorStep4State extends State<DoctorStep4> {
   @override
   void initState() {
     _dropdownMenuItems = buildDropdownMenuItems(_specialties);
-    //_selectedSpecialty = _dropdownMenuItems[0].value;
+    _selectedSpecialty = widget._formData['specialty'] != null
+        ? widget._formData['specialt']
+        : null;
     super.initState();
   }
 
@@ -40,9 +43,10 @@ class _DoctorStep4State extends State<DoctorStep4> {
     return items;
   }
 
-  onChangedDropdownItem(Specialty selectedSpecialt) {
+  onChangedDropdownItem(Specialty selectedSpecialty) {
     setState(() {
-      _selectedSpecialty = selectedSpecialt;
+      _selectedSpecialty = selectedSpecialty;
+      widget._formData['specialty'] = selectedSpecialty;
     });
   }
 
@@ -60,7 +64,9 @@ class _DoctorStep4State extends State<DoctorStep4> {
           ),
           child: DropdownButtonHideUnderline(
               child: DropdownButton(
-                  hint: Text('Selecione uma especialidade'),
+                  hint: widget._isEdit
+                      ? null
+                      : Text('Selecione uma especialidade'),
                   value: _selectedSpecialty,
                   onChanged: onChangedDropdownItem,
                   items: _dropdownMenuItems)));

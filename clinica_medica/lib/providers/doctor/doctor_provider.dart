@@ -22,6 +22,10 @@ class DoctorProvider extends ChangeNotifier {
         .toList();
   }
 
+  Doctor getItemById(String id) {
+    return _items.singleWhere((item) => item.id == id);
+  }
+
   int get itemsCount {
     return _items.length;
   }
@@ -47,5 +51,11 @@ class DoctorProvider extends ChangeNotifier {
       _items[index] = doctor;
       notifyListeners();
     }
+  }
+
+  Future<void> removeDoctor(Doctor doctor) async {
+    if (doctor == null) return;
+    _items.remove(doctor);
+    notifyListeners();
   }
 }
