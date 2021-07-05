@@ -18,15 +18,7 @@ class EmployeeStep3 extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 32.0),
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Dados Trabalhistas',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Container(
-                margin: EdgeInsets.only(bottom: 16.0),
+                margin: EdgeInsets.only(top: 24, bottom: 16.0),
                 child: Column(
                   children: [
                     SelectDateHiringDate(_formData),

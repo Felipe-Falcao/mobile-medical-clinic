@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String keyFormData;
@@ -11,6 +12,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final Function onFieldSubmitted;
   final Function onChanged;
+  final List<TextInputFormatter> inputFormatters;
 
   const CustomTextFormField(
       {@required this.keyFormData,
@@ -22,7 +24,8 @@ class CustomTextFormField extends StatelessWidget {
       this.textInputAction = TextInputAction.next,
       this.keyboardType,
       this.onFieldSubmitted,
-      this.onChanged});
+      this.onChanged,
+      this.inputFormatters});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,7 @@ class CustomTextFormField extends StatelessWidget {
         obscureText: obscureText,
         initialValue: formData[keyFormData],
         autofocus: autofocus,
+        inputFormatters: inputFormatters,
         decoration: InputDecoration(
             labelText: labelText,
             labelStyle: TextStyle(fontSize: 14.0, color: Colors.grey[600]),

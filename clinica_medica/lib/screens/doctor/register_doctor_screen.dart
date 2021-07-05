@@ -4,9 +4,11 @@ import 'package:clinica_medica/models/employee.dart';
 //import 'package:clinica_medica/models/specialty.dart';
 import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/widgets/doctor/forms/doctor_step_4.dart';
+import 'package:clinica_medica/widgets/employee/employee_timeline.dart';
 import 'package:clinica_medica/widgets/employee/forms/employee_step_1.dart';
 import 'package:clinica_medica/widgets/employee/forms/employee_step_2.dart';
 import 'package:clinica_medica/widgets/employee/forms/employee_step_3.dart';
+import 'package:clinica_medica/widgets/patient/patient_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timelines/timelines.dart';
@@ -247,6 +249,13 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
           }),
     );
 
+    List<String> _processes = [
+      'Dados \nPessoais',
+      'Endereço',
+      'Dados \nTrabalhistas',
+      'Dados \ndo Médico'
+    ];
+
     return Scaffold(
         appBar: appBar,
         body: _isLoading
@@ -258,105 +267,11 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                      alignment: Alignment.topCenter,
-                      height: 100,
-                      width: MediaQuery.of(context).size.width,
-                      child: Timeline.tileBuilder(
-                        theme: TimelineThemeData(
-                            direction: Axis.horizontal,
-                            connectorTheme: ConnectorThemeData(
-                                space: 30.0, thickness: 5.0)),
-                        builder: TimelineTileBuilder.connected(
-                            itemCount: 4,
-                            itemExtentBuilder: (_, __) =>
-                                MediaQuery.of(context).size.width / 4,
-                            indicatorBuilder: (_, index) {
-                              var color;
-                              var child;
-                              if (index == _processIndex) {
-                                color = Theme.of(context).accentColor;
-                                child = Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Text(
-                                      (index + 1).toString(),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500),
-                                      textAlign: TextAlign.center,
-                                    ));
-                              } else if (index < _processIndex) {
-                                color = Theme.of(context).accentColor;
-                                child = Icon(
-                                  Icons.check,
-                                  color: Theme.of(context).primaryColor,
-                                  size: 20.0,
-                                );
-                              } else {
-                                color = Theme.of(context).accentColor;
-                                child = Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Text(
-                                      (index + 1).toString(),
-                                      style: TextStyle(
-                                          color: Theme.of(context).accentColor,
-                                          fontWeight: FontWeight.w500),
-                                      textAlign: TextAlign.center,
-                                    ));
-                              }
-
-                              if (index <= _processIndex) {
-                                return DotIndicator(
-                                  size: 50.0,
-                                  color: color,
-                                  child: child,
-                                );
-                              } else {
-                                return OutlinedDotIndicator(
-                                  borderWidth: 2.0,
-                                  color: color,
-                                  child: child,
-                                  size: 50.0,
-                                );
-                              }
-                            },
-                            connectorBuilder: (_, index, type) {
-                              if (index >= 0) {
-                                if (index == _processIndex) {
-                                  final prevColor =
-                                      Theme.of(context).accentColor;
-                                  final color = todoColor;
-                                  List<Color> gradientColors;
-                                  if (type == ConnectorType.start) {
-                                    gradientColors = [
-                                      Color.lerp(prevColor, color, 0.5),
-                                      color
-                                    ];
-                                  } else {
-                                    gradientColors = [
-                                      prevColor,
-                                      Color.lerp(prevColor, color, 0.5)
-                                    ];
-                                  }
-
-                                  return DecoratedLineConnector(
-                                    decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                            colors: gradientColors)),
-                                  );
-                                } else if (index > _processIndex) {
-                                  return SolidLineConnector(
-                                    color: todoColor,
-                                  );
-                                } else {
-                                  return SolidLineConnector(
-                                    color: Theme.of(context).accentColor,
-                                  );
-                                }
-                              } else {
-                                return null;
-                              }
-                            }),
-                      )),
+                    alignment: Alignment.topCenter,
+                    height: 120,
+                    width: MediaQuery.of(context).size.width,
+                    child: EmployeeTimeline(_processIndex, _processes),
+                  ),
                   Container(
                     child: Column(
                       children: [

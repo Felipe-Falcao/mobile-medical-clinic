@@ -1,6 +1,8 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:clinica_medica/widgets/employee/custom_text_form_field.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class EmployeeStep2 extends StatelessWidget {
   final GlobalKey<FormState> _form;
@@ -17,15 +19,7 @@ class EmployeeStep2 extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(bottom: 32.0),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Endereço',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 16.0),
+                margin: EdgeInsets.only(top: 24, bottom: 16.0),
                 child: CustomTextFormField(
                     keyFormData: 'street',
                     formData: _formData,
@@ -66,18 +60,23 @@ class EmployeeStep2 extends StatelessWidget {
                       child: Container(
                         margin: EdgeInsets.only(bottom: 16.0),
                         child: CustomTextFormField(
-                            keyFormData: 'zipCode',
-                            formData: _formData,
-                            labelText: 'CEP',
-                            keyboardType: TextInputType.numberWithOptions(),
-                            validator: (value) {
-                              bool isEmpty = value.trim().isEmpty;
-                              bool isInvalid = value.trim().length < 8;
-                              if (isEmpty || isInvalid) {
-                                return 'Informe um CEP válido!';
-                              }
-                              return null;
-                            }),
+                          keyFormData: 'zipCode',
+                          formData: _formData,
+                          labelText: 'CEP',
+                          //keyboardType: TextInputType.numberWithOptions(),
+                          validator: (value) {
+                            bool isEmpty = value.trim().isEmpty;
+                            bool isInvalid = value.trim().length < 8;
+                            if (isEmpty || isInvalid) {
+                              return 'Informe um CEP válido!';
+                            }
+                            return null;
+                          },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            CepInputFormatter()
+                          ],
+                        ),
                       ))
                 ],
               ),

@@ -64,9 +64,7 @@ class _DoctorStep4State extends State<DoctorStep4> {
           ),
           child: DropdownButtonHideUnderline(
               child: DropdownButton(
-                  hint: widget._isEdit
-                      ? null
-                      : Text('Selecione uma especialidade'),
+                  hint: Text('Selecione uma especialidade'),
                   value: _selectedSpecialty,
                   onChanged: onChangedDropdownItem,
                   items: _dropdownMenuItems)));
@@ -79,15 +77,7 @@ class _DoctorStep4State extends State<DoctorStep4> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 32.0),
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Dados do Cargo de Médico',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 16.0),
+              margin: EdgeInsets.only(top: 24, bottom: 16.0),
               child: CustomTextFormField(
                   keyFormData: 'crm',
                   formData: widget._formData,

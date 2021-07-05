@@ -1,6 +1,8 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:clinica_medica/widgets/employee/custom_text_form_field.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class EmployeeStep1 extends StatelessWidget {
   final GlobalKey<FormState> _form;
@@ -18,15 +20,7 @@ class EmployeeStep1 extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 22.0),
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Dados Pessoais',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 16.0),
+              margin: EdgeInsets.only(top: 24, bottom: 16.0),
               child: CustomTextFormField(
                   keyFormData: 'name',
                   formData: _formData,
@@ -44,18 +38,23 @@ class EmployeeStep1 extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(bottom: 16.0),
               child: CustomTextFormField(
-                  keyFormData: 'phoneNumber',
-                  formData: _formData,
-                  labelText: 'Telefone',
-                  keyboardType: TextInputType.numberWithOptions(),
-                  validator: (value) {
-                    bool isEmpty = value.trim().isEmpty;
-                    bool isInvalid = value.trim().length < 9;
-                    if (isEmpty || isInvalid) {
-                      return 'Informe um número de telefone válido';
-                    }
-                    return null;
-                  }),
+                keyFormData: 'phoneNumber',
+                formData: _formData,
+                labelText: 'Telefone',
+                //keyboardType: TextInputType.numberWithOptions(),
+                validator: (value) {
+                  bool isEmpty = value.trim().isEmpty;
+                  bool isInvalid = value.trim().length < 9;
+                  if (isEmpty || isInvalid) {
+                    return 'Informe um número de telefone válido';
+                  }
+                  return null;
+                },
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  TelefoneInputFormatter()
+                ],
+              ),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 16.0),
@@ -69,10 +68,20 @@ class EmployeeStep1 extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(bottom: 16.0),
               child: CustomTextFormField(
-                  keyFormData: 'cpf',
-                  formData: _formData,
-                  labelText: 'CPF',
-                  validator: _validarCPF),
+                keyFormData: 'cpf',
+                formData: _formData,
+                labelText: 'CPF',
+                validator: (value) {
+                  if (!UtilBrasilFields.isCPFValido(value)) {
+                    return 'Informe um CPF válido';
+                  }
+                  return null;
+                },
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  CpfInputFormatter()
+                ],
+              ),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 16.0),
