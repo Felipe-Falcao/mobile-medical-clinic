@@ -226,4 +226,19 @@ class FuncionarioController {
       return null;
     }
   }
+
+  Future<List<dynamic>> buscarEspecialidades() async {
+    var result = [];
+    var data;
+    QuerySnapshot especialidades = await especialidadeFB.getEspecialidades();
+
+    for (int i = 0; i < especialidades.size; i++) {
+      data = especialidades.docs[i].data();
+      result.add({
+        'id': especialidades.docs[i].id,
+        'nomeEspecialidade': data['nomeEspecialidade'],
+      });
+    }
+    return result;
+  }
 }
