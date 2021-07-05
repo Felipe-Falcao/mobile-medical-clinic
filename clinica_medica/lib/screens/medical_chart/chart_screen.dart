@@ -2,7 +2,7 @@ import 'package:clinica_medica/widgets/app_drawer.dart';
 import 'package:clinica_medica/screens/medical_chart/find_chart_screen.dart';
 import 'package:clinica_medica/screens/medical_chart/register_chart_screen.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
-import 'package:clinica_medica/widgets/patient/menu_tile.dart';
+import 'package:clinica_medica/widgets/menu_tile.dart';
 import 'package:flutter/material.dart';
 
 class ChartScreen extends StatelessWidget {

@@ -5,9 +5,7 @@ nextButton(BuildContext context, Function next) => SizedBox(
       width: 150,
       child: ElevatedButton(
         onPressed: next,
-        style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.all(16.0),
-            primary: Theme.of(context).accentColor),
+        style: Theme.of(context).elevatedButtonTheme.style,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -27,13 +25,7 @@ previousButton(BuildContext context, Function previous) => SizedBox(
       width: 150,
       child: OutlinedButton(
         onPressed: previous,
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.all(16.0),
-          side: BorderSide(
-            color: Theme.of(context).primaryColor,
-            width: 2,
-          ),
-        ),
+        style: Theme.of(context).outlinedButtonTheme.style,
         child: Text(
           'Voltar',
           style: TextStyle(color: Theme.of(context).primaryColor),
@@ -46,13 +38,7 @@ cancelButton(BuildContext context, Function cancel) => SizedBox(
       width: 150,
       child: OutlinedButton(
         onPressed: cancel,
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.all(16.0),
-          side: BorderSide(
-            color: Theme.of(context).primaryColor,
-            width: 2,
-          ),
-        ),
+        style: Theme.of(context).outlinedButtonTheme.style,
         child: Text(
           'Cancelar',
           style: TextStyle(color: Theme.of(context).primaryColor),
@@ -65,9 +51,7 @@ finishButton(BuildContext context, Function finish) => SizedBox(
       width: 150,
       child: ElevatedButton(
         onPressed: finish,
-        style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.all(16.0),
-            primary: Theme.of(context).accentColor),
+        style: Theme.of(context).elevatedButtonTheme.style,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

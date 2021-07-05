@@ -35,7 +35,7 @@ class Employee {
   }
 
   Employee.fromMap(Map json)
-      : id = json['id'] as String,
+      : id = json['employeeId'] as String,
         workCard = json['workCard'] as String,
         hiringDate = json['hiringDate'] as DateTime,
         email = json['email'] as String,

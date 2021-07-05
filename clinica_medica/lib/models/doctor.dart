@@ -19,7 +19,7 @@ class Doctor {
   Map toMap() {
     return {
       'CRM': crm,
-      'Salário': salary.toString(),
+      'Salário': salary,
     };
   }
 

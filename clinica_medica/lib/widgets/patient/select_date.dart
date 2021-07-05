@@ -16,9 +16,7 @@ class _SelectDateState extends State<SelectDate> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime d = await showDatePicker(
       context: context,
-      initialDate: widget._formData['birthDate'] != null
-          ? widget._formData['birthDate']
-          : DateTime.now(),
+      initialDate: widget._formData['birthDate'] ?? DateTime.now(),
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),
       builder: (BuildContext context, Widget child) {
@@ -67,11 +65,13 @@ class _SelectDateState extends State<SelectDate> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                _selectedDate,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black54),
-              ),
+              widget._formData['birthDate'] == null
+                  ? Text(_selectedDate,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black54))
+                  : Text(_selectedDate,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black87)),
               IconButton(
                 padding: EdgeInsets.all(0),
                 color: Theme.of(context).primaryColor,

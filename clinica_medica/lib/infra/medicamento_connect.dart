@@ -24,14 +24,13 @@ class MedicamentoFB {
   /*
    * Função responsável por modificar dados do medicamento.
    */
-  Future<void> update(
-      dataPrescricao, dose, nome, medicoId, pacienteId, medicamentoId) async {
+  Future<void> update(dataPrescricao, dose, nome, medicamentoId) async {
     final userData = {
       'dataPrescricao': dataPrescricao,
       'dose': dose,
       'nome': nome,
-      'refMedico': db.doc('medico/' + medicoId),
-      'refPaciente': db.doc('paciente/' + pacienteId),
+      // 'refMedico': db.doc('medico/' + medicoId),
+      // 'refPaciente': db.doc('paciente/' + pacienteId),
     };
 
     await db.collection('medicamento').doc(medicamentoId).update(userData);
@@ -59,5 +58,10 @@ class MedicamentoFB {
   Stream readAll() {
     var doc = db.collection('medicamento').snapshots();
     return doc;
+  }
+
+  Future<QuerySnapshot> getMedicamentos() async {
+    var querySnapshot = await db.collection('medicamento').get();
+    return querySnapshot;
   }
 }

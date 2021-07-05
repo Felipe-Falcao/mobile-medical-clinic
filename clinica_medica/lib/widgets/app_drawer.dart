@@ -15,31 +15,35 @@ class AppDrawer extends StatelessWidget {
             automaticallyImplyLeading: false,
           ),
           const SizedBox(height: 8),
-          ListTile(
-            leading: const Icon(Icons.home_rounded),
-            title: const Text('Home'),
-            enabled: currentRoute != AppRoutes.HOME_SCREEN,
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.HOME_SCREEN);
-            },
+          _listTile(
+            context: context,
+            icon: Icons.home_rounded,
+            label: 'Home',
+            route: AppRoutes.HOME_SCREEN,
           ),
-          ListTile(
-            leading: const Icon(Icons.people_alt_rounded),
-            title: const Text('Gerenciar Pacientes'),
-            enabled: currentRoute != AppRoutes.PATIENT_SCREEN,
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(AppRoutes.PATIENT_SCREEN);
-            },
+          _listTile(
+            context: context,
+            icon: Icons.people_alt_rounded,
+            label: 'Gerenciar Pacientes',
+            route: AppRoutes.PATIENT_SCREEN,
           ),
-          ListTile(
-            leading: const Icon(Icons.chat_rounded),
-            title: const Text('Gerenciar Prontuário'),
-            enabled: currentRoute != AppRoutes.CHART_SCREEN,
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(AppRoutes.CHART_SCREEN);
-            },
+          _listTile(
+            context: context,
+            icon: Icons.note_alt_rounded,
+            label: 'Gerenciar Prontuário',
+            route: AppRoutes.CHART_SCREEN,
+          ),
+          _listTile(
+            context: context,
+            icon: Icons.event_available_rounded,
+            label: 'Gerenciar Consulta',
+            route: AppRoutes.APPOINTMENT_SCREEN,
+          ),
+          _listTile(
+            context: context,
+            icon: Icons.event_note_rounded,
+            label: 'Gerenciar Agendamentos',
+            route: AppRoutes.SCHEDULE_SCREEN,
           ),
           ListTile(
             leading: const Icon(Icons.chat_rounded),
@@ -52,6 +56,30 @@ class AppDrawer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _listTile({
+    @required BuildContext context,
+    @required IconData icon,
+    @required String label,
+    @required String route,
+  }) {
+    bool isSelected = currentRoute == route;
+    return ListTile(
+      selected: isSelected,
+      selectedTileColor: Colors.teal[50],
+      leading: Icon(icon,
+          color: isSelected
+              ? Theme.of(context).accentColor
+              : Theme.of(context).primaryColor),
+      title: Text(label,
+          style: TextStyle(
+              color:
+                  isSelected ? Theme.of(context).accentColor : Colors.black54)),
+      onTap: isSelected
+          ? null
+          : () => Navigator.of(context).pushReplacementNamed(route),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/new_text_form_field.dart';
 import 'package:clinica_medica/widgets/patient/patient_item.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class _FindPatientScreenState extends State<FindPatientScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _filter = _formData['filter'] != null ? _formData['filter'] : null;
+    _filter = _formData['filter'];
     final Patients patientsProvider = Provider.of<Patients>(context);
     final List<Patient> patients = patientsProvider.getItemsWith(_filter);
 

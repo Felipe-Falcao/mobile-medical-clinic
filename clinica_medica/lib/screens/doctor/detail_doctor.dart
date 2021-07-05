@@ -140,13 +140,17 @@ class _DetailDoctorState extends State<DetailDoctor> {
                     height: 10,
                   ),
                   Container(
-                    height: 130,
+                    height: 170,
                     child: ListView.builder(
-                        itemCount: doctor.toMap().length,
+                        itemCount: doctor.employee.toMap().length,
                         itemBuilder: (context, index) {
                           return _itemList(
                               doctor.employee.toMap().keys.toList()[index],
-                              doctor.employee.toMap().values.toList()[index]);
+                              doctor.employee
+                                  .toMap()
+                                  .values
+                                  .toList()[index]
+                                  .toString());
                         }),
                   ),
                   SizedBox(
@@ -166,12 +170,16 @@ class _DetailDoctorState extends State<DetailDoctor> {
                     height: 10,
                   ),
                   Container(
-                    height: 130,
+                    height: 170,
                     child: ListView.builder(
-                        itemCount: doctor.toMap().length,
+                        itemCount: doctor.employee.address.toMap.length,
                         itemBuilder: (context, index) {
-                          return _itemList(doctor.toMap().keys.toList()[index],
-                              doctor.toMap().values.toList()[index]);
+                          return _itemList(
+                              doctor.employee.address.toMap.keys
+                                  .toList()[index],
+                              doctor.employee.address.toMap.values
+                                  .toList()[index]
+                                  .toString());
                         }),
                   ),
                   SizedBox(
@@ -191,9 +199,9 @@ class _DetailDoctorState extends State<DetailDoctor> {
                     height: 10,
                   ),
                   Container(
-                    height: 130,
+                    height: 50,
                     child: ListView.builder(
-                        itemCount: doctor.toMap().length,
+                        itemCount: doctor.specialty.toMap().length,
                         itemBuilder: (context, index) {
                           return _itemList(
                               'Especialidade', doctor.specialty.name);
@@ -221,7 +229,7 @@ class _DetailDoctorState extends State<DetailDoctor> {
                         itemCount: doctor.toMap().length,
                         itemBuilder: (context, index) {
                           return _itemList(doctor.toMap().keys.toList()[index],
-                              doctor.toMap().values.toList()[index]);
+                              doctor.toMap().values.toList()[index].toString());
                         }),
                   )
                 ],

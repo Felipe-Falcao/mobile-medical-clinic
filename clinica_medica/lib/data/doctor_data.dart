@@ -28,7 +28,7 @@ final DOCTOR_DATA = [
   Doctor(
       id: Random().nextDouble().toString(),
       crm: '00000000000',
-      salary: 10.000,
+      salary: 10000,
       employee: employee,
       specialty: specialty)
 ];

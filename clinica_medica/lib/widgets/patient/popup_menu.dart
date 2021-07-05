@@ -13,7 +13,7 @@ class PopupMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopupMenuButton(
       iconSize: 30,
-      icon: icon != null ? icon : Icon(Icons.more_horiz_rounded),
+      icon: icon ?? Icon(Icons.more_horiz_rounded),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),
       itemBuilder: (context) => [
