@@ -37,9 +37,13 @@ class MedicamentoController {
     return result;
   }
 
-  void editarMedicamento(infoMedicamento) {
-    medicamentoFB.update(infoMedicamento.dataPrescricao, infoMedicamento.dose,
-        infoMedicamento.nome, infoMedicamento.id);
+  Future<void> editarMedicamento(infoMedicamento) async {
+    try {
+      medicamentoFB.update(infoMedicamento.dataPrescricao, infoMedicamento.dose,
+          infoMedicamento.nome, infoMedicamento.id);
+    } catch (err) {
+      print(err);
+    }
   }
 
   Future<void> excluirMedicamento(medicamentoId) async {
@@ -47,6 +51,15 @@ class MedicamentoController {
       medicamentoFB.delete(medicamentoId);
     } catch (err) {
       print(err);
+    }
+  }
+
+  Future<Map<String, dynamic>> buscarMedicamento(medicamentoId) async {
+    try {
+      return await medicamentoFB.read(medicamentoId);
+    } catch (err) {
+      print(err);
+      return null;
     }
   }
 }

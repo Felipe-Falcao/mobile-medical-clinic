@@ -44,50 +44,55 @@ class DoctorProvider extends ChangeNotifier {
 
   Future<void> loadDoctors() async {
     List<dynamic> doctorList = await funcionarioController.buscarMedicos();
-    print(doctorList[0].toString());
+
     _items.clear();
 
     for (var i = 0; i < doctorList.length; i++) {
       List<dynamic> funcionarios =
           await funcionarioController.buscarFuncionarios();
 
-      dynamic funcionario = funcionarios.singleWhere(
-          (element) =>
-              element['refFuncionario'] == doctorList[i]['refFuncionario'],
-          orElse: () => print('Elemento não encontrado'));
+      dynamic funcionario;
 
-      Map<String, dynamic> enderecoMap =
-          await enderecoController.buscarEndereco(funcionario['refEndereco']);
+      for (var j = 0; j < funcionarios.length; j++) {
+        if (funcionarios[j]['id'] == doctorList[i]['refFuncionario']) {
+          print('entrei aqui');
+          funcionario = funcionarios[i];
+          Map<String, dynamic> enderecoMap = await enderecoController
+              .buscarEndereco(funcionario['refEndereco']);
 
-      Address address = Address(
-          id: funcionario['refEndereco'],
-          street: enderecoMap['logradouro'],
-          number: enderecoMap['numero'],
-          zipCode: enderecoMap['CEP'],
-          city: enderecoMap['cidade'],
-          state: enderecoMap['estado']);
+          Address address = Address(
+              id: funcionario['refEndereco'],
+              street: enderecoMap['logradouro'],
+              number: enderecoMap['numero'],
+              zipCode: enderecoMap['CEP'],
+              city: enderecoMap['cidade'],
+              state: enderecoMap['estado']);
 
-      Employee employee = Employee(
-          workCard: funcionario['carteiraTrabalho'],
-          hiringDate: DateTime.fromMicrosecondsSinceEpoch(
-              funcionario['dataContratacao'].microsecondsSinceEpoch),
-          email: funcionario['email'],
-          name: funcionario['nome'],
-          phoneNumber: funcionario['telefone'],
-          cpf: funcionario['cpf'],
-          password: funcionario['senha'],
-          address: address);
+          Employee employee = Employee(
+              workCard: funcionario['carteiraTrabalho'],
+              hiringDate: DateTime.fromMicrosecondsSinceEpoch(
+                  funcionario['dataContratacao'].microsecondsSinceEpoch),
+              email: funcionario['email'],
+              name: funcionario['nome'],
+              phoneNumber: funcionario['telefone'],
+              cpf: funcionario['cpf'],
+              password: funcionario['senha'],
+              address: address);
 
-      Specialty specialty =
-          Specialty(name: doctorList[i]['refEspecialidade'].id);
+          Specialty specialty =
+              Specialty(name: doctorList[i]['refEspecialidade']);
 
-      Doctor doctor = Doctor(
-          crm: doctorList[i]['crm'],
-          salary: doctorList[i]['salario'],
-          employee: employee,
-          specialty: specialty);
+          Doctor doctor = Doctor(
+              crm: doctorList[i]['crm'],
+              salary: double.parse(doctorList[i]['salario']),
+              employee: employee,
+              specialty: specialty);
 
-      _items.add(doctor);
+          _items.add(doctor);
+        } else {
+          return null;
+        }
+      }
     }
 
     notifyListeners();

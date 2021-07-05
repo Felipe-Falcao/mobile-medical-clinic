@@ -42,8 +42,12 @@ class PacienteController {
   }
 
   Future<void> editarPaciente(infoPaciente) async {
-    await pacienteFB.update(infoPaciente.cpf, infoPaciente.dataNascimento,
-        infoPaciente.nome, infoPaciente.telefone, infoPaciente.id);
+    try {
+      await pacienteFB.update(infoPaciente.cpf, infoPaciente.dataNascimento,
+          infoPaciente.nome, infoPaciente.telefone, infoPaciente.id);
+    } catch (err) {
+      print(err);
+    }
   }
 
   Future<void> excluirPaciente(infoPaciente) async {
