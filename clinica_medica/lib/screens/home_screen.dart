@@ -2,6 +2,7 @@ import 'package:clinica_medica/providers/attendant/attendant_provider.dart';
 import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/providers/patients.dart';
+import 'package:clinica_medica/providers/user.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProv = Provider.of<UserProvider>(context);
+    bool isAdmin = userProv.isAdmin;
+    bool isAttendant = userProv.isAttendant;
+    bool isDoctor = userProv.isDoctor;
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
       body: GridView.count(
@@ -44,30 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
           _item(
             context: context,
             icons: Icons.people_alt_rounded,
-            label: 'Gerenciar Pacientes',
+            label: 'Gerenciar Atendente',
             nav: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.PATIENT_SCREEN),
-          ),
-          _item(
-            context: context,
-            icons: Icons.note_alt_rounded,
-            label: 'Gerenciar Prontuário',
-            nav: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.CHART_SCREEN),
-          ),
-          _item(
-            context: context,
-            icons: Icons.event_available_rounded,
-            label: 'Gerenciar Consulta',
-            nav: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.APPOINTMENT_SCREEN),
-          ),
-          _item(
-            context: context,
-            icons: Icons.event_note_rounded,
-            label: 'Gerenciar Agendamentos',
-            nav: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.SCHEDULE_SCREEN),
+                .pushReplacementNamed(AppRoutes.ATTENDANT_SCREEN),
+            hasAccess: isAdmin,
           ),
           _item(
             context: context,
@@ -75,24 +60,61 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Gerenciar Médicos',
             nav: () => Navigator.of(context)
                 .pushReplacementNamed(AppRoutes.DOCTOR_SCREEN),
+            hasAccess: isAdmin,
           ),
           _item(
             context: context,
-            icons: Icons.people,
-            label: 'Gerenciar Atendentes',
+            icons: Icons.people_alt_rounded,
+            label: 'Gerenciar Pacientes',
             nav: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.ATTENDANT_SCREEN),
+                .pushReplacementNamed(AppRoutes.PATIENT_SCREEN),
+            hasAccess: isAdmin || isAttendant || isDoctor,
+          ),
+          _item(
+            context: context,
+            icons: Icons.event_note_rounded,
+            label: 'Gerenciar Agendamentos',
+            nav: () => Navigator.of(context)
+                .pushReplacementNamed(AppRoutes.SCHEDULE_SCREEN),
+            hasAccess: isAdmin || isAttendant || isDoctor,
+          ),
+          _item(
+            context: context,
+            icons: Icons.event_available_rounded,
+            label: 'Gerenciar Consulta',
+            nav: () => Navigator.of(context)
+                .pushReplacementNamed(AppRoutes.APPOINTMENT_SCREEN),
+            hasAccess: isAdmin || isAttendant || isDoctor,
+          ),
+          _item(
+            context: context,
+            icons: Icons.medical_services,
+            label: 'Gerenciar Medicamentos',
+            nav: null,
+            //TODO - aterar quando ger. medicamentos estiver pronto
+            hasAccess: false,
+            // hasAccess: isAdmin || isDoctor,
+          ),
+          _item(
+            context: context,
+            icons: Icons.note_alt_rounded,
+            label: 'Gerenciar Prontuário',
+            nav: () => Navigator.of(context)
+                .pushReplacementNamed(AppRoutes.CHART_SCREEN),
+            hasAccess: isAdmin || isAttendant || isDoctor,
           ),
         ],
       ),
     );
   }
 
-  Widget _item(
-      {@required BuildContext context,
-      @required String label,
-      @required Function nav,
-      @required IconData icons}) {
+  Widget _item({
+    @required BuildContext context,
+    @required String label,
+    @required Function nav,
+    @required IconData icons,
+    @required bool hasAccess,
+  }) {
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -105,27 +127,41 @@ class _HomeScreenState extends State<HomeScreen> {
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: Colors.white,
       ),
-      child: TextButton(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-                backgroundColor: Theme.of(context).primaryColor,
-                child: Icon(icons, color: Theme.of(context).accentColor)),
-            SizedBox(height: 3),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black87, fontSize: 13),
-            ),
-            /*TextButton(
-              child: Text(label),
+      child: hasAccess
+          ? TextButton(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: Icon(icons, color: Theme.of(context).accentColor)),
+                  SizedBox(height: 3),
+                  Text(
+                    label,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black87, fontSize: 13),
+                  ),
+                ],
+              ),
               onPressed: nav,
-            ),*/
-          ],
-        ),
-        onPressed: nav,
-      ),
+            )
+          : TextButton(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                      backgroundColor: Colors.black12,
+                      child: Icon(icons, color: Colors.black26)),
+                  SizedBox(height: 3),
+                  Text(
+                    label,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.grey, fontSize: 13),
+                  ),
+                ],
+              ),
+              onPressed: null,
+            ),
     );
   }
 }
