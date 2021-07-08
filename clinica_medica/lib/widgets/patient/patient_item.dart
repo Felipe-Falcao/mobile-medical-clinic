@@ -1,5 +1,5 @@
 import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/screens/patient/detail_patient_screen.dart';
 import 'package:clinica_medica/widgets/patient/popup_menu.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +21,7 @@ class PatientItem extends StatelessWidget {
               settings: RouteSettings(arguments: patient)));
         },
         leading: CircleAvatar(
-          child: Text(
-            '${patient.name[0]}',
-            style: TextStyle(color: Theme.of(context).accentColor),
-          ),
+          child: Icon(Icons.person, color: Theme.of(context).accentColor),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         title: Text(patient.name),

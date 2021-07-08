@@ -13,7 +13,7 @@ class EspecialidadeFB {
 
     await FirebaseFirestore.instance
         .collection('especialidade')
-        .doc()
+        .doc(nomeEspecialidade)
         .set(userData);
   }
 
@@ -50,5 +50,15 @@ class EspecialidadeFB {
   Stream readAll() {
     var doc = db.collection('especialidade').snapshots();
     return doc;
+  }
+
+  DocumentReference getDocRef(nomeEspecialidade) {
+    var doc = db.collection('especialidade').doc(nomeEspecialidade);
+    return doc;
+  }
+
+  Future<QuerySnapshot> getEspecialidades() async {
+    var querySnapshot = await db.collection('especialidade').get();
+    return querySnapshot;
   }
 }

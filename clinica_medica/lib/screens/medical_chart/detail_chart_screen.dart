@@ -1,7 +1,10 @@
 import 'package:clinica_medica/models/chart.dart';
-import 'package:clinica_medica/providers/medical_chart/charts.dart';
+import 'package:clinica_medica/models/patient.dart';
+import 'package:clinica_medica/providers/charts.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/medical_chart/popup_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DetailChartScreen extends StatefulWidget {
@@ -22,8 +25,12 @@ class _DetailChartScreenState extends State<DetailChartScreen> {
   @override
   Widget build(BuildContext context) {
     Charts charts = Provider.of<Charts>(context);
+    Patient patient = Provider.of<Patients>(context, listen: false)
+        .getItemById(chart.patientId);
+
     if (!isLoading) {
       setState(() {
+        //atualiza o prontuario apos edicao
         chart = charts.getItemById(chart.id);
       });
     }
@@ -61,46 +68,72 @@ class _DetailChartScreenState extends State<DetailChartScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20),
-                  const Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Text(
-                      'Informações do Prontuário',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  const Divider(),
                   Container(
-                    height: availableHeight * 0.22,
-                    child: ListView.builder(
-                      itemCount: chart.values().length,
-                      itemBuilder: (ctx, i) => Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                chart.keys()[i],
-                                style: TextStyle(color: Colors.black54),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                chart.values()[i],
-                                style: TextStyle(
-                                    color: Theme.of(context).accentColor),
-                              ),
-                            ),
-                          ],
-                        ),
+                    height: 40,
+                    child: const Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Text(
+                        'Informações do Prontuário',
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const Divider(height: 10),
+                  Container(
+                    height: availableHeight - 70,
+                    child: Column(
+                      children: [
+                        _itemList('Paciente', patient.name),
+                        _itemList(
+                          'Data de cadastro',
+                          new DateFormat('dd/MM/yyyy').format(chart.entryDate),
+                        ),
+                        _itemList(
+                          'Data de atualização',
+                          new DateFormat('dd/MM/yyyy').format(chart.updateDate),
+                        ),
+                        _itemList('Nota', ''),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              chart.note,
+                              overflow: TextOverflow.fade,
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                  color: Theme.of(context).accentColor),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
+    );
+  }
+
+  Widget _itemList(String key, String value) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(key, style: TextStyle(color: Colors.black54)),
+          ),
+          Container(
+            width: 200,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(value,
+                  style: TextStyle(color: Theme.of(context).accentColor)),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

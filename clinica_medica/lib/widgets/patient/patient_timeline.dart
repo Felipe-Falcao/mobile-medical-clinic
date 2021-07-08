@@ -1,17 +1,14 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:timelines/timelines.dart';
 
 const kTileHeight = 50.0;
-
 const completeColor = Color(0xff5e6172);
 // const inProgressColor = Color(0xff5ec792);
 const todoColor = Color(0xffd1d2d7);
 
 class PatientTimeline extends StatefulWidget {
   final int _processIndex;
-
   PatientTimeline(this._processIndex);
 
   @override
@@ -157,8 +154,6 @@ class _PatientTimelineState extends State<PatientTimeline> {
   }
 }
 
-/// hardcoded bezier painter
-/// TODO: Bezier curve into package component
 class _BezierPainter extends CustomPainter {
   const _BezierPainter({
     @required this.color,
@@ -182,40 +177,32 @@ class _BezierPainter extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.fill
       ..color = color;
-
     final radius = size.width / 2;
-
     var angle;
     var offset1;
     var offset2;
-
     var path;
-
     if (drawStart) {
       angle = 3 * pi / 4;
       offset1 = _offset(radius, angle);
       offset2 = _offset(radius, -angle);
       path = Path()
         ..moveTo(offset1.dx, offset1.dy)
-        ..quadraticBezierTo(0.0, size.height / 2, -radius,
-            radius) // TODO connector start & gradient
+        ..quadraticBezierTo(0.0, size.height / 2, -radius, radius)
         ..quadraticBezierTo(0.0, size.height / 2, offset2.dx, offset2.dy)
         ..close();
-
       canvas.drawPath(path, paint);
     }
     if (drawEnd) {
       angle = -pi / 4;
       offset1 = _offset(radius, angle);
       offset2 = _offset(radius, -angle);
-
       path = Path()
         ..moveTo(offset1.dx, offset1.dy)
-        ..quadraticBezierTo(size.width, size.height / 2, size.width + radius,
-            radius) // TODO connector end & gradient
+        ..quadraticBezierTo(
+            size.width, size.height / 2, size.width + radius, radius)
         ..quadraticBezierTo(size.width, size.height / 2, offset2.dx, offset2.dy)
         ..close();
-
       canvas.drawPath(path, paint);
     }
   }

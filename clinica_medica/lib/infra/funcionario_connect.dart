@@ -6,16 +6,16 @@ class FuncionarioFB {
   /*
    * Função responsável por criar um funcionário.
    */
-  Future<void> create(
-      authData, userCredential, enderecoId, especialidadeId) async {
+  Future<void> create(infoFuncionario, userCredential, enderecoId) async {
     final userData = {
-      'nome': authData.name,
-      'carteiraTrabalho': '123456',
+      'nome': infoFuncionario.nome,
+      'cpf': infoFuncionario.cpf,
+      'carteiraTrabalho': infoFuncionario.carteiraTrabalho,
       'dataContratacao': DateTime.now(),
-      'email': authData.email,
-      'refEndereco': db.doc('endereco/' + enderecoId),
-      'refEspecialidade': db.doc('especialidade/' + especialidadeId),
-      'telefone': '79 99999999'
+      'email': infoFuncionario.email,
+      'refEndereco': enderecoId,
+      'telefone': infoFuncionario.telefone,
+      'tipoFuncionario': infoFuncionario.tipo,
     };
 
     await FirebaseFirestore.instance
@@ -29,19 +29,39 @@ class FuncionarioFB {
    * Exemplo de chamada:
    * await func.update(authData, 'BYo4qMI6ZTQkVK4fKhcwCLQuJyP2', 'null', 'null');
    */
-  Future<void> update(
-      authData, funcionarioId, enderecoId, especialidadeId) async {
+  Future<void> update(infoFuncionario, funcionarioId, enderecoId) async {
     final userData = {
-      'nome': authData.name,
-      'carteiraTrabalho': '1234567',
-      'dataContratacao': DateTime.now(),
-      'email': authData.email,
+      'nome': infoFuncionario.name,
+      'cpf': infoFuncionario.cpf,
+      'carteiraTrabalho': infoFuncionario.carteiraTrabalho,
+      'dataContratacao': infoFuncionario.dataContratacao,
+      'email': infoFuncionario.email,
       'refEndereco': db.doc('endereco/' + enderecoId),
-      'refEspecialidade': db.doc('especialidade/' + especialidadeId),
-      'telefone': '79 99999999'
+      'telefone': infoFuncionario.telefone,
     };
 
     await db.collection("funcionario").doc(funcionarioId).update(userData);
+  }
+
+  Future<void> updatePersonalData(infoFuncionario) async {
+    final userData = {
+      'nome': infoFuncionario.nome,
+      'cpf': infoFuncionario.cpf,
+      'email': infoFuncionario.email,
+      'telefone': infoFuncionario.telefone,
+    };
+
+    await db.collection("funcionario").doc(infoFuncionario.id).update(userData);
+  }
+
+  Future<void> updateWorkData(
+      carteiraTrabalho, dataContratacao, idFuncionario) async {
+    final userData = {
+      'carteiraTrabalho': carteiraTrabalho,
+      'dataContratacao': dataContratacao,
+    };
+
+    await db.collection("funcionario").doc(idFuncionario).update(userData);
   }
 
   /*
@@ -71,4 +91,27 @@ class FuncionarioFB {
     var doc = db.collection('funcionario').snapshots();
     return doc;
   }
+
+  Future<QuerySnapshot> getFuncionarios() async {
+    var querySnapshot = await db.collection('funcionario').get();
+    return querySnapshot;
+  }
+
+  Future<String> getFuncionarioId(data) async {
+    var querySnapshot =
+        await db.collection('funcionario').where('cpf', isEqualTo: data).get();
+    return querySnapshot.docs[0].id;
+
+    // db
+    //     .collection('funcionario')
+    //     .where('cpf', isEqualTo: data)
+    //     .get()
+    //     .then((value) => {
+    //           value.docs.forEach((doc) {
+    //             print(doc.id);
+    //             // print(doc.data());
+    //           })
+    //         });
+  }
+  //https://petercoding.com/firebase/2020/04/04/using-cloud-firestore-in-flutter/
 }

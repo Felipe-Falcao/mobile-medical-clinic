@@ -1,5 +1,6 @@
 import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/providers/patients.dart';
+import 'package:clinica_medica/screens/patient/charts_patient_screen.dart';
 import 'package:clinica_medica/widgets/patient/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,8 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
 
   @override
   void didChangeDependencies() {
-    patient = ModalRoute.of(context).settings.arguments as Patient;
+    if (ModalRoute.of(context).settings.arguments != null)
+      patient = ModalRoute.of(context).settings.arguments as Patient;
     super.didChangeDependencies();
   }
 
@@ -24,6 +26,7 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
     Patients patients = Provider.of<Patients>(context);
     if (!isLoading) {
       setState(() {
+        //atualiza o paciente apos edicao
         patient = patients.getItemById(patient.id);
       });
     }
@@ -38,18 +41,15 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
               setState(() {
                 isLoading = true;
               });
-              Navigator.of(context).pop();
-              patients.removePatient(patient);
+              patients
+                  .removePatient(patient)
+                  .then((_) => Navigator.of(context).pop());
             }
           },
           icon: Icon(Icons.more_vert_rounded),
         ),
       ],
     );
-
-    final availableHeight = MediaQuery.of(context).size.height -
-        appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
 
     return Scaffold(
       appBar: appBar,
@@ -61,82 +61,98 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20),
-                  const Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Text(
-                      'Informações Pessoais',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  const Divider(),
                   Container(
-                    height: availableHeight * 0.22,
-                    child: ListView.builder(
-                      itemCount: patient.values().length,
-                      itemBuilder: (ctx, i) => Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                patient.keys()[i],
-                                style: TextStyle(color: Colors.black54),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                patient.values()[i],
-                                style: TextStyle(
-                                    color: Theme.of(context).accentColor),
-                              ),
-                            ),
-                          ],
-                        ),
+                    height: 40,
+                    child: const Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Text(
+                        'Informações Pessoais',
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
+                  ),
+                  const Divider(height: 10),
+                  Container(
+                    height: 130,
+                    child: ListView.builder(
+                        itemCount: patient.toMap.length,
+                        itemBuilder: (ctx, i) => _itemList(
+                            patient.toMap.keys.toList()[i],
+                            patient.toMap.values.toList()[i].toString())),
                   ),
                   const SizedBox(height: 20),
-                  const Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Text(
-                      'Endereço',
-                      style: const TextStyle(fontSize: 16),
+                  Container(
+                    height: 40,
+                    child: const Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Text('Endereço',
+                          style: const TextStyle(fontSize: 16)),
                     ),
                   ),
-                  const Divider(),
+                  const Divider(height: 10),
                   Container(
-                    height: availableHeight * 0.54,
+                    height: 170,
                     child: ListView.builder(
-                      itemCount: patient.address.values().length,
-                      itemBuilder: (ctx, i) => Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                patient.address.keys()[i],
-                                style: TextStyle(color: Colors.black54),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                patient.address.values()[i],
-                                style: TextStyle(
-                                    color: Theme.of(context).accentColor),
-                              ),
-                            ),
-                          ],
+                      itemCount: patient.address.toMap.length,
+                      itemBuilder: (ctx, i) => _itemList(
+                          patient.address.toMap.keys.toList()[i],
+                          patient.address.toMap.values.toList()[i].toString()),
+                    ),
+                  ),
+                  const Divider(height: 20),
+                  const SizedBox(height: 10),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        color: Theme.of(context).accentColor,
+                      ),
+                      child: TextButton(
+                        child: Text(
+                          'Mostrar prontuários cadastrados',
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
                         ),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  ChartsPatientScreen(patient)));
+                        },
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
+    );
+  }
+
+  Widget _itemList(String key, String value) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              key,
+              style: TextStyle(color: Colors.black54),
+            ),
+          ),
+          Container(
+            width: 150,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                value,
+                overflow: TextOverflow.fade,
+                style: TextStyle(color: Theme.of(context).accentColor),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

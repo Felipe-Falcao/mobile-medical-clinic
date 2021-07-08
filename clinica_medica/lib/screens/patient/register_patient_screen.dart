@@ -1,6 +1,6 @@
 import 'package:clinica_medica/models/address.dart';
 import 'package:clinica_medica/models/patient.dart';
-import 'package:clinica_medica/providers/patient/patients.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/buttons.dart';
 import 'package:clinica_medica/widgets/patient/patient_timeline.dart';
@@ -18,11 +18,9 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
   String _titleScreen = 'Cadastrar Paciente';
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
-
   bool _isValidDate = true;
   bool _isLoading = false;
   int _step = 1;
-
   int _processIndex = 0;
 
   @override
@@ -116,6 +114,8 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
         _formData['phoneNumber'] = patient.phoneNumber;
         _formData['cpf'] = patient.cpf;
         _formData['birthDate'] = patient.birthDate;
+
+        _formData['addressId'] = patient.address.id;
         _formData['street'] = patient.address.street;
         _formData['number'] = patient.address.number;
         _formData['zipCode'] = patient.address.zipCode;
@@ -147,6 +147,7 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
     if (!isValid) return;
     _form.currentState.save();
     final address = Address(
+      id: _formData['addressId'],
       street: _formData['street'],
       number: _formData['number'],
       zipCode: _formData['zipCode'],
@@ -167,9 +168,9 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
     final patients = Provider.of<Patients>(context, listen: false);
     try {
       if (_formData['id'] == null) {
-        patients.addPatient(patient);
+        await patients.addPatient(patient);
       } else {
-        patients.updatePatient(patient);
+        await patients.updatePatient(patient);
       }
       await showDialog<Null>(
         context: context,

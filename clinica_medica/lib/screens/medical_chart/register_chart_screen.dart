@@ -1,5 +1,5 @@
 import 'package:clinica_medica/models/chart.dart';
-import 'package:clinica_medica/providers/medical_chart/charts.dart';
+import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/buttons.dart';
 import 'package:clinica_medica/widgets/medical_chart/chart_form.dart';
@@ -15,8 +15,6 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
   String _titleScreen = 'Cadastrar Prontuário';
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
-
-  bool _isValidDate = true;
   bool _isValidPatient = true;
   bool _isLoading = false;
 
@@ -40,8 +38,8 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
                     ChartForm(
                       formData: _formData,
                       form: _form,
-                      isValidDate: _isValidDate,
                       isValidPatient: _isValidPatient,
+                      currentMode: _titleScreen,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -73,6 +71,8 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
         });
         _formData['id'] = chart.id;
         _formData['patientId'] = chart.patientId;
+        _formData['medicineId'] = chart.medicineId;
+        _formData['updateDate'] = chart.updateDate;
         _formData['date'] = chart.entryDate;
         _formData['note'] = chart.note;
       }
@@ -83,14 +83,15 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
     var isValid = _form.currentState.validate();
     setState(() {
       _isValidPatient = _formData['patientId'] != null;
-      _isValidDate = _formData['date'] != null;
     });
-    if (!isValid) return;
+    if (!isValid || !_isValidPatient) return;
     _form.currentState.save();
     final chart = Chart(
       id: _formData['id'],
       patientId: _formData['patientId'],
+      medicineId: _formData['medicineId'],
       entryDate: _formData['date'],
+      updateDate: _formData['updateDate'],
       note: _formData['note'],
     );
     setState(() {
@@ -99,9 +100,9 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
     final charts = Provider.of<Charts>(context, listen: false);
     try {
       if (_formData['id'] == null) {
-        charts.addChart(chart);
+        await charts.addChart(chart);
       } else {
-        charts.updateChart(chart);
+        await charts.updateChart(chart);
       }
       await showDialog<Null>(
         context: context,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class AgendamentoFB {
   final db = FirebaseFirestore.instance;
@@ -13,20 +14,23 @@ class AgendamentoFB {
       'tipo': tipo,
     };
 
+    DateFormat formatter = DateFormat('yyyy.MM.dd;hh:mm;aaa');
+    String docId = atendenteId + formatter.format(data);
+
     await FirebaseFirestore.instance
         .collection('agendamento')
-        .doc()
+        .doc(docId)
         .set(userData);
   }
 
   /*
    * Função responsável por modificar dados do agendamento.
    */
-  Future<void> update(data, atendenteId, tipo, agendamentoId) async {
+  Future<void> update(data, agendamentoId) async {
     final userData = {
       'data': data,
-      'refAtendente': db.doc('atendente/' + atendenteId),
-      'tipo': tipo,
+      // 'refAtendente': db.doc('atendente/' + atendenteId),
+      // 'tipo': tipo,
     };
 
     await db.collection('agendamento').doc(agendamentoId).update(userData);
@@ -53,6 +57,11 @@ class AgendamentoFB {
    */
   Stream readAll() {
     var doc = db.collection('agendamento').snapshots();
+    return doc;
+  }
+
+  DocumentReference getDocRef(atendenteId, data) {
+    var doc = db.collection('agendamento').doc(atendenteId + data);
     return doc;
   }
 }
