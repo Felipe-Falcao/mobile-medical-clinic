@@ -1,17 +1,16 @@
 import 'package:clinica_medica/models/address.dart';
 import 'package:clinica_medica/models/doctor.dart';
 import 'package:clinica_medica/models/employee.dart';
-//import 'package:clinica_medica/models/specialty.dart';
+import 'package:clinica_medica/models/specialty.dart';
 import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/widgets/doctor/forms/doctor_step_4.dart';
 import 'package:clinica_medica/widgets/employee/employee_timeline.dart';
 import 'package:clinica_medica/widgets/employee/forms/employee_step_1.dart';
 import 'package:clinica_medica/widgets/employee/forms/employee_step_2.dart';
 import 'package:clinica_medica/widgets/employee/forms/employee_step_3.dart';
-import 'package:clinica_medica/widgets/patient/patient_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:timelines/timelines.dart';
+//import 'package:timelines/timelines.dart';
 
 const todoColor = Color(0xffd1d2d7);
 
@@ -38,12 +37,12 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
     if (_formData.isEmpty) {
       final Doctor doctor = ModalRoute.of(context).settings.arguments as Doctor;
 
-      setState(() {
-        _title = 'Editar Médico';
-        _isEdit = true;
-      });
-
       if (doctor != null) {
+        setState(() {
+          _title = 'Editar Médico';
+          _isEdit = true;
+        });
+
         _formData['id'] = doctor.id;
         _formData['crm'] = doctor.crm;
         _formData['salary'] = doctor.salary.toStringAsFixed(2);
@@ -54,9 +53,9 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
         _formData['email'] = doctor.employee.email;
         _formData['cpf'] = doctor.employee.cpf;
         _formData['workCard'] = doctor.employee.workCard;
-        _formData['hiringData'] = doctor.employee.hiringDate;
+        _formData['hiringDate'] = doctor.employee.hiringDate;
 
-        _formData['specialty'] = doctor.specialty;
+        _formData['specialty_name'] = doctor.specialty.name;
 
         _formData['addressId'] = doctor.employee.address.id;
         _formData['street'] = doctor.employee.address.street;
@@ -105,7 +104,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
         city: _formData['city'],
         state: _formData['state']);
 
-    //final specialty = Specialty(name: _formData['specialty_name']);
+    final specialty = Specialty(name: _formData['specialty_name']);
 
     final employee = Employee(
         id: _formData['employeeId'],
@@ -123,14 +122,17 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
         crm: _formData['crm'],
         salary: double.parse(_formData['salary']),
         employee: employee,
-        specialty: _formData['specialty']);
+        specialty: specialty);
 
     final doctorProvider = Provider.of<DoctorProvider>(context, listen: false);
+
+    print(doctor.toString());
 
     try {
       if (_formData['id'] == null) {
         doctorProvider.addDoctor(doctor);
       } else {
+        print('Entrei em update com o id: ${doctor.employee.id}');
         doctorProvider.updateDoctor(doctor);
       }
 

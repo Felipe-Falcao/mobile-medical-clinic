@@ -1,3 +1,4 @@
+import 'package:clinica_medica/controllers/funcionario_controller.dart';
 import 'package:clinica_medica/models/specialty.dart';
 import 'package:clinica_medica/widgets/employee/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -15,44 +16,31 @@ class DoctorStep4 extends StatefulWidget {
 }
 
 class _DoctorStep4State extends State<DoctorStep4> {
-  //List<Specialty> _specialties = Specialty.getSpecialty();
-  var _specialties = <Specialty>[
-    Specialty(id: 1, name: 'Clinico Geral'),
-    Specialty(id: 2, name: 'Ortopedista')
-  ];
+  String currentOptionEspecialidade;
+  FuncionarioController funcionarioController = FuncionarioController();
 
-  List<DropdownMenuItem<Specialty>> _dropdownMenuItems;
-  Specialty _selectedSpecialty;
+  List<Specialty> specialties = [];
 
-  @override
-  void initState() {
-    _dropdownMenuItems = buildDropdownMenuItems(_specialties);
-    _selectedSpecialty = widget._formData['specialty'] != null
-        ? widget._formData['specialt']
-        : null;
-    super.initState();
-  }
+  Future<void> loadSpecialties() async {
+    List<dynamic> specialtyList =
+        await funcionarioController.buscarEspecialidades();
 
-  List<DropdownMenuItem<Specialty>> buildDropdownMenuItems(
-      List<Specialty> specialties) {
-    List<DropdownMenuItem<Specialty>> items = [];
-    for (Specialty specialty in specialties) {
-      items
-          .add(DropdownMenuItem(value: specialty, child: Text(specialty.name)));
+    specialties.clear();
+
+    for (var i = 0; i < specialtyList.length; i++) {
+      Specialty specialty = Specialty(
+          id: specialtyList[i]['id'],
+          name: specialtyList[i]['nomeEspecialidade']);
+
+      specialties.add(specialty);
     }
-    return items;
-  }
-
-  onChangedDropdownItem(Specialty selectedSpecialty) {
-    setState(() {
-      _selectedSpecialty = selectedSpecialty;
-      widget._formData['specialty'] = selectedSpecialty;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget _dropdownSpecialty() {
+    loadSpecialties();
+
+    Container _formFieldEspecialidade(List<Specialty> especialidades) {
       return Container(
           margin: EdgeInsets.only(bottom: 16.0),
           width: 350,
@@ -63,11 +51,20 @@ class _DoctorStep4State extends State<DoctorStep4> {
             color: Color.fromRGBO(0, 21, 36, 0.11),
           ),
           child: DropdownButtonHideUnderline(
-              child: DropdownButton(
+              child: DropdownButton<String>(
                   hint: Text('Selecione uma especialidade'),
-                  value: _selectedSpecialty,
-                  onChanged: onChangedDropdownItem,
-                  items: _dropdownMenuItems)));
+                  value: currentOptionEspecialidade,
+                  onChanged: (String newValue) {
+                    setState(() {
+                      currentOptionEspecialidade = newValue;
+                      widget._formData['specialty_name'] = newValue;
+                    });
+                  },
+                  items: especialidades
+                      .map<DropdownMenuItem<String>>((Specialty value) =>
+                          DropdownMenuItem<String>(
+                              value: value.name, child: Text(value.name)))
+                      .toList())));
     }
 
     return Padding(
@@ -111,7 +108,7 @@ class _DoctorStep4State extends State<DoctorStep4> {
             ),
             Container(
                 margin: EdgeInsets.only(bottom: 16.0),
-                child: _dropdownSpecialty()),
+                child: _formFieldEspecialidade(specialties)),
           ],
         ),
       ),

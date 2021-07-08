@@ -21,14 +21,14 @@ class DoctorScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MenuTile(
-              title: 'Cadastrar Paciente',
+              title: 'Cadastrar Médico',
               nav: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => RegisterDoctor(),
               )),
             ),
             const SizedBox(height: 20),
             MenuTile(
-              title: 'Buscar Paciente',
+              title: 'Buscar Médico',
               nav: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => FindDoctor(),
               )),

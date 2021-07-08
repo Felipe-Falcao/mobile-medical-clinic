@@ -3,6 +3,7 @@ import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/screens/doctor/detail_doctor.dart';
 import 'package:clinica_medica/screens/doctor/register_doctor_screen.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
+import 'package:clinica_medica/widgets/doctor/doctor_item.dart';
 import 'package:clinica_medica/widgets/employee/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,12 +21,12 @@ class _FindDoctorState extends State<FindDoctor> {
 
   @override
   Widget build(BuildContext context) {
-    _filter = _formData['filter'] != null ? _formData['filter'] : null;
+    _filter = _formData['filter'];
     final DoctorProvider doctorProvider = Provider.of<DoctorProvider>(context);
     final List<Doctor> doctors = doctorProvider.getItemsWith(_filter);
 
     final appBar = AppBar(
-      title: Text('Buscar Funcionário'),
+      title: Text('Funcionários'),
     );
 
     final availableHeight = MediaQuery.of(context).size.height -
@@ -66,107 +67,7 @@ class _FindDoctorState extends State<FindDoctor> {
                 height: availableHeight - 90,
                 child: ListView.builder(
                     itemBuilder: (context, int index) {
-                      return Card(
-                        child: ListTile(
-                          title: Text(doctors[index].employee.name),
-                          subtitle: Text(doctors[index].specialty.name),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => DetailDoctor(),
-                                settings:
-                                    RouteSettings(arguments: doctors[index])));
-                          },
-                          leading: CircleAvatar(
-                            child: Text(
-                              '${doctors[index].employee.name[0]}',
-                              style: TextStyle(
-                                  color: Theme.of(context).accentColor),
-                            ),
-                            backgroundColor: Theme.of(context).primaryColor,
-                          ),
-                          trailing: PopupMenuButton(
-                            iconSize: 30,
-                            child: Icon(Icons.more_horiz),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0))),
-                            itemBuilder: (context) {
-                              return [
-                                PopupMenuItem(
-                                  padding: EdgeInsets.symmetric(horizontal: 0),
-                                  child: TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                settings: RouteSettings(
-                                                    arguments: doctors[index]),
-                                                builder: (context) =>
-                                                    RegisterDoctor()));
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Icon(
-                                            Icons.edit,
-                                            color:
-                                                Theme.of(context).accentColor,
-                                          ),
-                                          Text(
-                                            'Editar',
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .accentColor),
-                                          )
-                                        ],
-                                      )),
-                                  value: 'editar',
-                                ),
-                                PopupMenuItem(
-                                  padding: EdgeInsets.symmetric(horizontal: 0),
-                                  child: TextButton(
-                                      onPressed: () async {
-                                        Navigator.pop(context);
-                                        await showDialog<Null>(
-                                            context: context,
-                                            builder: (context) =>
-                                                aletDialogRemove(
-                                                    context: context,
-                                                    message:
-                                                        'Tem certeza que deseja excluir esse paciente',
-                                                    callback: (bool value) {
-                                                      if (value) {
-                                                        doctorProvider
-                                                            .removeDoctor(
-                                                                doctors[index]);
-                                                      }
-                                                    }));
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Icon(
-                                            Icons.delete,
-                                            color:
-                                                Theme.of(context).accentColor,
-                                          ),
-                                          Text(
-                                            'Excluir',
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .accentColor),
-                                          )
-                                        ],
-                                      )),
-                                  value: 'excluir',
-                                ),
-                              ];
-                            },
-                          ),
-                        ),
-                      );
+                      return DoctorItem(doctor: doctors[index]);
                     },
                     itemCount: doctors.length,
                     padding: EdgeInsets.only(left: 16.0, right: 16.0)))

@@ -41,7 +41,7 @@ class EmployeeStep1 extends StatelessWidget {
                 keyFormData: 'phoneNumber',
                 formData: _formData,
                 labelText: 'Telefone',
-                //keyboardType: TextInputType.numberWithOptions(),
+                keyboardType: TextInputType.numberWithOptions(),
                 validator: (value) {
                   bool isEmpty = value.trim().isEmpty;
                   bool isInvalid = value.trim().length < 9;
@@ -71,6 +71,7 @@ class EmployeeStep1 extends StatelessWidget {
                 keyFormData: 'cpf',
                 formData: _formData,
                 labelText: 'CPF',
+                keyboardType: TextInputType.numberWithOptions(),
                 validator: (value) {
                   if (!UtilBrasilFields.isCPFValido(value)) {
                     return 'Informe um CPF válido';
@@ -137,30 +138,4 @@ class EmployeeStep1 extends StatelessWidget {
       return null;
     }
   }
-
-  String _validarCPF(String value) {
-    String pattern =
-        '([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})';
-    RegExp regExp = RegExp(pattern);
-    if (value.length == 0) {
-      return 'Informe o CPF';
-    } else if (!regExp.hasMatch(value)) {
-      return 'CPF inválido';
-    } else {
-      return null;
-    }
-  }
-
-  /*String _validarSenha(String value) {
-    String pattern =
-        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$';
-    RegExp regExp = RegExp(pattern);
-    if (value.length == 0) {
-      return 'Informe uma senha';
-    } else if (!regExp.hasMatch(value)) {
-      return 'A senha deve ter:\n 8 digitos\n uma letra maiúscula\n uma letra minúscula\n um número\n um caracter especial\n';
-    } else {
-      return null;
-    }
-  }*/
 }

@@ -28,6 +28,8 @@ class _DetailDoctorState extends State<DetailDoctor> {
   @override
   Widget build(BuildContext context) {
     DoctorProvider doctorProvider = Provider.of<DoctorProvider>(context);
+    print(doctor.id);
+
     if (!isLoading) {
       setState(() {
         doctor = doctorProvider.getItemById(doctor.id);

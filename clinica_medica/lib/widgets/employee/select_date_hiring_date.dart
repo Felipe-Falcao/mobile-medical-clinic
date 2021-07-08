@@ -16,9 +16,7 @@ class _SelectDateHiringDateState extends State<SelectDateHiringDate> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime date = await showDatePicker(
         context: context,
-        initialDate: widget._formData['hiringDate'] != null
-            ? widget._formData['hiringDate']
-            : DateTime.now(),
+        initialDate: widget._formData['hiringDate'] ?? DateTime.now(),
         firstDate: DateTime(1970),
         lastDate: DateTime.now());
 
@@ -54,16 +52,22 @@ class _SelectDateHiringDateState extends State<SelectDateHiringDate> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                _selectedDate,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey[600]),
-              ),
+              widget._formData['hiringDate'] != null
+                  ? Text(
+                      _selectedDate,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black54),
+                    )
+                  : Text(
+                      _selectedDate,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black87),
+                    ),
               IconButton(
                   padding: EdgeInsets.zero,
                   icon: Icon(
                     Icons.calendar_today,
-                    color: Colors.grey[700],
+                    color: Theme.of(context).primaryColor,
                   ),
                   onPressed: () {
                     _selectDate(context);

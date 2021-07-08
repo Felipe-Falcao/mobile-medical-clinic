@@ -8,6 +8,7 @@ class Doctor {
   double salary;
   Employee employee;
   Specialty specialty;
+  String type = 'medico';
 
   Doctor(
       {this.id,
@@ -27,4 +28,9 @@ class Doctor {
       : id = json['id'] as String,
         crm = json['crm'] as String,
         salary = json['salary'] as double;
+
+  @override
+  String toString() {
+    return '{id: $id, crm: $crm, salario: $salary, especialidade: $specialty, funcionario: $employee}';
+  }
 }

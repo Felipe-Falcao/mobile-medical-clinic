@@ -63,7 +63,7 @@ class EmployeeStep2 extends StatelessWidget {
                           keyFormData: 'zipCode',
                           formData: _formData,
                           labelText: 'CEP',
-                          //keyboardType: TextInputType.numberWithOptions(),
+                          keyboardType: TextInputType.numberWithOptions(),
                           validator: (value) {
                             bool isEmpty = value.trim().isEmpty;
                             bool isInvalid = value.trim().length < 8;
@@ -72,10 +72,10 @@ class EmployeeStep2 extends StatelessWidget {
                             }
                             return null;
                           },
-                          inputFormatters: [
+                          /*inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                             CepInputFormatter()
-                          ],
+                          ],*/
                         ),
                       ))
                 ],
