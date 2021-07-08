@@ -1,4 +1,5 @@
 import 'package:clinica_medica/models/patient.dart';
+import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/screens/patient/detail_patient_screen.dart';
 import 'package:clinica_medica/widgets/patient/popup_menu.dart';
@@ -11,7 +12,8 @@ class PatientItem extends StatelessWidget {
   PatientItem({@required this.patient});
   @override
   Widget build(BuildContext context) {
-    Patients patients = Provider.of<Patients>(context);
+    Patients patients = Provider.of<Patients>(context, listen: false);
+    Charts charts = Provider.of<Charts>(context, listen: false);
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: ListTile(
@@ -30,7 +32,9 @@ class PatientItem extends StatelessWidget {
           patient: patient,
           callback: (bool value) {
             if (value) {
-              patients.removePatient(patient);
+              charts
+                  .removeChartsWith(patient.id)
+                  .then((_) => patients.removePatient(patient));
             }
           },
         ),

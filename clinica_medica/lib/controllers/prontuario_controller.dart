@@ -6,8 +6,11 @@ class ProntuarioController {
 
   Future<void> cadastrarProntuario(infoProntuario) async {
     try {
-      await prontuarioFB.create(infoProntuario.refPaciente,
-          infoProntuario.refMedicamento, infoProntuario.nota);
+      await prontuarioFB.create(
+        infoProntuario.refPaciente,
+        // infoProntuario.refMedicamento,
+        infoProntuario.nota,
+      );
     } catch (err) {
       print(err);
     }
@@ -25,7 +28,7 @@ class ProntuarioController {
         'dataAtualizacao': data['dataAtualizacao'],
         'dataCadastro': data['dataCadastro'],
         'nota': data['nota'],
-        'refMedicamento': data['refMedicamento'].id,
+        // 'refMedicamento': data['refMedicamento'].id,
         'refPaciente': data['refPaciente'].id,
       });
     }
@@ -34,7 +37,10 @@ class ProntuarioController {
 
   Future<void> editarProntuario(infoProntuario) async {
     await prontuarioFB.update(
-        infoProntuario.refMedicamento, infoProntuario.id, infoProntuario.nota);
+      // infoProntuario.refMedicamento,
+      infoProntuario.id,
+      infoProntuario.nota,
+    );
   }
 
   Future<void> excluirProntuario(prontuarioId) async {
