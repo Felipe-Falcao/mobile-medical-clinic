@@ -1,4 +1,6 @@
+import 'package:clinica_medica/providers/attendant/attendant_provider.dart';
 import 'package:clinica_medica/providers/charts.dart';
+import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +16,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     Patients patients = Provider.of<Patients>(context, listen: false);
     Charts charts = Provider.of(context, listen: false);
+    DoctorProvider doctorProvider =
+        Provider.of<DoctorProvider>(context, listen: false);
+    AttendantProvider attendantProvider =
+        Provider.of<AttendantProvider>(context, listen: false);
+
     patients.loadPatients();
     charts.loadCharts();
+    doctorProvider.loadDoctors();
+    attendantProvider.loadAttendants();
     super.initState();
   }
 
@@ -65,6 +74,13 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Gerenciar Médicos',
             nav: () => Navigator.of(context)
                 .pushReplacementNamed(AppRoutes.DOCTOR_SCREEN),
+          ),
+          _item(
+            context: context,
+            icons: Icons.people,
+            label: 'Gerenciar Atendentes',
+            nav: () => Navigator.of(context)
+                .pushReplacementNamed(AppRoutes.ATTENDANT_SCREEN),
           ),
         ],
       ),

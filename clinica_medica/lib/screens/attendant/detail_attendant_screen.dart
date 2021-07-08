@@ -1,42 +1,42 @@
-import 'package:clinica_medica/models/doctor.dart';
-import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
-import 'package:clinica_medica/screens/doctor/register_doctor_screen.dart';
+import 'package:clinica_medica/models/attendant.dart';
+import 'package:clinica_medica/providers/attendant/attendant_provider.dart';
+import 'package:clinica_medica/screens/attendant/register_attendant_screen.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DetailDoctor extends StatefulWidget {
-  const DetailDoctor({Key key}) : super(key: key);
+class DetailAttendantScreen extends StatefulWidget {
+  const DetailAttendantScreen({Key key}) : super(key: key);
 
   @override
-  _DetailDoctorState createState() => _DetailDoctorState();
+  _DetailAttendantScreenState createState() => _DetailAttendantScreenState();
 }
 
-class _DetailDoctorState extends State<DetailDoctor> {
-  Doctor doctor;
+class _DetailAttendantScreenState extends State<DetailAttendantScreen> {
+  Attendant attendant;
   bool isLoading = false;
 
   @override
   void didChangeDependencies() {
     if (ModalRoute.of(context).settings.arguments != null) {
-      doctor = ModalRoute.of(context).settings.arguments as Doctor;
+      attendant = ModalRoute.of(context).settings.arguments as Attendant;
     }
-
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    DoctorProvider doctorProvider = Provider.of<DoctorProvider>(context);
+    AttendantProvider attendantProvider =
+        Provider.of<AttendantProvider>(context);
 
     if (!isLoading) {
       setState(() {
-        doctor = doctorProvider.getItemById(doctor.id);
+        attendant = attendantProvider.getItemById(attendant.id);
       });
     }
 
     final appBar = AppBar(
-      title: Text('Médico'),
+      title: Text('Atendente'),
       actions: [
         PopupMenuButton(
           iconSize: 30,
@@ -51,8 +51,8 @@ class _DetailDoctorState extends State<DetailDoctor> {
                     onPressed: () {
                       Navigator.pop(context);
                       Navigator.of(context).push(MaterialPageRoute(
-                          settings: RouteSettings(arguments: doctor),
-                          builder: (context) => RegisterDoctor()));
+                          settings: RouteSettings(arguments: attendant),
+                          builder: (context) => RegisterAttendantScreen()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -86,8 +86,8 @@ class _DetailDoctorState extends State<DetailDoctor> {
                                   setState(() {
                                     isLoading = true;
                                   });
-                                  doctorProvider
-                                      .removeDoctor(doctor)
+                                  attendantProvider
+                                      .removeAttendant(attendant)
                                       .then((_) => Navigator.of(context).pop());
                                 }
                               }));
@@ -143,11 +143,11 @@ class _DetailDoctorState extends State<DetailDoctor> {
                   Container(
                     height: 170,
                     child: ListView.builder(
-                        itemCount: doctor.employee.toMap().length,
+                        itemCount: attendant.employee.toMap().length,
                         itemBuilder: (context, index) {
                           return _itemList(
-                              doctor.employee.toMap().keys.toList()[index],
-                              doctor.employee
+                              attendant.employee.toMap().keys.toList()[index],
+                              attendant.employee
                                   .toMap()
                                   .values
                                   .toList()[index]
@@ -173,12 +173,12 @@ class _DetailDoctorState extends State<DetailDoctor> {
                   Container(
                     height: 170,
                     child: ListView.builder(
-                        itemCount: doctor.employee.address.toMap.length,
+                        itemCount: attendant.employee.address.toMap.length,
                         itemBuilder: (context, index) {
                           return _itemList(
-                              doctor.employee.address.toMap.keys
+                              attendant.employee.address.toMap.keys
                                   .toList()[index],
-                              doctor.employee.address.toMap.values
+                              attendant.employee.address.toMap.values
                                   .toList()[index]
                                   .toString());
                         }),
@@ -191,32 +191,7 @@ class _DetailDoctorState extends State<DetailDoctor> {
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        'Especialidade',
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 50,
-                    child: ListView.builder(
-                        itemCount: doctor.specialty.toMap().length,
-                        itemBuilder: (context, index) {
-                          return _itemList(
-                              'Especialidade', doctor.specialty.name);
-                        }),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: 40,
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Informações do Médico',
+                        'Informações do Atendente',
                         style: TextStyle(fontSize: 16.0),
                       ),
                     ),
@@ -227,10 +202,15 @@ class _DetailDoctorState extends State<DetailDoctor> {
                   Container(
                     height: 130,
                     child: ListView.builder(
-                        itemCount: doctor.toMap().length,
+                        itemCount: attendant.toMap().length,
                         itemBuilder: (context, index) {
-                          return _itemList(doctor.toMap().keys.toList()[index],
-                              doctor.toMap().values.toList()[index].toString());
+                          return _itemList(
+                              attendant.toMap().keys.toList()[index],
+                              attendant
+                                  .toMap()
+                                  .values
+                                  .toList()[index]
+                                  .toString());
                         }),
                   )
                 ],

@@ -185,7 +185,7 @@ class FuncionarioController {
       // Excluir funcionário
       await funcionarioFB.delete(infoAtendente.id);
       // Excluir atendente
-      await medicoFB.delete(infoAtendente.id);
+      await atendenteFB.delete(infoAtendente.id);
       // Excluir endereco
       await enderecoFB.delete(infoFuncionario.refEndereco);
     } catch (err) {
