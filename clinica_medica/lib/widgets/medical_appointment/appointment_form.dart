@@ -1,5 +1,6 @@
-import 'package:clinica_medica/models/appointment.dart';
+import 'package:clinica_medica/models/doctor.dart';
 import 'package:clinica_medica/models/patient.dart';
+import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/medical_appointment/select_date.dart';
 import 'package:clinica_medica/widgets/searchable_dropdown.dart';
@@ -31,14 +32,11 @@ class _AppointmentFormState extends State<AppointmentForm> {
   Patient patientSelected;
   Doctor doctorSelected;
 
-  List<Doctor> doctors = [
-    Doctor(name: 'Paulo', CRM: 'crm-teste', id: 'idteste', salary: 500),
-    Doctor(name: 'Carlos', CRM: 'crm-teste2', id: 'idteste2', salary: 500),
-  ];
-
   @override
   Widget build(BuildContext context) {
     Patients patients = Provider.of<Patients>(context, listen: false);
+    DoctorProvider doctors =
+        Provider.of<DoctorProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Form(
@@ -48,7 +46,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
             const SizedBox(height: 20),
             _searchableDropdown(
               items: patients.items,
-              key: 'patient',
+              key: 'patientId',
               label: 'Selecione o paciente',
               selected: patientSelected,
             ),
@@ -62,8 +60,8 @@ class _AppointmentFormState extends State<AppointmentForm> {
               ]),
             const SizedBox(height: 12),
             _searchableDropdown(
-              items: doctors,
-              key: 'doctor',
+              items: doctors.items,
+              key: 'doctorId',
               label: 'Selecione o médico',
               selected: doctorSelected,
             ),
@@ -105,10 +103,15 @@ class _AppointmentFormState extends State<AppointmentForm> {
         hint: Text(label),
         style: TextStyle(color: Colors.black87),
         underline: SizedBox(),
-        items: items.map((item) {
-          return new DropdownMenuItemDiff<Object>(
-              child: Text(item.name), value: item);
-        }).toList(),
+        items: key == 'doctorId'
+            ? items.map((item) {
+                return new DropdownMenuItemDiff<Object>(
+                    child: Text(item.employee.name), value: item);
+              }).toList()
+            : items.map((item) {
+                return new DropdownMenuItemDiff<Object>(
+                    child: Text(item.name), value: item);
+              }).toList(),
         searchFn: (String keyword, items) {
           List<int> ret = [];
           if (keyword != null && items != null && keyword.isNotEmpty) {
@@ -140,7 +143,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
         ),
         onChanged: (value) {
           setState(() {
-            widget.formData[key] = value;
+            widget.formData[key] = value.id;
             selected = value;
             widget.callback();
           });

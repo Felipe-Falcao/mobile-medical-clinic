@@ -1,5 +1,7 @@
 import 'package:clinica_medica/models/appointment.dart';
+import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/providers/appointments.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/medical_appointment/appointment_item.dart';
 import 'package:clinica_medica/widgets/new_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +19,11 @@ class _FindAppointmentScreenState extends State<FindAppointmentScreen> {
   @override
   Widget build(BuildContext context) {
     _filter = _formData['filter'];
-    final Appointments appointmentProvider = Provider.of<Appointments>(context);
-    final List<Appointment> appointments =
-        appointmentProvider.getItemsWith(_filter);
+    Appointments appointmentProvider = Provider.of<Appointments>(context);
+    List<Patient> patients =
+        Provider.of<Patients>(context, listen: false).items;
+    List<Appointment> appointments =
+        appointmentProvider.getItemsWith(_filter, patients);
 
     final appBar = AppBar(
       title: const Text('Buscar Consultas'),

@@ -26,7 +26,7 @@ class Patients with ChangeNotifier {
   }
 
   Patient getItemById(String id) {
-    return _items.singleWhere((item) => item.id == id);
+    return _items.singleWhere((item) => item.id == id, orElse: () => null);
   }
 
   int get itemsCount {

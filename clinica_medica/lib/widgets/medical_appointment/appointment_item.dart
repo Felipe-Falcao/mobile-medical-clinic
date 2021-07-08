@@ -1,5 +1,7 @@
 import 'package:clinica_medica/models/appointment.dart';
+import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/providers/appointments.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/screens/medical_appointment/detail_appointment_screen.dart';
 import 'package:clinica_medica/widgets/medical_appointment/popup_menu.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,8 @@ class AppointmentItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Appointments appointments = Provider.of<Appointments>(context);
+    Patients patients = Provider.of<Patients>(context, listen: false);
+    Patient patient = patients.getItemById(appointment?.patientId);
 
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -29,7 +33,7 @@ class AppointmentItem extends StatelessWidget {
           ),
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        title: Text(appointment.patient.name),
+        title: Text(patient.name),
         subtitle: Text(
             'Data: ${DateFormat('dd/MM/yyyy').format(appointment.schedule.date)}'),
         trailing: PopupMenu(

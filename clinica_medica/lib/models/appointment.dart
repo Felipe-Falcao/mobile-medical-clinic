@@ -1,4 +1,3 @@
-import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/models/schedule.dart';
 import 'package:flutter/foundation.dart';
 
@@ -7,23 +6,23 @@ class Appointment {
   final String certificate;
   final String result;
   final Schedule schedule;
-  final Patient patient;
-  final Doctor doctor;
+  final String patientId;
+  final String doctorId;
 
   Appointment(
       {this.id,
       this.certificate,
       this.result,
       @required this.schedule,
-      @required this.patient,
-      @required this.doctor});
+      @required this.patientId,
+      @required this.doctorId});
 }
 
-class Doctor {
-  final String id;
-  final String name;
-  final String CRM;
-  double salary;
+// class Doctor {
+//   final String id;
+//   final String name;
+//   final String CRM;
+//   double salary;
 
-  Doctor({this.id, this.name, this.CRM, this.salary});
-}
+//   Doctor({this.id, this.name, this.CRM, this.salary});
+// }

@@ -1,8 +1,8 @@
 class InfoConsulta {
   String id;
   DateTime data;
-  String tipo = 'Consulta';
-  String refAtendente;
+  String horario;
+  // String refAtendente;
   String atestado;
   String refMedico;
   String refPaciente;

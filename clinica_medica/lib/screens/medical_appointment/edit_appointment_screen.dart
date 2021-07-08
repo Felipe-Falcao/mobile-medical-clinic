@@ -1,5 +1,9 @@
 import 'package:clinica_medica/models/appointment.dart';
+import 'package:clinica_medica/models/doctor.dart';
+import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/providers/appointments.dart';
+import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/buttons.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +22,11 @@ class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
+    DoctorProvider doctorProv =
+        Provider.of<DoctorProvider>(context, listen: false);
+    Patients patients = Provider.of<Patients>(context, listen: false);
+    Patient patient = patients.getItemById(appointment?.patientId);
+    Doctor doctor = doctorProv.getItemById(appointment?.doctorId);
     return Scaffold(
       appBar: AppBar(title: const Text('Editar Consulta')),
       body: _isLoading
@@ -29,13 +38,13 @@ class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
                 child: Column(
                   children: <Widget>[
                     const SizedBox(height: 10),
-                    _itemList('Paciente', appointment.patient.name),
+                    _itemList('Paciente', patient.name),
                     _itemList(
                         'Data da consulta',
                         new DateFormat('dd/MM/yyyy')
                             .format(appointment.schedule.date)),
                     _itemList('Horário', appointment.schedule.timeBlock),
-                    _itemList('Médico', appointment.doctor.name),
+                    _itemList('Médico', doctor.employee.name),
                     const SizedBox(height: 15),
                     _textBox(
                       key: 'result',
@@ -76,8 +85,8 @@ class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
       appointment = ModalRoute.of(context).settings.arguments as Appointment;
       if (appointment != null) {
         _formData['id'] = appointment.id;
-        _formData['patient'] = appointment.patient;
-        _formData['doctor'] = appointment.doctor;
+        _formData['patientId'] = appointment.patientId;
+        _formData['doctorId'] = appointment.doctorId;
         _formData['schedule'] = appointment.schedule;
         _formData['result'] = appointment.result;
         _formData['certificate'] = appointment.certificate;
@@ -152,8 +161,8 @@ class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
     });
     final appointment = Appointment(
       id: _formData['id'],
-      patient: _formData['patient'],
-      doctor: _formData['doctor'],
+      patientId: _formData['patientId'],
+      doctorId: _formData['doctorId'],
       schedule: _formData['schedule'],
       result: _formData['result'],
       certificate: _formData['certificate'],
@@ -188,9 +197,7 @@ class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
         ),
       );
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
     }
   }
 }

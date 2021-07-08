@@ -1,6 +1,8 @@
 import 'package:clinica_medica/models/appointment.dart';
+import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/models/schedule.dart';
 import 'package:clinica_medica/providers/appointments.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/buttons.dart';
 import 'package:clinica_medica/widgets/medical_appointment/appointment_form.dart';
@@ -26,7 +28,9 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appointments = Provider.of<Appointments>(context, listen: false);
+    Appointments appointments =
+        Provider.of<Appointments>(context, listen: false);
+    Patients patients = Provider.of<Patients>(context, listen: false);
 
     final appBar = AppBar(
       title: Text(_titleScreen),
@@ -51,12 +55,10 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
                         isValidPatient: _isValidPatient,
                         isValidDoctor: _isValidDoctor,
                         callback: () {
-                          setState(() {
-                            _selectedTimeBlock = null;
-                          });
+                          setState(() => _selectedTimeBlock = null);
                         }),
                     SizedBox(height: 12),
-                    _selectSchedule(timeBlocks, appointments),
+                    _selectSchedule(timeBlocks, appointments, patients),
                     if (!_isValidTimeBlock)
                       Row(children: [
                         Padding(
@@ -85,7 +87,8 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
     );
   }
 
-  Widget _selectSchedule(List<String> timeBlocks, Appointments appointments) {
+  Widget _selectSchedule(
+      List<String> timeBlocks, Appointments appointments, Patients patients) {
     return Flexible(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
@@ -98,8 +101,9 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
           itemBuilder: (context, index) {
             bool isSelected = _selectedTimeBlock == timeBlocks[index];
             Appointment appointment = appointments.getByTimeBlock(
-                timeBlocks[index], _formData['doctor'], _formData['date']);
+                timeBlocks[index], _formData['doctorId'], _formData['date']);
             bool hasPatient = appointment != null;
+            Patient patient = patients.getItemById(appointment?.patientId);
             return Container(
               height: 40,
               decoration: BoxDecoration(
@@ -131,8 +135,7 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
                         !hasPatient
                             ? Text(timeBlocks[index],
                                 style: TextStyle(color: Colors.black87))
-                            : Text(
-                                '${timeBlocks[index]}  -  ${appointment.patient.name}',
+                            : Text('${timeBlocks[index]}  -  ${patient.name}',
                                 style: TextStyle(color: Colors.black45),
                                 overflow: TextOverflow.ellipsis),
                       ]),
@@ -151,8 +154,8 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
   Future<void> _saveForm() async {
     var isValid = _form.currentState.validate();
     setState(() {
-      _isValidPatient = _formData['patient'] != null;
-      _isValidDoctor = _formData['doctor'] != null;
+      _isValidPatient = _formData['patientId'] != null;
+      _isValidDoctor = _formData['doctorId'] != null;
       _isValidDate = _formData['date'] != null;
       _isValidTimeBlock = _selectedTimeBlock != null;
     });
@@ -171,8 +174,8 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
     );
     final appointment = Appointment(
       id: _formData['id'],
-      patient: _formData['patient'],
-      doctor: _formData['doctor'],
+      patientId: _formData['patientId'],
+      doctorId: _formData['doctorId'],
       schedule: schedule,
       result: _formData['result'],
       certificate: _formData['certificate'],
@@ -208,9 +211,7 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
         ),
       );
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
     }
   }
 }

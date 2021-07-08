@@ -1,7 +1,9 @@
-import 'package:clinica_medica/models/appointment.dart';
+import 'package:clinica_medica/models/doctor.dart';
+import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/widgets/medical_appointment/select_date.dart';
 import 'package:clinica_medica/widgets/searchable_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ScheduleForm extends StatefulWidget {
   final GlobalKey<FormState> form;
@@ -25,13 +27,9 @@ class ScheduleForm extends StatefulWidget {
 class _ScheduleFormState extends State<ScheduleForm> {
   Doctor doctorSelected;
 
-  List<Doctor> doctors = [
-    Doctor(name: 'Paulo', CRM: 'crm-teste', id: 'idteste', salary: 500),
-    Doctor(name: 'Carlos', CRM: 'crm-teste2', id: 'idteste2', salary: 500),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final doctors = Provider.of<DoctorProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Form(
@@ -40,8 +38,8 @@ class _ScheduleFormState extends State<ScheduleForm> {
           children: <Widget>[
             const SizedBox(height: 20),
             _searchableDropdown(
-              items: doctors,
-              key: 'doctor',
+              items: doctors.items,
+              key: 'doctorId',
               label: 'Selecione o médico',
               selected: doctorSelected,
             ),
@@ -69,7 +67,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
         underline: SizedBox(),
         items: items.map((item) {
           return new DropdownMenuItemDiff<Object>(
-              child: Text(item.name), value: item);
+              child: Text(item.employee.name), value: item);
         }).toList(),
         searchFn: (String keyword, items) {
           List<int> ret = [];
@@ -102,7 +100,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
         ),
         onChanged: (value) {
           setState(() {
-            widget.formData[key] = value;
+            widget.formData[key] = value.id;
             selected = value;
             widget.callback();
           });
