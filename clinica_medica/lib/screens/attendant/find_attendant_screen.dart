@@ -1,29 +1,30 @@
-import 'package:clinica_medica/models/doctor.dart';
-import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
-import 'package:clinica_medica/widgets/doctor/doctor_item.dart';
+import 'package:clinica_medica/models/attendant.dart';
+import 'package:clinica_medica/providers/attendant/attendant_provider.dart';
+import 'package:clinica_medica/widgets/attendant/attendant_item.dart';
 import 'package:clinica_medica/widgets/employee/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class FindDoctor extends StatefulWidget {
-  const FindDoctor({Key key}) : super(key: key);
+class FindAttendantScreen extends StatefulWidget {
+  const FindAttendantScreen({Key key}) : super(key: key);
 
   @override
-  _FindDoctorState createState() => _FindDoctorState();
+  _FindAttendantScreenState createState() => _FindAttendantScreenState();
 }
 
-class _FindDoctorState extends State<FindDoctor> {
+class _FindAttendantScreenState extends State<FindAttendantScreen> {
   final _formData = Map<String, Object>();
   String _filter;
-
   @override
   Widget build(BuildContext context) {
     _filter = _formData['filter'];
-    final DoctorProvider doctorProvider = Provider.of<DoctorProvider>(context);
-    final List<Doctor> doctors = doctorProvider.getItemsWith(_filter);
+
+    final AttendantProvider attendantProvider =
+        Provider.of<AttendantProvider>(context);
+    final List<Attendant> attendants = attendantProvider.getItemsWith(_filter);
 
     final appBar = AppBar(
-      title: Text('Médicos'),
+      title: Text('Atendentes'),
     );
 
     final availableHeight = MediaQuery.of(context).size.height -
@@ -50,7 +51,7 @@ class _FindDoctorState extends State<FindDoctor> {
                       CustomTextFormField(
                         keyFormData: 'filter',
                         formData: _formData,
-                        labelText: 'Digite o nome ou a especialidade',
+                        labelText: 'Digite um nome',
                         onChanged: (value) {
                           setState(() {
                             _filter = value;
@@ -64,9 +65,9 @@ class _FindDoctorState extends State<FindDoctor> {
                 height: availableHeight - 90,
                 child: ListView.builder(
                     itemBuilder: (context, int index) {
-                      return DoctorItem(doctor: doctors[index]);
+                      return AttendantItem(attendant: attendants[index]);
                     },
-                    itemCount: doctors.length,
+                    itemCount: attendants.length,
                     padding: EdgeInsets.only(left: 16.0, right: 16.0)))
           ],
         ),

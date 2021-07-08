@@ -1,6 +1,6 @@
 import 'package:clinica_medica/models/employee.dart';
 import 'package:clinica_medica/models/specialty.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Doctor {
   String id;

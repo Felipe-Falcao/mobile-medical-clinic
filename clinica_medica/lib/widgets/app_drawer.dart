@@ -54,6 +54,15 @@ class AppDrawer extends StatelessWidget {
                   .pushReplacementNamed(AppRoutes.DOCTOR_SCREEN);
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.chat_rounded),
+            title: const Text('Gerenciar Atendente'),
+            enabled: currentRoute != AppRoutes.ATTENDANT_SCREEN,
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(AppRoutes.ATTENDANT_SCREEN);
+            },
+          ),
         ],
       ),
     );

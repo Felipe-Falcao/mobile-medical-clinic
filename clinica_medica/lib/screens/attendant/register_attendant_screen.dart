@@ -1,33 +1,30 @@
 import 'package:clinica_medica/models/address.dart';
-import 'package:clinica_medica/models/doctor.dart';
+import 'package:clinica_medica/models/attendant.dart';
 import 'package:clinica_medica/models/employee.dart';
-import 'package:clinica_medica/models/specialty.dart';
-import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
-import 'package:clinica_medica/widgets/doctor/forms/doctor_step_4.dart';
+import 'package:clinica_medica/providers/attendant/attendant_provider.dart';
+import 'package:clinica_medica/widgets/attendant/forms/attendant_step4.dart';
 import 'package:clinica_medica/widgets/employee/employee_timeline.dart';
 import 'package:clinica_medica/widgets/employee/forms/employee_step_1.dart';
 import 'package:clinica_medica/widgets/employee/forms/employee_step_2.dart';
 import 'package:clinica_medica/widgets/employee/forms/employee_step_3.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:timelines/timelines.dart';
 
-const todoColor = Color(0xffd1d2d7);
-
-class RegisterDoctor extends StatefulWidget {
-  const RegisterDoctor({Key key}) : super(key: key);
+class RegisterAttendantScreen extends StatefulWidget {
+  const RegisterAttendantScreen({Key key}) : super(key: key);
 
   @override
-  _RegisterDoctorState createState() => _RegisterDoctorState();
+  _RegisterAttendantScreenState createState() =>
+      _RegisterAttendantScreenState();
 }
 
-class _RegisterDoctorState extends State<RegisterDoctor> {
+class _RegisterAttendantScreenState extends State<RegisterAttendantScreen> {
   int _processIndex = 0;
   int _step = 1;
   final _formData = Map<String, Object>();
   final _form = GlobalKey<FormState>();
   bool isValidDate = true;
-  String _title = 'Cadastrar Médico';
+  String _title = 'Cadastrar Atendente';
   bool _isEdit = false;
   bool _isLoading = false;
 
@@ -35,34 +32,33 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_formData.isEmpty) {
-      final Doctor doctor = ModalRoute.of(context).settings.arguments as Doctor;
+      final Attendant attendant =
+          ModalRoute.of(context).settings.arguments as Attendant;
 
-      if (doctor != null) {
+      if (attendant != null) {
         setState(() {
-          _title = 'Editar Médico';
+          _title = 'Editar Atendente';
           _isEdit = true;
         });
 
-        _formData['id'] = doctor.id;
-        _formData['crm'] = doctor.crm;
-        _formData['salary'] = doctor.salary.toStringAsFixed(2);
-        _formData['name'] = doctor.employee.name;
+        _formData['id'] = attendant.id;
+        _formData['rotation'] = attendant.rotation;
+        _formData['salary'] = attendant.salary.toStringAsFixed(2);
 
-        _formData['employeeId'] = doctor.employee.id;
-        _formData['phoneNumber'] = doctor.employee.phoneNumber;
-        _formData['email'] = doctor.employee.email;
-        _formData['cpf'] = doctor.employee.cpf;
-        _formData['workCard'] = doctor.employee.workCard;
-        _formData['hiringDate'] = doctor.employee.hiringDate;
+        _formData['employeeId'] = attendant.employee.id;
+        _formData['name'] = attendant.employee.name;
+        _formData['phoneNumber'] = attendant.employee.phoneNumber;
+        _formData['email'] = attendant.employee.email;
+        _formData['cpf'] = attendant.employee.cpf;
+        _formData['workCard'] = attendant.employee.workCard;
+        _formData['hiringDate'] = attendant.employee.hiringDate;
 
-        _formData['specialty_name'] = doctor.specialty.name;
-
-        _formData['addressId'] = doctor.employee.address.id;
-        _formData['street'] = doctor.employee.address.street;
-        _formData['number'] = doctor.employee.address.number;
-        _formData['zipCode'] = doctor.employee.address.zipCode;
-        _formData['city'] = doctor.employee.address.city;
-        _formData['state'] = doctor.employee.address.state;
+        _formData['addressId'] = attendant.employee.address.id;
+        _formData['street'] = attendant.employee.address.street;
+        _formData['number'] = attendant.employee.address.number;
+        _formData['zipCode'] = attendant.employee.address.zipCode;
+        _formData['city'] = attendant.employee.address.city;
+        _formData['state'] = attendant.employee.address.state;
       }
     }
   }
@@ -104,8 +100,6 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
         city: _formData['city'],
         state: _formData['state']);
 
-    final specialty = Specialty(name: _formData['specialty_name']);
-
     final employee = Employee(
         id: _formData['employeeId'],
         workCard: _formData['workCard'],
@@ -117,22 +111,20 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
         password: _formData['password'],
         address: address);
 
-    final doctor = Doctor(
+    final attendant = Attendant(
         id: _formData['id'],
-        crm: _formData['crm'],
-        salary: double.parse(_formData['salary']),
         employee: employee,
-        specialty: specialty);
+        salary: double.parse(_formData['salary']),
+        rotation: _formData['rotation']);
 
-    final doctorProvider = Provider.of<DoctorProvider>(context, listen: false);
-
-    print(doctor.toString());
+    final attendantProvider =
+        Provider.of<AttendantProvider>(context, listen: false);
 
     try {
       if (_formData['id'] == null) {
-        doctorProvider.addDoctor(doctor);
+        attendantProvider.addAttendant(attendant);
       } else {
-        doctorProvider.updateDoctor(doctor);
+        attendantProvider.updateAttendant(attendant);
       }
 
       await showDialog<Null>(
@@ -158,7 +150,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
                 ],
               ),
               content: Text(
-                'O Médico foi cadastrado com sucesso.',
+                'O Atendente foi cadastrado com sucesso.',
                 textAlign: TextAlign.center,
               ),
               actions: [
@@ -201,7 +193,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
                     height: 10.0,
                   ),
                   Text(
-                    'O Médico não foi cadastrado!',
+                    'Houve um erro ao tentar cadastrar o atendente!',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   Divider()
@@ -254,7 +246,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
       'Dados \nPessoais',
       'Endereço',
       'Dados \nTrabalhistas',
-      'Dados \ndo Médico'
+      'Dados \ndo Atendente'
     ];
 
     return Scaffold(
@@ -282,7 +274,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
                                 ? EmployeeStep2(_form, _formData)
                                 : (_step == 3)
                                     ? EmployeeStep3(_form, _formData)
-                                    : DoctorStep4(_form, _formData, _isEdit)
+                                    : AttendantStep4(_form, _formData, _isEdit)
                       ],
                     ),
                   ),
