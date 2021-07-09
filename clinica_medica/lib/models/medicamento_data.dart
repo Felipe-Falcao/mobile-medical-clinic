@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 class InfoMedicamento {
   String id;
   DateTime dataPrescricao;

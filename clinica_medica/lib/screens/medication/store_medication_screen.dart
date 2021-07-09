@@ -1,21 +1,130 @@
+import 'dart:ffi';
+
+import 'package:clinica_medica/models/receita.dart';
+import 'package:clinica_medica/providers/medication.dart';
+import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
+import 'package:clinica_medica/widgets/buttons_alerts/buttons.dart';
+import 'package:clinica_medica/widgets/medication/medication_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class StoreMedicationScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return StoreMedicationState();
-  }
+  _StoreMedicationState createState() => _StoreMedicationState();
 }
 
-class StoreMedicationState extends State<StoreMedicationScreen> {
+class _StoreMedicationState extends State<StoreMedicationScreen> {
+  String _titleScreen = 'Cadastrar Receita';
+  final _form = GlobalKey<FormState>();
+  final _formData = Map<String, Object>();
+  bool _isValidMedication = true;
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cadastrar Medicamento'),
-      ),
-      body: null,
+    final appBar = AppBar(
+      title: Text(_titleScreen),
     );
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
+      body: _isLoading
+          ? const Center(child: const CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Container(
+              height: availableHeight - 100,
+              child: Column(
+                children: [
+                  MedicationForm(
+                    currentMode: _titleScreen,
+                    form: _form,
+                    formData: _formData,
+                    isValidMedication: _isValidMedication,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 20, left: 20, bottom: 20, top: 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        cancelButton(
+                            context, () => Navigator.of(context).pop()),
+                        finishButton(context, _saveForm),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )),
+    );
+  }
+
+  Future<void> _saveForm() async {
+    var isValid = _form.currentState.validate();
+
+    setState(() {
+      _isValidMedication = _formData['refPaciente'] != null;
+    });
+
+    if (!isValid || !_isValidMedication) {
+      return null;
+    }
+
+    _form.currentState.save();
+
+    final receita = Receita(
+      id: _formData['id'],
+      dataPrescricao: _formData['data'],
+      dose: _formData['dose'],
+      nome: _formData['nome'],
+      refMedico: _formData['refMedico'],
+      refPaciente: _formData['refPaciente'],
+    );
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    final medications = Provider.of<Medication>(context, listen: false);
+
+    try {
+      if (_formData['id'] == null) {
+        await medications.addMedication(receita);
+      } else {
+        // await update
+      }
+
+      await showDialog(
+        context: context,
+        builder: (ctx) => aletDialogSuccess(
+          context: ctx,
+          message: 'Receita foi cadastrada com sucesso.',
+        ),
+      );
+
+      Navigator.of(context).pop();
+    } catch (erro) {
+      await showDialog<Null>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Ocorreu um erro!'),
+          content: const Text('Ocorreu um erro pra salvar o medicamento!'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Fechar'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 }

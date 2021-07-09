@@ -1,3 +1,6 @@
+import 'package:clinica_medica/screens/medication/store_medication_screen.dart';
+import 'package:clinica_medica/utils/app_routes.dart';
+import 'package:clinica_medica/widgets/app_drawer.dart';
 import 'package:clinica_medica/widgets/menu_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -6,8 +9,11 @@ class MedicamentoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: AppDrawer(
+        currentRoute: AppRoutes.MEDICAMENTO_SCREEN,
+      ),
       appBar: AppBar(
-        title: const Text('Gerenciar Medicamento'),
+        title: const Text('Gerenciar Receita'),
       ),
       body: Container(
         padding: EdgeInsets.all(20),
@@ -15,16 +21,16 @@ class MedicamentoScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MenuTile(
-              title: 'Cadastrar Medicamento',
+              title: 'Cadastrar Receita',
               nav: () => Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => null,
+                  builder: (context) => StoreMedicationScreen(),
                 ),
               ),
             ),
             const SizedBox(height: 20),
             MenuTile(
-              title: 'Buscar Medicamento',
+              title: 'Buscar Receita',
               nav: () => Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => null,
