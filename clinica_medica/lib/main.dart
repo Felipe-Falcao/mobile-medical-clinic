@@ -185,17 +185,19 @@ class _MyHomePageState extends State<MyHomePage> {
           InfoProntuario infoProntuario = new InfoProntuario();
           infoProntuario.nota = 'Medicamento receitado. Dor de barriga.';
 
-          FuncionarioController funcionarioController =
-              new FuncionarioController();
-          // var a = await funcionarioController
-          //     .buscarTipoFuncionario('23IfKpVrq7RLOzmunlDOCV9YQdu1');
-          // print(a);
-          var a = await funcionarioController
-              .buscarMedico('LTdA4c79HYVZqw1QFDF656QsXQt1');
-          print(a);
-          // try {} catch (err) {
-          //   print(err);
-          // }
+          // FuncionarioController funcionarioController =
+          //     new FuncionarioController();
+          // Map<String, dynamic> funcionario = await funcionarioController
+          //     .buscarFuncionario('4bAZLX2DLTZ5HjbDOUidRIDQsPG3');
+
+          // var enderecoFuncionario = funcionario['refEndereco'].id;
+
+          // EnderecoController enderecoController = new EnderecoController();
+          // Map<String, dynamic> endereco =
+          //     await enderecoController.buscarEndereco(enderecoFuncionario);
+          // print(endereco);
+          AuthenticationFB authenticationFB = new AuthenticationFB();
+          print(await authenticationFB.updatePassword('qwertyu'));
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
