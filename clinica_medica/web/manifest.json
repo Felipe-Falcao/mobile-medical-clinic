@@ -1,6 +1,6 @@
 {
-    "name": "clinica_medica",
-    "short_name": "clinica_medica",
+    "name": "clinic_app_",
+    "short_name": "clinic_app_",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

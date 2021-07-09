@@ -1,4 +1,4 @@
-# clinica_medica
+# clinic_app_
 
 A new Flutter project.
 
