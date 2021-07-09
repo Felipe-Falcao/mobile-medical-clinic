@@ -11,8 +11,11 @@ class Patients with ChangeNotifier {
   final EnderecoController _addressCtrl = EnderecoController();
   List<Patient> _items = [];
 
-  List<Patient> get items {
-    return [..._items];
+  List<Patient> get items => [..._items];
+  int get itemsCount => _items.length;
+
+  Patient getItemById(String id) {
+    return _items.singleWhere((item) => item.id == id, orElse: () => null);
   }
 
   List<Patient> getItemsWith(String filter) {
@@ -23,14 +26,6 @@ class Patients with ChangeNotifier {
             patient.name.toLowerCase().contains(filter) ||
             patient.cpf.toLowerCase().contains(filter))
         .toList();
-  }
-
-  Patient getItemById(String id) {
-    return _items.singleWhere((item) => item.id == id, orElse: () => null);
-  }
-
-  int get itemsCount {
-    return _items.length;
   }
 
   Future<void> loadPatients() async {

@@ -33,7 +33,13 @@ class AppointmentItem extends StatelessWidget {
           ),
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        title: Text(patient.name),
+        title: Row(
+          children: [
+            Text('Paciente: ',
+                style: TextStyle(color: Colors.black54, fontSize: 15)),
+            Text(patient.name),
+          ],
+        ),
         subtitle: Text(
             'Data: ${DateFormat('dd/MM/yyyy').format(appointment.schedule.date)}'),
         trailing: PopupMenu(

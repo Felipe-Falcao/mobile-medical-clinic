@@ -47,9 +47,7 @@ class _DetailAppointmentScreenState extends State<DetailAppointmentScreen> {
           appointment: appointment,
           callback: (bool value) {
             if (value) {
-              setState(() {
-                isLoading = true;
-              });
+              setState(() => isLoading = true);
               Navigator.of(context).pop();
               appointments.removeAppointment(appointment);
             }

@@ -50,9 +50,7 @@ class _FindAppointmentScreenState extends State<FindAppointmentScreen> {
                     formData: _formData,
                     labelText: 'Nome ou CPF',
                     onChanged: (value) {
-                      setState(() {
-                        _filter = value;
-                      });
+                      setState(() => _filter = value);
                     },
                   ),
                 ]),

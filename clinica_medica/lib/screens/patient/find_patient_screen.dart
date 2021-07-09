@@ -46,9 +46,7 @@ class _FindPatientScreenState extends State<FindPatientScreen> {
                     formData: _formData,
                     labelText: 'Nome ou CPF',
                     onChanged: (value) {
-                      setState(() {
-                        _filter = value;
-                      });
+                      setState(() => _filter = value);
                     },
                   ),
                 ]),

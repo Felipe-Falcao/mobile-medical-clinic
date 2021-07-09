@@ -66,9 +66,7 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
     if (_formData.isEmpty) {
       final Chart chart = ModalRoute.of(context).settings.arguments as Chart;
       if (chart != null) {
-        setState(() {
-          _titleScreen = 'Editar Prontuário';
-        });
+        setState(() => _titleScreen = 'Editar Prontuário');
         _formData['id'] = chart.id;
         _formData['patientId'] = chart.patientId;
         _formData['medicineId'] = chart.medicineId;
@@ -94,9 +92,7 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
       updateDate: _formData['updateDate'],
       note: _formData['note'],
     );
-    setState(() {
-      _isLoading = true;
-    });
+    setState(() => _isLoading = true);
     final charts = Provider.of<Charts>(context, listen: false);
     try {
       if (_formData['id'] == null) {
@@ -127,9 +123,7 @@ class _RegisterChartScreenState extends State<RegisterChartScreen> {
         ),
       );
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
     }
   }
 }

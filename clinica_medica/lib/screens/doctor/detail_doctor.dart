@@ -1,4 +1,5 @@
 import 'package:clinica_medica/models/doctor.dart';
+import 'package:clinica_medica/providers/appointments.dart';
 import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/screens/doctor/register_doctor_screen.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
@@ -28,6 +29,8 @@ class _DetailDoctorState extends State<DetailDoctor> {
   @override
   Widget build(BuildContext context) {
     DoctorProvider doctorProvider = Provider.of<DoctorProvider>(context);
+    Appointments appointments =
+        Provider.of<Appointments>(context, listen: false);
 
     if (!isLoading) {
       setState(() {
@@ -83,12 +86,13 @@ class _DetailDoctorState extends State<DetailDoctor> {
                                   'Tem certeza que deseja excluir esse paciente',
                               callback: (bool value) {
                                 if (value) {
-                                  setState(() {
-                                    isLoading = true;
-                                  });
-                                  doctorProvider
-                                      .removeDoctor(doctor)
-                                      .then((_) => Navigator.of(context).pop());
+                                  setState(() => isLoading = true);
+                                  appointments
+                                      .removeAppointmentsWith(doctor.id)
+                                      .then((_) => doctorProvider
+                                          .removeDoctor(doctor)
+                                          .then((_) =>
+                                              Navigator.of(context).pop()));
                                 }
                               }));
                     },

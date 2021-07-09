@@ -156,9 +156,7 @@ class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
     var isValid = _form.currentState.validate();
     if (!isValid) return;
     _form.currentState.save();
-    setState(() {
-      _isLoading = true;
-    });
+    setState(() => _isLoading = true);
     final appointment = Appointment(
       id: _formData['id'],
       patientId: _formData['patientId'],

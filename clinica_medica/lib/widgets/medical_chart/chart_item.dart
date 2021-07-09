@@ -32,7 +32,13 @@ class ChartItem extends StatelessWidget {
           ),
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        title: Text(patient.name),
+        title: Row(
+          children: [
+            Text('Paciente: ',
+                style: TextStyle(color: Colors.black54, fontSize: 15)),
+            Text(patient.name),
+          ],
+        ),
         subtitle: Text(
             'Cadastro: ${DateFormat('dd/MM/yyyy').format(chart.entryDate)}'),
         trailing: PopupMenu(

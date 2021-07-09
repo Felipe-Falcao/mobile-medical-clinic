@@ -165,9 +165,7 @@ class _RegisterAppointmentScreenState extends State<RegisterAppointmentScreen> {
         !_isValidDate ||
         !_isValidTimeBlock) return;
     _form.currentState.save();
-    setState(() {
-      _isLoading = true;
-    });
+    setState(() => _isLoading = true);
     final schedule = Schedule(
       date: _formData['date'],
       timeBlock: _selectedTimeBlock,

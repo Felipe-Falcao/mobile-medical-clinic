@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:clinica_medica/controllers/consulta_controller.dart';
 import 'package:clinica_medica/models/appointment.dart';
 import 'package:clinica_medica/models/consulta_data.dart';
-import 'package:clinica_medica/models/doctor.dart';
 import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/models/schedule.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +9,11 @@ class Appointments with ChangeNotifier {
   final ConsultaController _appointmentCtrl = ConsultaController();
   List<Appointment> _items = [];
 
-  List<Appointment> get items {
-    return [..._items];
+  List<Appointment> get items => [..._items];
+  int get itemsCount => _items.length;
+
+  Appointment getItemById(String id) {
+    return _items.singleWhere((item) => item.id == id);
   }
 
   List<Appointment> getItemsWith(String filter, List<Patient> patients) {
@@ -27,10 +27,6 @@ class Appointments with ChangeNotifier {
     }).toList();
   }
 
-  Appointment getItemById(String id) {
-    return _items.singleWhere((item) => item.id == id);
-  }
-
   Appointment getByTimeBlock(String timeBlock, String doctorId, DateTime date) {
     if (timeBlock == null || doctorId == null || date == null) return null;
     return _items.singleWhere((item) {
@@ -38,10 +34,6 @@ class Appointments with ChangeNotifier {
           item.doctorId == doctorId &&
           item.schedule.date == date;
     }, orElse: () => null);
-  }
-
-  int get itemsCount {
-    return _items.length;
   }
 
   Future<void> loadAppointments() async {
@@ -99,5 +91,15 @@ class Appointments with ChangeNotifier {
         appointment.id, appointment.schedule.id);
     _items.remove(appointment);
     notifyListeners();
+  }
+
+  Future<void> removeAppointmentsWith(String id) async {
+    for (Appointment appointment in _items) {
+      if (appointment.patientId == id || appointment.doctorId == id) {
+        await _appointmentCtrl.excluirConsulta(
+            appointment.id, appointment.schedule.id);
+      }
+    }
+    await loadAppointments();
   }
 }

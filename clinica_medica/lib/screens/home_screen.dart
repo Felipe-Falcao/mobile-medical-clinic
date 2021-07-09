@@ -1,3 +1,4 @@
+import 'package:clinica_medica/providers/appointments.dart';
 import 'package:clinica_medica/providers/attendant/attendant_provider.dart';
 import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
@@ -16,17 +17,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     Patients patients = Provider.of<Patients>(context, listen: false);
-    Charts charts = Provider.of(context, listen: false);
+    Charts charts = Provider.of<Charts>(context, listen: false);
+    UserProvider user = Provider.of<UserProvider>(context, listen: false);
+    Appointments appointments =
+        Provider.of<Appointments>(context, listen: false);
     DoctorProvider doctorProvider =
         Provider.of<DoctorProvider>(context, listen: false);
     AttendantProvider attendantProvider =
         Provider.of<AttendantProvider>(context, listen: false);
-
     patients.loadPatients();
     charts.loadCharts();
+    appointments.loadAppointments();
     doctorProvider.loadDoctors();
     doctorProvider.loadSpecialties();
     attendantProvider.loadAttendants();
+    user.loadUser();
     super.initState();
   }
 
@@ -48,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           _item(
             context: context,
-            icons: Icons.people_alt_rounded,
+            icons: Icons.attribution_rounded,
             label: 'Gerenciar Atendente',
             nav: () => Navigator.of(context)
                 .pushReplacementNamed(AppRoutes.ATTENDANT_SCREEN),
@@ -133,8 +138,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
+                      radius: 25,
                       backgroundColor: Theme.of(context).primaryColor,
-                      child: Icon(icons, color: Theme.of(context).accentColor)),
+                      child: Icon(icons,
+                          color: Theme.of(context).accentColor, size: 30)),
                   SizedBox(height: 3),
                   Text(
                     label,

@@ -49,9 +49,7 @@ class _FindChartScreenState extends State<FindChartScreen> {
                     formData: _formData,
                     labelText: 'Nome ou CPF',
                     onChanged: (value) {
-                      setState(() {
-                        _filter = value;
-                      });
+                      setState(() => _filter = value);
                     },
                   ),
                 ]),

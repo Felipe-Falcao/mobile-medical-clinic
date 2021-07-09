@@ -42,9 +42,7 @@ class _DetailChartScreenState extends State<DetailChartScreen> {
           chart: chart,
           callback: (bool value) {
             if (value) {
-              setState(() {
-                isLoading = true;
-              });
+              setState(() => isLoading = true);
               Navigator.of(context).pop();
               charts.removeChart(chart);
             }

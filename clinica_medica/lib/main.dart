@@ -4,6 +4,7 @@ import 'package:clinica_medica/providers/attendant/attendant_provider.dart';
 import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/providers/patients.dart';
+import 'package:clinica_medica/providers/user.dart';
 import 'package:clinica_medica/screens/attendant/attendant_screen.dart';
 import 'package:clinica_medica/screens/auth_screen.dart';
 import 'package:clinica_medica/screens/doctor/doctor_screen.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => new Patients()),
         ChangeNotifierProvider(create: (_) => new Charts()),
         ChangeNotifierProvider(create: (_) => new Appointments()),
+        ChangeNotifierProvider(create: (_) => new UserProvider()),
         ChangeNotifierProvider(create: (_) => new DoctorProvider()),
         ChangeNotifierProvider(create: (_) => new AttendantProvider()),
       ],

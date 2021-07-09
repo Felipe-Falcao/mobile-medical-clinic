@@ -8,8 +8,11 @@ class Charts with ChangeNotifier {
   final ProntuarioController _chartCtrl = ProntuarioController();
   List<Chart> _items = [];
 
-  List<Chart> get items {
-    return [..._items];
+  List<Chart> get items => [..._items];
+  int get itemsCount => _items.length;
+
+  Chart getItemById(String id) {
+    return _items.singleWhere((item) => item.id == id);
   }
 
   List<Chart> getItemsWith(String filter, List<Patient> patients) {
@@ -20,14 +23,6 @@ class Charts with ChangeNotifier {
       return patient.name.toLowerCase().contains(filter) ||
           patient.cpf.toLowerCase().contains(filter);
     }).toList();
-  }
-
-  Chart getItemById(String id) {
-    return _items.singleWhere((item) => item.id == id);
-  }
-
-  int get itemsCount {
-    return _items.length;
   }
 
   Future<void> loadCharts() async {

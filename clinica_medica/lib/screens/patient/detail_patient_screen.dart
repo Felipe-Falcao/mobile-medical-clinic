@@ -1,4 +1,5 @@
 import 'package:clinica_medica/models/patient.dart';
+import 'package:clinica_medica/providers/appointments.dart';
 import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/screens/patient/charts_patient_screen.dart';
@@ -25,7 +26,9 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
   @override
   Widget build(BuildContext context) {
     Patients patients = Provider.of<Patients>(context);
-    Charts charts = Provider.of<Charts>(context);
+    Charts charts = Provider.of<Charts>(context, listen: false);
+    Appointments appointments =
+        Provider.of<Appointments>(context, listen: false);
     if (!isLoading) {
       setState(() {
         //atualiza o paciente apos edicao
@@ -41,9 +44,13 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
           callback: (bool value) {
             if (value) {
               setState(() => isLoading = true);
-              charts.removeChartsWith(patient.id).then((_) => patients
-                  .removePatient(patient)
-                  .then((_) => Navigator.of(context).pop()));
+              appointments.removeAppointmentsWith(patient.id).then(
+                    (_) => charts.removeChartsWith(patient.id).then(
+                          (_) => patients.removePatient(patient).then(
+                                (_) => Navigator.of(context).pop(),
+                              ),
+                        ),
+                  );
             }
           },
           icon: Icon(Icons.more_vert_rounded),

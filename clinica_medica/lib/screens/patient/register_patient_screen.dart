@@ -106,9 +106,7 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
       final Patient patient =
           ModalRoute.of(context).settings.arguments as Patient;
       if (patient != null) {
-        setState(() {
-          _titleScreen = 'Editar Paciente';
-        });
+        setState(() => _titleScreen = 'Editar Paciente');
         _formData['id'] = patient.id;
         _formData['name'] = patient.name;
         _formData['phoneNumber'] = patient.phoneNumber;
@@ -162,9 +160,7 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
       birthDate: _formData['birthDate'],
       address: address,
     );
-    setState(() {
-      _isLoading = true;
-    });
+    setState(() => _isLoading = true);
     final patients = Provider.of<Patients>(context, listen: false);
     try {
       if (_formData['id'] == null) {
@@ -195,9 +191,7 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
         ),
       );
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
     }
   }
 }

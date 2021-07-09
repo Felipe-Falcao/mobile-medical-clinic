@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 class UserProvider with ChangeNotifier {
   final AuthenticationFB _auth = AuthenticationFB();
   final FuncionarioController _emplCtrl = FuncionarioController();
-
   User _user;
 
   User get user => _user;
-
   bool get isAdmin => _user?.type == Type.ADMIN;
   bool get isDoctor => _user?.type == Type.DOCTOR;
   bool get isAttendant => _user?.type == Type.ATTENDANT;

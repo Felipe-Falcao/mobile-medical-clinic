@@ -29,39 +29,12 @@ class AppDrawer extends StatelessWidget {
             route: AppRoutes.HOME_SCREEN,
           ),
           Visibility(
-            visible: isAdmin || isAttendant || isDoctor,
+            visible: isAdmin,
             child: _listTile(
               context: context,
-              icon: Icons.people_alt_rounded,
-              label: 'Gerenciar Pacientes',
-              route: AppRoutes.PATIENT_SCREEN,
-            ),
-          ),
-          Visibility(
-            visible: isAdmin || isAttendant || isDoctor,
-            child: _listTile(
-              context: context,
-              icon: Icons.note_alt_rounded,
-              label: 'Gerenciar Prontuário',
-              route: AppRoutes.CHART_SCREEN,
-            ),
-          ),
-          Visibility(
-            visible: isAdmin || isAttendant || isDoctor,
-            child: _listTile(
-              context: context,
-              icon: Icons.event_available_rounded,
-              label: 'Gerenciar Consulta',
-              route: AppRoutes.APPOINTMENT_SCREEN,
-            ),
-          ),
-          Visibility(
-            visible: isAdmin || isAttendant || isDoctor,
-            child: _listTile(
-              context: context,
-              icon: Icons.event_note_rounded,
-              label: 'Gerenciar Agendamentos',
-              route: AppRoutes.SCHEDULE_SCREEN,
+              icon: Icons.chat_rounded,
+              label: 'Gerenciar Atendente',
+              route: AppRoutes.ATTENDANT_SCREEN,
             ),
           ),
           Visibility(
@@ -74,12 +47,48 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           Visibility(
-            visible: isAdmin,
+            visible: isAdmin || isAttendant || isDoctor,
             child: _listTile(
               context: context,
-              icon: Icons.chat_rounded,
-              label: 'Gerenciar Atendente',
-              route: AppRoutes.ATTENDANT_SCREEN,
+              icon: Icons.people_alt_rounded,
+              label: 'Gerenciar Pacientes',
+              route: AppRoutes.PATIENT_SCREEN,
+            ),
+          ),
+          Visibility(
+            visible: isAdmin || isAttendant || isDoctor,
+            child: _listTile(
+              context: context,
+              icon: Icons.event_note_rounded,
+              label: 'Gerenciar Agendamentos',
+              route: AppRoutes.SCHEDULE_SCREEN,
+            ),
+          ),
+          Visibility(
+            visible: isAdmin || isAttendant || isDoctor,
+            child: _listTile(
+              context: context,
+              icon: Icons.event_available_rounded,
+              label: 'Gerenciar Consulta',
+              route: AppRoutes.APPOINTMENT_SCREEN,
+            ),
+          ),
+          Visibility(
+            visible: isAdmin || isDoctor,
+            child: _listTile(
+              context: context,
+              icon: Icons.medication_rounded,
+              label: 'Gerenciar Medicamentos',
+              route: null, //TODO - inserir rota
+            ),
+          ),
+          Visibility(
+            visible: isAdmin || isAttendant || isDoctor,
+            child: _listTile(
+              context: context,
+              icon: Icons.note_alt_rounded,
+              label: 'Gerenciar Prontuário',
+              route: AppRoutes.CHART_SCREEN,
             ),
           ),
         ],
