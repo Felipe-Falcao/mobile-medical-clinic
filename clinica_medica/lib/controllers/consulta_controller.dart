@@ -29,10 +29,14 @@ class ConsultaController {
     }
   }
 
-  void editarConsulta(infoConsulta) {
-    consultaFB.update(
-        infoConsulta.atestado, infoConsulta.resultado, infoConsulta.id);
-    agendamentoFB.update(infoConsulta.data, infoConsulta.refAgendamento);
+  Future<void> editarConsulta(infoConsulta) async {
+    try {
+      consultaFB.update(
+          infoConsulta.atestado, infoConsulta.resultado, infoConsulta.id);
+      agendamentoFB.update(infoConsulta.data, infoConsulta.refAgendamento);
+    } catch (err) {
+      print(err);
+    }
   }
 
   Future<List<dynamic>> buscarConsultas() async {

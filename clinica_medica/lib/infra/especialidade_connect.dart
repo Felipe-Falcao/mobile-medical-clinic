@@ -56,4 +56,9 @@ class EspecialidadeFB {
     var doc = db.collection('especialidade').doc(nomeEspecialidade);
     return doc;
   }
+
+  Future<QuerySnapshot> getEspecialidades() async {
+    var querySnapshot = await db.collection('especialidade').get();
+    return querySnapshot;
+  }
 }

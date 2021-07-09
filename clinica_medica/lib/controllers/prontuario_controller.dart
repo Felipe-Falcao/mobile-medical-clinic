@@ -44,4 +44,13 @@ class ProntuarioController {
       print(err);
     }
   }
+
+  Future<Map<String, dynamic>> buscarProntuario(prontuarioId) async {
+    try {
+      return await prontuarioFB.read(prontuarioId);
+    } catch (err) {
+      print(err);
+      return null;
+    }
+  }
 }

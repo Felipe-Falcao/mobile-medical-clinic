@@ -45,6 +45,24 @@ class AppDrawer extends StatelessWidget {
             label: 'Gerenciar Agendamentos',
             route: AppRoutes.SCHEDULE_SCREEN,
           ),
+          ListTile(
+            leading: const Icon(Icons.chat_rounded),
+            title: const Text('Gerenciar Médico'),
+            enabled: currentRoute != AppRoutes.DOCTOR_SCREEN,
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(AppRoutes.DOCTOR_SCREEN);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.chat_rounded),
+            title: const Text('Gerenciar Atendente'),
+            enabled: currentRoute != AppRoutes.ATTENDANT_SCREEN,
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(AppRoutes.ATTENDANT_SCREEN);
+            },
+          ),
         ],
       ),
     );
