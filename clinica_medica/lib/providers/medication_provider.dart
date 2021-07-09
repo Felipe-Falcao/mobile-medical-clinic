@@ -54,7 +54,7 @@ class Medication with ChangeNotifier {
     if (medicamento == null) return null;
 
     InfoMedicamento med = InfoMedicamento();
-    med.dataPrescricao = medicamento.dataPrescricao;
+    med.dataPrescricao = DateTime.now();
     med.dose = medicamento.dose;
     med.nome = medicamento.nome;
     med.refMedico = medicamento.refMedico;

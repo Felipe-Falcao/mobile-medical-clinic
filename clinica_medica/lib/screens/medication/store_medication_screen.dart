@@ -1,7 +1,5 @@
-import 'dart:ffi';
-
 import 'package:clinica_medica/models/receita.dart';
-import 'package:clinica_medica/providers/medication.dart';
+import 'package:clinica_medica/providers/medication_provider.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/buttons.dart';
 import 'package:clinica_medica/widgets/medication/medication_form.dart';
@@ -61,6 +59,29 @@ class _StoreMedicationState extends State<StoreMedicationScreen> {
               ),
             )),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_formData.isEmpty) {
+      final Receita receita =
+          ModalRoute.of(context).settings.arguments as Receita;
+
+      if (receita != null) {
+        setState(() {
+          _titleScreen = 'Editar Receita';
+        });
+
+        _formData['id'] = receita.id;
+        _formData['dataPescricao'] = receita.dataPrescricao;
+        _formData['dose'] = receita.dose;
+        _formData['nome'] = receita.nome;
+        _formData['refMedico'] = receita.refMedico;
+        _formData['refPaciente'] = receita.refPaciente;
+      }
+    }
   }
 
   Future<void> _saveForm() async {
