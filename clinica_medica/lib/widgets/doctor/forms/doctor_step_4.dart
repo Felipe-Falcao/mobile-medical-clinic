@@ -42,9 +42,8 @@ class _DoctorStep4State extends State<DoctorStep4> {
   @override
   Widget build(BuildContext context) {
     DoctorProvider doctorProvider = Provider.of<DoctorProvider>(context);
-    //doctorProvider.loadDoctors();
+
     List<Specialty> specialties = doctorProvider.itemsSpecialty;
-    print(specialties);
 
     Container _formFieldEspecialidade(List<Specialty> especialidades) {
       return Container(
