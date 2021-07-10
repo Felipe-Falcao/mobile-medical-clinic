@@ -1,5 +1,6 @@
 import 'package:clinica_medica/controllers/endereco_controller.dart';
 import 'package:clinica_medica/controllers/funcionario_controller.dart';
+import 'package:clinica_medica/infra/auth_connect.dart';
 
 import 'package:clinica_medica/models/address.dart';
 
@@ -14,11 +15,18 @@ import 'package:flutter/material.dart';
 class DoctorProvider extends ChangeNotifier {
   FuncionarioController funcionarioController = FuncionarioController();
   EnderecoController enderecoController = EnderecoController();
+  AuthenticationFB authenticationFB = AuthenticationFB();
 
   List<Doctor> _items = [];
+  List<Specialty> specialties = [];
 
   List<Doctor> get items {
     return [..._items];
+  }
+
+  List<Specialty> get itemsSpecialty {
+    print([...specialties]);
+    return [...specialties];
   }
 
   List<Doctor> getItemsWith(String filter) {
@@ -38,6 +46,21 @@ class DoctorProvider extends ChangeNotifier {
 
   int get itemsCount {
     return _items.length;
+  }
+
+  Future<void> loadSpecialties() async {
+    List<dynamic> specialtyList =
+        await funcionarioController.buscarEspecialidades();
+
+    specialties.clear();
+
+    for (var i = 0; i < specialtyList.length; i++) {
+      Specialty specialty = Specialty(
+          id: specialtyList[i]['id'],
+          name: specialtyList[i]['nomeEspecialidade']);
+
+      specialties.add(specialty);
+    }
   }
 
   Future<void> loadDoctors() async {
@@ -87,6 +110,7 @@ class DoctorProvider extends ChangeNotifier {
 
       _items.add(doctor);
     }
+    loadSpecialties();
 
     notifyListeners();
   }
@@ -145,8 +169,11 @@ class DoctorProvider extends ChangeNotifier {
     infoFuncionario.carteiraTrabalho = doctor.employee.workCard;
     infoFuncionario.dataContratacao = doctor.employee.hiringDate;
     infoFuncionario.telefone = doctor.employee.phoneNumber;
-    //infoFuncionario.senha = doctor.employee.password;
+    infoFuncionario.senha = doctor.employee.password;
 
+    String result =
+        await authenticationFB.updatePassword(infoFuncionario.senha);
+    print(result);
     await funcionarioController.editarDadosPessoais(infoFuncionario);
     await funcionarioController.editarDadosTrabalho(infoFuncionario);
 
