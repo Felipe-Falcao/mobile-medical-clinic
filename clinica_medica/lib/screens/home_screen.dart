@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     patients.loadPatients();
     charts.loadCharts();
     doctorProvider.loadDoctors();
+    doctorProvider.loadSpecialties();
     attendantProvider.loadAttendants();
     super.initState();
   }

@@ -52,4 +52,17 @@ class AuthenticationFB {
   String getCurrentUser() {
     return _auth.currentUser.uid;
   }
+
+  Future<String> updatePassword(newPassword) async {
+    User user = _auth.currentUser;
+    if (user != null) {
+      try {
+        await user.updatePassword(newPassword);
+        return 'Atualizado com sucesso!';
+      } catch (err) {
+        print(err);
+        return 'Houve um erro ao atualizar a senha!';
+      }
+    }
+  }
 }
