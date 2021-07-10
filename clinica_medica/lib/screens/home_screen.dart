@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: GridView.count(
         primary: false,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-        crossAxisSpacing: 28,
+        crossAxisSpacing: 18,
         mainAxisSpacing: 20,
         crossAxisCount: 3,
         childAspectRatio: 9 / 10,
@@ -117,13 +117,10 @@ class _HomeScreenState extends State<HomeScreen> {
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.black87, fontSize: 13),
             ),
-            TextButton(
-              child: Text('Gerenciar Médico'),
-              onPressed: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(AppRoutes.DOCTOR_SCREEN);
-              },
-            ),
+            /*TextButton(
+              child: Text(label),
+              onPressed: nav,
+            ),*/
           ],
         ),
         onPressed: nav,

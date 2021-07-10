@@ -53,7 +53,8 @@ class _DoctorStep4State extends State<DoctorStep4> {
           child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
                   hint: Text('Selecione uma especialidade'),
-                  value: currentOptionEspecialidade,
+                  value: currentOptionEspecialidade ??
+                      widget._formData['specialty_name'],
                   onChanged: (String newValue) {
                     setState(() {
                       currentOptionEspecialidade = newValue;
