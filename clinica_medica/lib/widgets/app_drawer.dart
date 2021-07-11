@@ -13,12 +13,13 @@ class AppDrawer extends StatelessWidget {
     bool isAdmin = userProv.isAdmin;
     bool isAttendant = userProv.isAttendant;
     bool isDoctor = userProv.isDoctor;
-    String name = userProv.user.name.split(" ")[0];
     return Drawer(
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text('Bem vindo, $name!'),
+            title: userProv.user != null
+                ? Text('Bem vindo, ${userProv.firstName}!')
+                : Text('Bem vindo!'),
             automaticallyImplyLeading: false,
           ),
           const SizedBox(height: 8),
@@ -51,7 +52,7 @@ class AppDrawer extends StatelessWidget {
             child: _listTile(
               context: context,
               icon: Icons.people_alt_rounded,
-              label: 'Gerenciar Pacientes',
+              label: 'Gerenciar Paciente',
               route: AppRoutes.PATIENT_SCREEN,
             ),
           ),
@@ -60,7 +61,7 @@ class AppDrawer extends StatelessWidget {
             child: _listTile(
               context: context,
               icon: Icons.event_note_rounded,
-              label: 'Gerenciar Agendamentos',
+              label: 'Gerenciar Agendamento',
               route: AppRoutes.SCHEDULE_SCREEN,
             ),
           ),
@@ -78,7 +79,7 @@ class AppDrawer extends StatelessWidget {
             child: _listTile(
               context: context,
               icon: Icons.medication_rounded,
-              label: 'Gerenciar Medicamentos',
+              label: 'Gerenciar Medicamento',
               route: null, //TODO - inserir rota
             ),
           ),

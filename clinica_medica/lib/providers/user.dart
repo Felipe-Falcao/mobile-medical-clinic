@@ -11,6 +11,7 @@ class UserProvider with ChangeNotifier {
   bool get isAdmin => _user?.type == Type.ADMIN;
   bool get isDoctor => _user?.type == Type.DOCTOR;
   bool get isAttendant => _user?.type == Type.ATTENDANT;
+  String get firstName => _user?.name?.split(' ')[0];
 
   Future<void> loadUser() async {
     String userId = _auth.getCurrentUser();
