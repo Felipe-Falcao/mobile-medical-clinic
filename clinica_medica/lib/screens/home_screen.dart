@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               SizedBox(height: size.height * .18),
               Container(
-                height: size.height * .72,
+                height: size.height * .82,
                 child: GridView.count(
                   primary: false,
                   padding:
