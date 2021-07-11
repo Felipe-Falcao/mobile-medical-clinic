@@ -29,7 +29,7 @@ class _AttendantStep4State extends State<AttendantStep4> {
           child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
                   hint: Text('Selecione uma turno'),
-                  value: currentOptionTurno,
+                  value: currentOptionTurno ?? widget._formData['rotation'],
                   onChanged: (String newValue) {
                     setState(() {
                       currentOptionTurno = newValue;

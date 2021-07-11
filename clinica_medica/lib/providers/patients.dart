@@ -7,12 +7,15 @@ import 'package:clinica_medica/models/patient.dart';
 import 'package:flutter/material.dart';
 
 class Patients with ChangeNotifier {
-  PacienteController patientCtrl = PacienteController();
-  EnderecoController addressCtrl = EnderecoController();
+  final PacienteController _patientCtrl = PacienteController();
+  final EnderecoController _addressCtrl = EnderecoController();
   List<Patient> _items = [];
 
-  List<Patient> get items {
-    return [..._items];
+  List<Patient> get items => [..._items];
+  int get itemsCount => _items.length;
+
+  Patient getItemById(String id) {
+    return _items.singleWhere((item) => item.id == id, orElse: () => null);
   }
 
   List<Patient> getItemsWith(String filter) {
@@ -25,21 +28,13 @@ class Patients with ChangeNotifier {
         .toList();
   }
 
-  Patient getItemById(String id) {
-    return _items.singleWhere((item) => item.id == id);
-  }
-
-  int get itemsCount {
-    return _items.length;
-  }
-
   Future<void> loadPatients() async {
     List<Map<String, dynamic>> patientList =
-        await patientCtrl.buscarPacientes();
+        await _patientCtrl.buscarPacientes();
     _items.clear();
     for (var patientMap in patientList) {
       Map<String, dynamic> addressMap =
-          await addressCtrl.buscarEndereco(patientMap['refEndereco']);
+          await _addressCtrl.buscarEndereco(patientMap['refEndereco']);
       Address address = Address(
         id: patientMap['refEndereco'],
         street: addressMap['logradouro'],
@@ -75,7 +70,7 @@ class Patients with ChangeNotifier {
     infoEndereco.estado = patient.address.state;
     infoEndereco.logradouro = patient.address.street;
     infoEndereco.numero = patient.address.number;
-    await patientCtrl.cadastrarPaciente(infoPaciente, infoEndereco);
+    await _patientCtrl.cadastrarPaciente(infoPaciente, infoEndereco);
     await loadPatients();
   }
 
@@ -90,14 +85,14 @@ class Patients with ChangeNotifier {
     infoEndereco.logradouro = patient.address.street;
     infoEndereco.numero = patient.address.number;
     infoEndereco.id = patient.address.id;
-    await addressCtrl.atualizarEndereco(infoEndereco);
+    await _addressCtrl.atualizarEndereco(infoEndereco);
     InfoPaciente infoPaciente = InfoPaciente();
     infoPaciente.id = patient.id;
     infoPaciente.cpf = patient.cpf;
     infoPaciente.dataNascimento = patient.birthDate;
     infoPaciente.nome = patient.name;
     infoPaciente.telefone = patient.phoneNumber;
-    await patientCtrl.editarPaciente(infoPaciente);
+    await _patientCtrl.editarPaciente(infoPaciente);
     await loadPatients();
   }
 
@@ -106,7 +101,7 @@ class Patients with ChangeNotifier {
     InfoPaciente infoPaciente = InfoPaciente();
     infoPaciente.id = patient.id;
     infoPaciente.refEndereco = patient.address.id;
-    await patientCtrl.excluirPaciente(infoPaciente);
+    await _patientCtrl.excluirPaciente(infoPaciente);
     _items.remove(patient);
     notifyListeners();
   }

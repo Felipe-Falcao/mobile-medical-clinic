@@ -7,15 +7,15 @@ class AgendamentoFB {
   /*
    * Função responsável por criar um agendamento.
    */
-  Future<void> create(data, atendenteId, tipo) async {
+  Future<void> create(data, horario) async {
     final userData = {
       'data': data,
-      'refAtendente': db.doc('atendente/' + atendenteId),
-      'tipo': tipo,
+      // 'refAtendente': db.doc('atendente/' + atendenteId),
+      'horario': horario,
     };
 
     DateFormat formatter = DateFormat('yyyy.MM.dd;hh:mm;aaa');
-    String docId = atendenteId + formatter.format(data);
+    String docId = horario + formatter.format(data);
 
     await FirebaseFirestore.instance
         .collection('agendamento')
@@ -26,11 +26,11 @@ class AgendamentoFB {
   /*
    * Função responsável por modificar dados do agendamento.
    */
-  Future<void> update(data, agendamentoId) async {
+  Future<void> update(data, horario, agendamentoId) async {
     final userData = {
       'data': data,
       // 'refAtendente': db.doc('atendente/' + atendenteId),
-      // 'tipo': tipo,
+      'horario': horario,
     };
 
     await db.collection('agendamento').doc(agendamentoId).update(userData);
@@ -60,8 +60,8 @@ class AgendamentoFB {
     return doc;
   }
 
-  DocumentReference getDocRef(atendenteId, data) {
-    var doc = db.collection('agendamento').doc(atendenteId + data);
+  DocumentReference getDocRef(horario, data) {
+    var doc = db.collection('agendamento').doc(horario + data);
     return doc;
   }
 }

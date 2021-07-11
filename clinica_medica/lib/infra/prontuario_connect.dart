@@ -6,12 +6,16 @@ class ProntuarioFB {
   /*
    * Função responsável por criar um prontuario.
    */
-  Future<void> create(pacienteId, medicamentoId, nota) async {
+  Future<void> create(
+    pacienteId,
+    // medicamentoId,
+    nota,
+  ) async {
     final userData = {
       'dataCadastro': DateTime.now(),
       'dataAtualizacao': DateTime.now(),
       'refPaciente': db.doc('paciente/' + pacienteId),
-      'refMedicamento': db.doc('medicamento/' + medicamentoId),
+      // 'refMedicamento': db.doc('medicamento/' + medicamentoId),
       'nota': nota,
     };
 
@@ -24,10 +28,14 @@ class ProntuarioFB {
   /*
    * Função responsável por modificar dados do prontuario.
    */
-  Future<void> update(medicamentoId, prontuarioId, nota) async {
+  Future<void> update(
+    // medicamentoId,
+    prontuarioId,
+    nota,
+  ) async {
     final userData = {
       'dataAtualizacao': DateTime.now(),
-      'refMedicamento': db.doc('medicamento/' + medicamentoId),
+      // 'refMedicamento': db.doc('medicamento/' + medicamentoId),
       'nota': nota,
     };
 

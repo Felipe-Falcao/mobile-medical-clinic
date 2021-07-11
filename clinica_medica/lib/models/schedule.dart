@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 
 class Schedule {
-  DateTime date;
-  String timeBlock;
+  final String id;
+  final DateTime date;
+  final String timeBlock;
 
   Schedule({
+    this.id,
     @required this.date,
     @required this.timeBlock,
   });
 }
 
-List<String> timeBlocks = [
+const List<String> timeBlocks = [
   '8:00',
   '8:30',
   '9:00',

@@ -1,8 +1,11 @@
 import 'package:clinica_medica/controllers/funcionario_controller.dart';
 import 'package:clinica_medica/models/specialty.dart';
+import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/widgets/employee/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
+
+import 'package:provider/provider.dart';
 
 class DoctorStep4 extends StatefulWidget {
   final GlobalKey<FormState> _form;
@@ -19,9 +22,9 @@ class _DoctorStep4State extends State<DoctorStep4> {
   String currentOptionEspecialidade;
   FuncionarioController funcionarioController = FuncionarioController();
 
-  List<Specialty> specialties = [];
+  //List<Specialty> specialties = [];
 
-  Future<void> loadSpecialties() async {
+  /*Future<void> loadSpecialties() async {
     List<dynamic> specialtyList =
         await funcionarioController.buscarEspecialidades();
 
@@ -34,11 +37,13 @@ class _DoctorStep4State extends State<DoctorStep4> {
 
       specialties.add(specialty);
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    loadSpecialties();
+    DoctorProvider doctorProvider = Provider.of<DoctorProvider>(context);
+
+    List<Specialty> specialties = doctorProvider.itemsSpecialty;
 
     Container _formFieldEspecialidade(List<Specialty> especialidades) {
       return Container(
@@ -53,7 +58,8 @@ class _DoctorStep4State extends State<DoctorStep4> {
           child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
                   hint: Text('Selecione uma especialidade'),
-                  value: currentOptionEspecialidade,
+                  value: currentOptionEspecialidade ??
+                      widget._formData['specialty_name'],
                   onChanged: (String newValue) {
                     setState(() {
                       currentOptionEspecialidade = newValue;

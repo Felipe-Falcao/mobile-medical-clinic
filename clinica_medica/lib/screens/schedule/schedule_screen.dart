@@ -1,6 +1,8 @@
 import 'package:clinica_medica/models/appointment.dart';
+import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/models/schedule.dart';
 import 'package:clinica_medica/providers/appointments.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/screens/medical_appointment/detail_appointment_screen.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
 import 'package:clinica_medica/widgets/app_drawer.dart';
@@ -23,6 +25,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     final appointments = Provider.of<Appointments>(context);
+    final patients = Provider.of<Patients>(context, listen: false);
 
     final appBar = AppBar(
       title: Text('Agendamentos'),
@@ -47,7 +50,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     setState(() {});
                   }),
               const SizedBox(height: 12),
-              _schedule(timeBlocks, appointments),
+              _schedule(timeBlocks, appointments, patients),
               if (!_isValidTimeBlock)
                 Row(children: [
                   Padding(
@@ -65,7 +68,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     );
   }
 
-  Widget _schedule(List<String> timeBlocks, Appointments appointments) {
+  Widget _schedule(
+      List<String> timeBlocks, Appointments appointments, Patients patients) {
     return Flexible(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
@@ -77,8 +81,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           itemCount: timeBlocks.length,
           itemBuilder: (context, index) {
             Appointment appointment = appointments.getByTimeBlock(
-                timeBlocks[index], _formData['doctor'], _formData['date']);
+                timeBlocks[index], _formData['doctorId'], _formData['date']);
             bool hasPatient = appointment != null;
+            Patient patient = patients.getItemById(appointment?.patientId);
             return Container(
               height: 45,
               decoration: BoxDecoration(
@@ -91,8 +96,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         Icon(Icons.person_pin_rounded,
                             color: Theme.of(context).accentColor),
                         const SizedBox(width: 10),
-                        Text(
-                            '${timeBlocks[index]}  -  ${appointment.patient.name}',
+                        Text('${timeBlocks[index]}  -  ${patient.name}',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: Theme.of(context).accentColor,

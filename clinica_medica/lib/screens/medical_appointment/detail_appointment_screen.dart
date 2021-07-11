@@ -1,5 +1,9 @@
 import 'package:clinica_medica/models/appointment.dart';
+import 'package:clinica_medica/models/doctor.dart';
+import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/providers/appointments.dart';
+import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
+import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/widgets/medical_appointment/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -24,6 +28,11 @@ class _DetailAppointmentScreenState extends State<DetailAppointmentScreen> {
   @override
   Widget build(BuildContext context) {
     Appointments appointments = Provider.of<Appointments>(context);
+    DoctorProvider doctorProv =
+        Provider.of<DoctorProvider>(context, listen: false);
+    Patients patients = Provider.of<Patients>(context, listen: false);
+    Patient patient = patients.getItemById(appointment.patientId);
+    Doctor doctor = doctorProv.getItemById(appointment.doctorId);
     if (!isLoading) {
       setState(() {
         //atualiza a consulta apos edicao
@@ -38,9 +47,7 @@ class _DetailAppointmentScreenState extends State<DetailAppointmentScreen> {
           appointment: appointment,
           callback: (bool value) {
             if (value) {
-              setState(() {
-                isLoading = true;
-              });
+              setState(() => isLoading = true);
               Navigator.of(context).pop();
               appointments.removeAppointment(appointment);
             }
@@ -79,13 +86,13 @@ class _DetailAppointmentScreenState extends State<DetailAppointmentScreen> {
                     height: availableHeight - 60,
                     child: Column(
                       children: [
-                        _itemList('Paciente', appointment.patient.name),
+                        _itemList('Paciente', patient.name),
                         _itemList(
                             'Data da consulta',
                             new DateFormat('dd/MM/yyyy')
                                 .format(appointment.schedule.date)),
                         _itemList('Horário', appointment.schedule.timeBlock),
-                        _itemList('Médico', appointment.doctor.name),
+                        _itemList('Médico', doctor.employee.name),
                         _itemList('Resultado', ''),
                         _itemText(appointment.result),
                         _itemList('Certificado', ''),

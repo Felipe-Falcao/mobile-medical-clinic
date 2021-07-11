@@ -1,4 +1,6 @@
 import 'package:clinica_medica/models/patient.dart';
+import 'package:clinica_medica/providers/appointments.dart';
+import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/screens/patient/charts_patient_screen.dart';
 import 'package:clinica_medica/widgets/patient/popup_menu.dart';
@@ -24,6 +26,9 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
   @override
   Widget build(BuildContext context) {
     Patients patients = Provider.of<Patients>(context);
+    Charts charts = Provider.of<Charts>(context, listen: false);
+    Appointments appointments =
+        Provider.of<Appointments>(context, listen: false);
     if (!isLoading) {
       setState(() {
         //atualiza o paciente apos edicao
@@ -38,12 +43,14 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
           patient: patient,
           callback: (bool value) {
             if (value) {
-              setState(() {
-                isLoading = true;
-              });
-              patients
-                  .removePatient(patient)
-                  .then((_) => Navigator.of(context).pop());
+              setState(() => isLoading = true);
+              appointments.removeAppointmentsWith(patient.id).then(
+                    (_) => charts.removeChartsWith(patient.id).then(
+                          (_) => patients.removePatient(patient).then(
+                                (_) => Navigator.of(context).pop(),
+                              ),
+                        ),
+                  );
             }
           },
           icon: Icon(Icons.more_vert_rounded),
@@ -102,24 +109,27 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
                   const Divider(height: 20),
                   const SizedBox(height: 10),
                   Center(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: Theme.of(context).accentColor,
+                    child: TextButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Mostrar prontuários cadastrados',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).primaryColor)),
+                          Icon(
+                            Icons.chevron_right_rounded,
+                            size: 25,
+                            color: Theme.of(context).primaryColor,
+                          )
+                        ],
                       ),
-                      child: TextButton(
-                        child: Text(
-                          'Mostrar prontuários cadastrados',
-                          style:
-                              TextStyle(color: Theme.of(context).primaryColor),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  ChartsPatientScreen(patient)));
-                        },
-                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ChartsPatientScreen(patient)));
+                      },
                     ),
                   )
                 ],

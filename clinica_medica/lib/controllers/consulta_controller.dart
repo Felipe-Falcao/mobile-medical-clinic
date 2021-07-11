@@ -10,12 +10,11 @@ class ConsultaController {
   Future<void> agendarConsulta(infoConsulta) async {
     try {
       // Cadastrar Agendamento
-      agendamentoFB.create(
-          infoConsulta.data, infoConsulta.refAtendente, infoConsulta.tipo);
+      await agendamentoFB.create(infoConsulta.data, infoConsulta.horario);
       // Obter referência de agendamento
       DateFormat formatter = DateFormat('yyyy.MM.dd;hh:mm;aaa');
       DocumentReference agendamentoId = agendamentoFB.getDocRef(
-          infoConsulta.refAtendente, formatter.format(infoConsulta.data));
+          infoConsulta.horario, formatter.format(infoConsulta.data));
       // Cadastrar Consulta
       consultaFB.create(
         '',
@@ -31,16 +30,17 @@ class ConsultaController {
 
   Future<void> editarConsulta(infoConsulta) async {
     try {
-      consultaFB.update(
+      await consultaFB.update(
           infoConsulta.atestado, infoConsulta.resultado, infoConsulta.id);
-      agendamentoFB.update(infoConsulta.data, infoConsulta.refAgendamento);
+      await agendamentoFB.update(
+          infoConsulta.data, infoConsulta.horario, infoConsulta.refAgendamento);
     } catch (err) {
       print(err);
     }
   }
 
-  Future<List<dynamic>> buscarConsultas() async {
-    var result = [];
+  Future<List<Map<String, dynamic>>> buscarConsultas() async {
+    List<Map<String, dynamic>> result = [];
     var data;
     QuerySnapshot consultas = await consultaFB.getConsultas();
 
@@ -50,9 +50,9 @@ class ConsultaController {
         'id': consultas.docs[i].id,
         'atestado': data['atestado'],
         'resultado': data['resultado'],
-        'refAgendamento': data['refAgendamento'],
-        'refMedico': data['refMedico'],
-        'refPaciente': data['refPaciente'],
+        'refAgendamento': data['refAgendamento'].id,
+        'refMedico': data['refMedico'].id,
+        'refPaciente': data['refPaciente'].id,
       });
     }
     return result;

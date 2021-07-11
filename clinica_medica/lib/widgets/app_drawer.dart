@@ -1,5 +1,7 @@
+import 'package:clinica_medica/providers/user.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
   final String currentRoute;
@@ -7,11 +9,16 @@ class AppDrawer extends StatelessWidget {
   const AppDrawer({@required this.currentRoute});
   @override
   Widget build(BuildContext context) {
+    UserProvider userProv = Provider.of<UserProvider>(context);
+    bool isAdmin = userProv.isAdmin;
+    bool isAttendant = userProv.isAttendant;
+    bool isDoctor = userProv.isDoctor;
+    String name = userProv.user.name.split(" ")[0];
     return Drawer(
       child: Column(
         children: <Widget>[
           AppBar(
-            title: const Text('Bem vindo!'),
+            title: Text('Bem vindo, $name!'),
             automaticallyImplyLeading: false,
           ),
           const SizedBox(height: 8),
@@ -21,47 +28,68 @@ class AppDrawer extends StatelessWidget {
             label: 'Home',
             route: AppRoutes.HOME_SCREEN,
           ),
-          _listTile(
-            context: context,
-            icon: Icons.people_alt_rounded,
-            label: 'Gerenciar Pacientes',
-            route: AppRoutes.PATIENT_SCREEN,
+          Visibility(
+            visible: isAdmin,
+            child: _listTile(
+              context: context,
+              icon: Icons.chat_rounded,
+              label: 'Gerenciar Atendente',
+              route: AppRoutes.ATTENDANT_SCREEN,
+            ),
           ),
-          _listTile(
-            context: context,
-            icon: Icons.note_alt_rounded,
-            label: 'Gerenciar Prontuário',
-            route: AppRoutes.CHART_SCREEN,
+          Visibility(
+            visible: isAdmin,
+            child: _listTile(
+              context: context,
+              icon: Icons.chat_rounded,
+              label: 'Gerenciar Médico',
+              route: AppRoutes.DOCTOR_SCREEN,
+            ),
           ),
-          _listTile(
-            context: context,
-            icon: Icons.event_available_rounded,
-            label: 'Gerenciar Consulta',
-            route: AppRoutes.APPOINTMENT_SCREEN,
+          Visibility(
+            visible: isAdmin || isAttendant || isDoctor,
+            child: _listTile(
+              context: context,
+              icon: Icons.people_alt_rounded,
+              label: 'Gerenciar Pacientes',
+              route: AppRoutes.PATIENT_SCREEN,
+            ),
           ),
-          _listTile(
-            context: context,
-            icon: Icons.event_note_rounded,
-            label: 'Gerenciar Agendamentos',
-            route: AppRoutes.SCHEDULE_SCREEN,
+          Visibility(
+            visible: isAdmin || isAttendant || isDoctor,
+            child: _listTile(
+              context: context,
+              icon: Icons.event_note_rounded,
+              label: 'Gerenciar Agendamentos',
+              route: AppRoutes.SCHEDULE_SCREEN,
+            ),
           ),
-          ListTile(
-            leading: const Icon(Icons.chat_rounded),
-            title: const Text('Gerenciar Médico'),
-            enabled: currentRoute != AppRoutes.DOCTOR_SCREEN,
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(AppRoutes.DOCTOR_SCREEN);
-            },
+          Visibility(
+            visible: isAdmin || isAttendant || isDoctor,
+            child: _listTile(
+              context: context,
+              icon: Icons.event_available_rounded,
+              label: 'Gerenciar Consulta',
+              route: AppRoutes.APPOINTMENT_SCREEN,
+            ),
           ),
-          ListTile(
-            leading: const Icon(Icons.chat_rounded),
-            title: const Text('Gerenciar Atendente'),
-            enabled: currentRoute != AppRoutes.ATTENDANT_SCREEN,
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(AppRoutes.ATTENDANT_SCREEN);
-            },
+          Visibility(
+            visible: isAdmin || isDoctor,
+            child: _listTile(
+              context: context,
+              icon: Icons.medication_rounded,
+              label: 'Gerenciar Medicamentos',
+              route: null, //TODO - inserir rota
+            ),
+          ),
+          Visibility(
+            visible: isAdmin || isAttendant || isDoctor,
+            child: _listTile(
+              context: context,
+              icon: Icons.note_alt_rounded,
+              label: 'Gerenciar Prontuário',
+              route: AppRoutes.CHART_SCREEN,
+            ),
           ),
         ],
       ),
