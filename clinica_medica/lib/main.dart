@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
         theme: appTheme,
         home: _home(),
         routes: {
-          AppRoutes.HOME_SCREEN: (_) => _home(),
+          AppRoutes.HOME_SCREEN: (_) => HomeScreen(),
           AppRoutes.PATIENT_SCREEN: (_) => PatientScreen(),
           AppRoutes.CHART_SCREEN: (_) => ChartScreen(),
           AppRoutes.APPOINTMENT_SCREEN: (_) => AppointmentScreen(),

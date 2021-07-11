@@ -5,10 +5,10 @@ import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
 import 'package:clinica_medica/providers/medication_provider.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/providers/user.dart';
+import 'package:clinica_medica/screens/user/user_screen.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clinica_medica/infra/auth_connect.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final AuthenticationFB auth = new AuthenticationFB();
   @override
   void initState() {
     Patients patients = Provider.of<Patients>(context, listen: false);
@@ -47,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     bool isAttendant = userProv.isAttendant;
     bool isDoctor = userProv.isDoctor;
     var size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -55,17 +55,43 @@ class _HomeScreenState extends State<HomeScreen> {
             height: size.height * .27,
             color: Theme.of(context).primaryColor,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                children: [
-                  Text(
-                    'Clinic+',
-                    style: TextStyle(fontFamily: 'Iceberg', fontSize: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Row(children: [
+                Text(
+                  'Clinic+',
+                  style: TextStyle(fontFamily: 'Iceberg', fontSize: 40),
+                ),
+                Spacer(),
+                if (userProv.user != null)
+                  Container(
+                    height: 40,
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(.4),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: TextButton(
+                      child: Row(
+                        children: [
+                          Text(userProv.firstName,
+                              style: TextStyle(
+                                  color: Theme.of(context).accentColor,
+                                  fontSize: 16)),
+                          SizedBox(width: 8),
+                          Icon(
+                            Icons.account_circle_rounded,
+                            color: Theme.of(context).accentColor,
+                            size: 25,
+                          ),
+                        ],
+                      ),
+                      onPressed: () =>
+                          Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => UserScreen(),
+                      )),
+                    ),
                   ),
-                  Spacer(),
-                  _button(),
-                ],
-              ),
+              ]),
             ),
           ),
           Column(
@@ -93,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _item(
                       context: context,
                       icons: Icons.people,
-                      label: 'Gerenciar Médicos',
+                      label: 'Gerenciar Médico',
                       nav: () => Navigator.of(context)
                           .pushReplacementNamed(AppRoutes.DOCTOR_SCREEN),
                       hasAccess: isAdmin,
@@ -101,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _item(
                       context: context,
                       icons: Icons.people_alt_rounded,
-                      label: 'Gerenciar Pacientes',
+                      label: 'Gerenciar Paciente',
                       nav: () => Navigator.of(context)
                           .pushReplacementNamed(AppRoutes.PATIENT_SCREEN),
                       hasAccess: isAdmin || isAttendant || isDoctor,
@@ -109,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _item(
                       context: context,
                       icons: Icons.event_note_rounded,
-                      label: 'Gerenciar Agendamentos',
+                      label: 'Gerenciar Agendamento',
                       nav: () => Navigator.of(context)
                           .pushReplacementNamed(AppRoutes.SCHEDULE_SCREEN),
                       hasAccess: isAdmin || isAttendant || isDoctor,
@@ -125,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _item(
                       context: context,
                       icons: Icons.medical_services,
-                      label: 'Gerenciar Medicamentos',
+                      label: 'Gerenciar Receita',
                       nav: () => Navigator.of(context)
                           .pushReplacementNamed(AppRoutes.MEDICAMENTO_SCREEN),
                       hasAccess: isAdmin || isDoctor,
@@ -147,36 +173,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  _button() => DropdownButton(
-        underline: SizedBox(),
-        icon: Icon(
-          Icons.more_vert,
-          color: Theme.of(context).primaryIconTheme.color,
-        ),
-        items: [
-          DropdownMenuItem(
-            value: 'logout',
-            child: Container(
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.exit_to_app,
-                    color: Colors.black,
-                  ),
-                  SizedBox(width: 8),
-                  Text('Sair'),
-                ],
-              ),
-            ),
-          )
-        ],
-        onChanged: (item) {
-          if (item == 'logout') {
-            auth.signOut();
-          }
-        },
-      );
 
   Widget _item({
     @required BuildContext context,
