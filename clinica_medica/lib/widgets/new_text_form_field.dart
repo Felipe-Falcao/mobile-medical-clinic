@@ -10,6 +10,7 @@ class NewTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final Function onFieldSubmitted;
   final Function onChanged;
+  final bool isObscure;
 
   const NewTextFormField({
     @required this.keyFormData,
@@ -21,11 +22,13 @@ class NewTextFormField extends StatelessWidget {
     this.keyboardType,
     this.onFieldSubmitted,
     this.onChanged,
+    this.isObscure,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: isObscure ?? false,
       key: ValueKey(keyFormData),
       initialValue: formData[keyFormData],
       autofocus: autofocus,
