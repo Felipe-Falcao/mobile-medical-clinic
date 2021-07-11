@@ -2,7 +2,7 @@ import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/models/receita.dart';
 import 'package:clinica_medica/providers/medication_provider.dart';
 import 'package:clinica_medica/providers/patients.dart';
-import 'package:clinica_medica/screens/medical_chart/detail_chart_screen.dart';
+import 'package:clinica_medica/screens/medication/detail_medication_screen.dart';
 import 'package:clinica_medica/widgets/medication/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -22,7 +22,7 @@ class MedicationItem extends StatelessWidget {
       child: ListTile(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => DetailChartScreen(),
+              builder: (context) => DetailMedicationScreen(),
               settings: RouteSettings(arguments: receita)));
         },
         leading: CircleAvatar(

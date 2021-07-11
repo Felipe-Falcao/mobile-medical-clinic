@@ -99,7 +99,7 @@ class _StoreMedicationState extends State<StoreMedicationScreen> {
 
     final receita = Receita(
       id: _formData['id'],
-      dataPrescricao: _formData['data'],
+      dataPrescricao: DateTime.now(),
       dose: _formData['dose'],
       nome: _formData['nome'],
       refMedico: 'qVLN2s87OXOA4OrRdnBY8utKZDw2', // _formData['refMedico'],

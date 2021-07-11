@@ -79,7 +79,7 @@ class AppDrawer extends StatelessWidget {
               context: context,
               icon: Icons.medication_rounded,
               label: 'Gerenciar Medicamentos',
-              route: null, //TODO - inserir rota
+              route: AppRoutes.MEDICAMENTO_SCREEN,
             ),
           ),
           Visibility(

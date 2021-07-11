@@ -31,19 +31,19 @@ class Medication with ChangeNotifier {
   }
 
   Future<void> loadMedications() async {
-    List<Map<String, dynamic>> listaMedicamentos =
+    List<dynamic> listaMedicamentos =
         await medicamentoController.buscarMedicamentos();
     _items.clear();
     for (var med in listaMedicamentos) {
+      print(med['dataPrescricao']);
       Receita receita = Receita(
         dataPrescricao: DateTime.fromMicrosecondsSinceEpoch(
-          med['dataPrescricao'].microsecondsSinceEpoch,
-        ),
+            med['dataPrescricao'].microsecondsSinceEpoch),
         id: med['id'],
         nome: med['nome'],
         dose: med['dose'],
-        refPaciente: med['refPaciente'],
-        refMedico: med['refMedico'],
+        refPaciente: med['refPaciente'].id,
+        refMedico: med['refMedico'].id,
       );
       _items.add(receita);
     }
@@ -70,6 +70,7 @@ class Medication with ChangeNotifier {
     if (medicamento == null || medicamento.id == null) return;
 
     InfoMedicamento med = InfoMedicamento();
+    med.id = medicamento.id;
     med.dataPrescricao = DateTime.now();
     med.dose = medicamento.dose;
     med.nome = medicamento.nome;

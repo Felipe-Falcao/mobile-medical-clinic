@@ -1,5 +1,6 @@
 import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/providers/patients.dart';
+import 'package:clinica_medica/widgets/employee/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -69,6 +70,20 @@ class _MedicationFormState extends State<MedicationForm> {
                   ),
                 ],
               ),
+            const SizedBox(height: 15),
+            CustomTextFormField(
+                keyFormData: 'nome',
+                formData: widget.formData,
+                labelText: 'Nome do Medicamento',
+                autofocus: true,
+                validator: (value) {
+                  bool isEmpty = value.trim().isEmpty;
+                  bool isInvalid = value.trim().length < 3;
+                  if (isEmpty || isInvalid) {
+                    return 'Informe um nome válido\ncom no mínimo 3 caracteres!';
+                  }
+                  return null;
+                }),
             const SizedBox(height: 15),
             TextFormField(
               key: ValueKey('dose'),

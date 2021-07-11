@@ -2,6 +2,7 @@ import 'package:clinica_medica/providers/appointments.dart';
 import 'package:clinica_medica/providers/attendant/attendant_provider.dart';
 import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
+import 'package:clinica_medica/providers/medication_provider.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/providers/user.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
@@ -27,12 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<DoctorProvider>(context, listen: false);
     AttendantProvider attendantProvider =
         Provider.of<AttendantProvider>(context, listen: false);
+    Medication medications = Provider.of(context, listen: false);
     patients.loadPatients();
     charts.loadCharts();
     appointments.loadAppointments();
     doctorProvider.loadDoctors();
     doctorProvider.loadSpecialties();
     attendantProvider.loadAttendants();
+    medications.loadMedications();
     user.loadUser();
     super.initState();
   }
@@ -45,56 +48,25 @@ class _HomeScreenState extends State<HomeScreen> {
     bool isDoctor = userProv.isDoctor;
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: GridView.count(
-        primary: false,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-        crossAxisSpacing: 28,
-        mainAxisSpacing: 20,
-        crossAxisCount: 3,
-        childAspectRatio: 9 / 10,
-        children: <Widget>[
-          _item(
-            context: context,
-            icons: Icons.people_alt_rounded,
-            label: 'Gerenciar Pacientes',
-            nav: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.PATIENT_SCREEN),
-          ),
-          _item(
-            context: context,
-            icons: Icons.note_alt_rounded,
-            label: 'Gerenciar Prontuário',
-            nav: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.CHART_SCREEN),
-          ),
-          _item(
-            context: context,
-            icons: Icons.event_available_rounded,
-            label: 'Gerenciar Consulta',
-            nav: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.APPOINTMENT_SCREEN),
-          ),
-          _item(
-            context: context,
-            icons: Icons.event_note_rounded,
-            label: 'Gerenciar Agendamentos',
-            nav: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.SCHEDULE_SCREEN),
-          ),
-          _item(
-            context: context,
-            icons: Icons.medication,
-            label: 'Gerenciar Medicamento',
-            nav: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.MEDICAMENTO_SCREEN),
-          ),
-          _item(
-            context: context,
-            icons: Icons.people,
-            label: 'Gerenciar Médicos',
-            nav: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.DOCTOR_SCREEN),
+      body: Stack(
+        children: [
+          Container(
+            width: size.width,
+            height: size.height * .27,
+            color: Theme.of(context).primaryColor,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                children: [
+                  Text(
+                    'Clinic+',
+                    style: TextStyle(fontFamily: 'Iceberg', fontSize: 40),
+                  ),
+                  Spacer(),
+                  _button(),
+                ],
+              ),
+            ),
           ),
           Column(
             children: [
@@ -154,10 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       context: context,
                       icons: Icons.medical_services,
                       label: 'Gerenciar Medicamentos',
-                      nav: null,
-                      //TODO - aterar quando ger. medicamentos estiver pronto
-                      hasAccess: false,
-                      // hasAccess: isAdmin || isDoctor,
+                      nav: () => Navigator.of(context)
+                          .pushReplacementNamed(AppRoutes.MEDICAMENTO_SCREEN),
+                      hasAccess: isAdmin || isDoctor,
                     ),
                     _item(
                       context: context,
