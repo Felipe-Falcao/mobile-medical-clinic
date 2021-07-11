@@ -171,9 +171,6 @@ class DoctorProvider extends ChangeNotifier {
     infoFuncionario.telefone = doctor.employee.phoneNumber;
     infoFuncionario.senha = doctor.employee.password;
 
-    String result =
-        await authenticationFB.updatePassword(infoFuncionario.senha);
-    print(result);
     await funcionarioController.editarDadosPessoais(infoFuncionario);
     await funcionarioController.editarDadosTrabalho(infoFuncionario);
 

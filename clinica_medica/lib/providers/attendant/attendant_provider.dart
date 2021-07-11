@@ -1,5 +1,6 @@
 import 'package:clinica_medica/controllers/endereco_controller.dart';
 import 'package:clinica_medica/controllers/funcionario_controller.dart';
+import 'package:clinica_medica/infra/auth_connect.dart';
 import 'package:clinica_medica/models/address.dart';
 import 'package:clinica_medica/models/atendente_data.dart';
 import 'package:clinica_medica/models/attendant.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 class AttendantProvider extends ChangeNotifier {
   FuncionarioController funcionarioController = FuncionarioController();
   EnderecoController enderecoController = EnderecoController();
+  AuthenticationFB authenticationFB = AuthenticationFB();
 
   List<Attendant> _items = [];
 
@@ -139,7 +141,7 @@ class AttendantProvider extends ChangeNotifier {
     infoFuncionario.carteiraTrabalho = attendant.employee.workCard;
     infoFuncionario.dataContratacao = attendant.employee.hiringDate;
     infoFuncionario.telefone = attendant.employee.phoneNumber;
-    //infoFuncionario.senha = attendant.employee.password;
+    infoFuncionario.senha = attendant.employee.password;
 
     await funcionarioController.editarDadosPessoais(infoFuncionario);
     await funcionarioController.editarDadosTrabalho(infoFuncionario);
