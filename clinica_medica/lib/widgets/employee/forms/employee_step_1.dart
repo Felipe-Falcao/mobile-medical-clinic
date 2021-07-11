@@ -84,42 +84,48 @@ class EmployeeStep1 extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 16.0),
-              child: CustomTextFormField(
-                  keyFormData: 'password',
-                  formData: _formData,
-                  labelText: 'Informe uma senha',
-                  obscureText: true,
-                  validator: (value) {
-                    if (!_isEdit) {
-                      bool isEmpty = value.trim().isEmpty;
-                      bool isInvalid = value.trim().length < 9;
-                      if (isEmpty || isInvalid) {
-                        return 'Informe uma senha com 9 caracteres';
-                      }
-                    }
+            !_isEdit
+                ? Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(bottom: 16.0),
+                        child: CustomTextFormField(
+                            keyFormData: 'password',
+                            formData: _formData,
+                            labelText: 'Informe uma senha',
+                            obscureText: true,
+                            validator: (value) {
+                              if (!_isEdit) {
+                                bool isEmpty = value.trim().isEmpty;
+                                bool isInvalid = value.trim().length < 9;
+                                if (isEmpty || isInvalid) {
+                                  return 'Informe uma senha com 9 caracteres';
+                                }
+                              }
 
-                    return null;
-                  }),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 16.0),
-              child: CustomTextFormField(
-                keyFormData: 'passwordConfirmation',
-                formData: _formData,
-                labelText: 'Confirme sua senha',
-                obscureText: true,
-                validator: (value) {
-                  if (!_isEdit) {
-                    if (value != _formData['password']) {
-                      return 'As senhas são diferente';
-                    }
-                  }
-                  return null;
-                },
-              ),
-            ),
+                              return null;
+                            }),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 16.0),
+                        child: CustomTextFormField(
+                          keyFormData: 'passwordConfirmation',
+                          formData: _formData,
+                          labelText: 'Confirme sua senha',
+                          obscureText: true,
+                          validator: (value) {
+                            if (!_isEdit) {
+                              if (value != _formData['password']) {
+                                return 'As senhas são diferente';
+                              }
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                : SizedBox()
           ],
         ),
       ),
