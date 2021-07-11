@@ -33,28 +33,6 @@ class _AuthScreenState extends State<AuthScreen> {
         userCredential = await auth.signIn(authData);
       } else {
         userCredential = await auth.signUp(authData);
-        // await funcionarioFB.create(authData, userCredential, 'null', 'null');
-        // await funcionarioController.createfuncMedico(
-        //     authData,
-        //     userCredential,
-        //     '4900000',
-        //     'Aracaju',
-        //     'SE',
-        //     'logradouro',
-        //     '12',
-        //     'Ortopedista',
-        //     12000,
-        //     '1111');
-        // await funcionarioController.createFuncAtendente(
-        //     authData,
-        //     userCredential,
-        //     999,
-        //     'manhã',
-        //     '49999',
-        //     'Aracaju',
-        //     'SE',
-        //     'Rua X',
-        //     '12');
       }
     } on PlatformException catch (err) {
       final msg = err.message ?? 'Ocorreu um erro! Verifique suas credenciais!';
@@ -104,12 +82,14 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      // backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Colors.white,
       // body: AuthForm(_handleSubmit),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Image.asset('assets/images/logo01.png'),
             Stack(
               children: [
                 AuthForm(_handleSubmit),

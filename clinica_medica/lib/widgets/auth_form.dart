@@ -36,6 +36,7 @@ class _AuthFormState extends State<AuthForm> {
     return Center(
       child: Card(
         margin: EdgeInsets.all(20),
+        elevation: 0.0,
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(16),
@@ -60,8 +61,19 @@ class _AuthFormState extends State<AuthForm> {
                     ),
                   TextFormField(
                     key: ValueKey('email'),
-                    decoration: InputDecoration(
-                      labelText: 'E-mail',
+                    decoration: new InputDecoration(
+                      fillColor: Color(0xffE4E5E7),
+                      filled: true,
+                      border: new OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                              const Radius.circular(8.0)),
+                          borderSide: new BorderSide(
+                              color: Colors.transparent, width: 1.0)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.transparent)),
+                      labelText: 'Usuário',
+                      labelStyle: TextStyle(color: Colors.grey, fontSize: 14),
                     ),
                     onChanged: (value) => _authData.email = value,
                     validator: (value) {
@@ -71,18 +83,30 @@ class _AuthFormState extends State<AuthForm> {
                       return null;
                     },
                   ),
+                  Padding(padding: EdgeInsets.only(top: 2.0, bottom: 15.0)),
                   TextFormField(
                     key: ValueKey('password'),
                     obscureText: _hidePassword,
-                    decoration: InputDecoration(
+                    decoration: new InputDecoration(
+                      fillColor: Color(0xffE4E5E7),
+                      filled: true,
+                      border: new OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                              const Radius.circular(8.0)),
+                          borderSide: new BorderSide(
+                              color: Colors.transparent, width: 1.0)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.transparent)),
                       labelText: 'Senha',
+                      labelStyle: TextStyle(color: Colors.grey, fontSize: 14),
                       suffixIcon: GestureDetector(
                         onTap: _toggleHide,
                         child: Icon(
                           _hidePassword
                               ? Icons.visibility_off
                               : Icons.visibility,
-                          color: Colors.grey[350],
+                          color: Colors.grey,
                         ),
                       ),
                     ),
@@ -95,19 +119,26 @@ class _AuthFormState extends State<AuthForm> {
                     },
                   ),
                   SizedBox(height: 12),
-                  ElevatedButton(
-                    onPressed: _submit,
-                    child: Text(_authData.isLogin ? 'Entrar' : 'Cadastrar'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _authData.toggleMode();
-                      });
-                    },
-                    child: Text(_authData.isLogin
-                        ? 'Quero me cadastrar!'
-                        : 'Já possui uma conta?'),
+                  ConstrainedBox(
+                    constraints:
+                        BoxConstraints.tightFor(width: double.infinity),
+                    child: ElevatedButton(
+                      onPressed: _submit,
+                      child: Text(
+                        _authData.isLogin ? 'Entrar' : 'Cadastrar',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed))
+                              return Colors.grey;
+                            return Color(0xff72D5C0);
+                          },
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),

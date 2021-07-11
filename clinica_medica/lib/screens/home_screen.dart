@@ -7,6 +7,7 @@ import 'package:clinica_medica/providers/user.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:clinica_medica/infra/auth_connect.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -37,12 +38,47 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationFB auth = new AuthenticationFB();
     UserProvider userProv = Provider.of<UserProvider>(context);
     bool isAdmin = userProv.isAdmin;
     bool isAttendant = userProv.isAttendant;
     bool isDoctor = userProv.isDoctor;
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
+      appBar: AppBar(
+        title: Text('Home'),
+        actions: [
+          DropdownButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Theme.of(context).primaryIconTheme.color,
+            ),
+            items: [
+              DropdownMenuItem(
+                value: 'logout',
+                child: Container(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.exit_to_app,
+                        color: Colors.black,
+                      ),
+                      SizedBox(width: 8),
+                      Text('Sair'),
+                    ],
+                  ),
+                ),
+              )
+            ],
+            onChanged: (item) {
+              if (item == 'logout') {
+                auth.signOut();
+              }
+            },
+          )
+        ],
+      ),
+      // appBar: AppBar(title: const Text('Home')
+      // ),
       body: GridView.count(
         primary: false,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
