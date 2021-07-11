@@ -5,5 +5,6 @@ class AppRoutes {
   static const DOCTOR_SCREEN = '/doctor-screen';
   static const APPOINTMENT_SCREEN = '/appointment-screen';
   static const SCHEDULE_SCREEN = '/schedule-screen';
+  static const MEDICAMENTO_SCREEN = '/medicamento-screen';
   static const ATTENDANT_SCREEN = '/attendant-screen';
 }

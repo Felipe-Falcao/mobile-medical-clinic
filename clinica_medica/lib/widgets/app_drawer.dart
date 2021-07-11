@@ -79,8 +79,8 @@ class AppDrawer extends StatelessWidget {
             child: _listTile(
               context: context,
               icon: Icons.medication_rounded,
-              label: 'Gerenciar Medicamento',
-              route: null, //TODO - inserir rota
+              label: 'Gerenciar Receita',
+              route: AppRoutes.MEDICAMENTO_SCREEN,
             ),
           ),
           Visibility(

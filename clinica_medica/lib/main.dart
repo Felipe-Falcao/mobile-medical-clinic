@@ -3,6 +3,7 @@ import 'package:clinica_medica/providers/appointments.dart';
 import 'package:clinica_medica/providers/attendant/attendant_provider.dart';
 import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
+import 'package:clinica_medica/providers/medication_provider.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/providers/user.dart';
 import 'package:clinica_medica/screens/attendant/attendant_screen.dart';
@@ -11,6 +12,7 @@ import 'package:clinica_medica/screens/doctor/doctor_screen.dart';
 import 'package:clinica_medica/screens/home_screen.dart';
 import 'package:clinica_medica/screens/medical_appointment/appointment_screen.dart';
 import 'package:clinica_medica/screens/medical_chart/chart_screen.dart';
+import 'package:clinica_medica/screens/medication/medication_screen.dart';
 import 'package:clinica_medica/screens/patient/patient_screen.dart';
 import 'package:clinica_medica/screens/schedule/schedule_screen.dart';
 import 'package:clinica_medica/theme/theme.dart';
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => new UserProvider()),
         ChangeNotifierProvider(create: (_) => new DoctorProvider()),
         ChangeNotifierProvider(create: (_) => new AttendantProvider()),
+        ChangeNotifierProvider(create: (_) => new Medication()),
       ],
       child: MaterialApp(
         title: 'Clinic+',
@@ -57,6 +60,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.CHART_SCREEN: (_) => ChartScreen(),
           AppRoutes.APPOINTMENT_SCREEN: (_) => AppointmentScreen(),
           AppRoutes.SCHEDULE_SCREEN: (_) => ScheduleScreen(),
+          AppRoutes.MEDICAMENTO_SCREEN: (_) => MedicamentoScreen(),
           AppRoutes.DOCTOR_SCREEN: (_) => DoctorScreen(),
           AppRoutes.ATTENDANT_SCREEN: (_) => AttendantScreen()
         },

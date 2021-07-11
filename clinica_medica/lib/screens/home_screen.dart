@@ -2,6 +2,7 @@ import 'package:clinica_medica/providers/appointments.dart';
 import 'package:clinica_medica/providers/attendant/attendant_provider.dart';
 import 'package:clinica_medica/providers/charts.dart';
 import 'package:clinica_medica/providers/doctor/doctor_provider.dart';
+import 'package:clinica_medica/providers/medication_provider.dart';
 import 'package:clinica_medica/providers/patients.dart';
 import 'package:clinica_medica/providers/user.dart';
 import 'package:clinica_medica/screens/user/user_screen.dart';
@@ -26,12 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<DoctorProvider>(context, listen: false);
     AttendantProvider attendantProvider =
         Provider.of<AttendantProvider>(context, listen: false);
+    Medication medications = Provider.of(context, listen: false);
     patients.loadPatients();
     charts.loadCharts();
     appointments.loadAppointments();
     doctorProvider.loadDoctors();
     doctorProvider.loadSpecialties();
     attendantProvider.loadAttendants();
+    medications.loadMedications();
     user.loadUser();
     super.initState();
   }
@@ -148,11 +151,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     _item(
                       context: context,
                       icons: Icons.medical_services,
-                      label: 'Gerenciar Medicamento',
-                      nav: null,
-                      //TODO - aterar quando ger. medicamentos estiver pronto
-                      hasAccess: false,
-                      // hasAccess: isAdmin || isDoctor,
+                      label: 'Gerenciar Receita',
+                      nav: () => Navigator.of(context)
+                          .pushReplacementNamed(AppRoutes.MEDICAMENTO_SCREEN),
+                      hasAccess: isAdmin || isDoctor,
                     ),
                     _item(
                       context: context,
