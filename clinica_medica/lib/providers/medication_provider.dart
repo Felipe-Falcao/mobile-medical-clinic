@@ -1,5 +1,6 @@
 import 'package:clinica_medica/controllers/medicamento_controller.dart';
 import 'package:clinica_medica/models/medicamento_data.dart';
+import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/models/receita.dart';
 import 'package:flutter/material.dart';
 
@@ -11,16 +12,15 @@ class Medication with ChangeNotifier {
     return [..._items];
   }
 
-  /** 
-  List<InfoMedicamento> getItemsWith(String filter, List<Patient> patients) {
+  List<Receita> getItemsWith(String filter, List<Patient> patients) {
     if (filter == null) return [..._items];
     filter = filter.toLowerCase();
-    return _items.where((chart) {
-      Patient patient = patients.singleWhere((el) => el.id == chart.patientId);
+    return _items.where((rec) {
+      Patient patient = patients.singleWhere((el) => el.id == rec.refPaciente);
       return patient.name.toLowerCase().contains(filter) ||
           patient.cpf.toLowerCase().contains(filter);
     }).toList();
-  }*/
+  }
 
   Receita getItemById(String id) {
     return _items.singleWhere((item) => item.id == id);
@@ -65,22 +65,28 @@ class Medication with ChangeNotifier {
 
     await loadMedications();
   }
-/** 
-  Future<void> updateChart(Chart chart) async {
-    if (chart == null || chart.id == null) return;
-    InfoProntuario infoProntuario = InfoProntuario();
-    infoProntuario.id = chart.id;
-    infoProntuario.refMedicamento = chart.medicineId;
-    infoProntuario.nota = chart.note;
-    await chartCtrl.editarProntuario(infoProntuario);
-    await loadCharts();
+
+  Future<void> updateMedication(Receita medicamento) async {
+    if (medicamento == null || medicamento.id == null) return;
+
+    InfoMedicamento med = InfoMedicamento();
+    med.dataPrescricao = DateTime.now();
+    med.dose = medicamento.dose;
+    med.nome = medicamento.nome;
+    med.refMedico = medicamento.refMedico;
+    med.refPaciente = medicamento.refPaciente;
+
+    await medicamentoController.editarMedicamento(med);
+
+    await loadMedications();
   }
 
-  Future<void> removeChart(Chart chart) async {
-    if (chart == null) return;
-    await chartCtrl.excluirProntuario(chart.id);
-    _items.remove(chart);
+  Future<void> removeMedication(Receita rec) async {
+    if (rec == null) return;
+
+    await medicamentoController.excluirMedicamento(rec.id);
+    _items.remove(rec);
+
     notifyListeners();
   }
-  */
 }

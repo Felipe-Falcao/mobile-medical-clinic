@@ -102,7 +102,7 @@ class _StoreMedicationState extends State<StoreMedicationScreen> {
       dataPrescricao: _formData['data'],
       dose: _formData['dose'],
       nome: _formData['nome'],
-      refMedico: _formData['refMedico'],
+      refMedico: 'qVLN2s87OXOA4OrRdnBY8utKZDw2', // _formData['refMedico'],
       refPaciente: _formData['refPaciente'],
     );
 
@@ -116,7 +116,7 @@ class _StoreMedicationState extends State<StoreMedicationScreen> {
       if (_formData['id'] == null) {
         await medications.addMedication(receita);
       } else {
-        // await update
+        await medications.updateMedication(receita);
       }
 
       await showDialog(

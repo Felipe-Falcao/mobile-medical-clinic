@@ -1,3 +1,4 @@
+import 'package:clinica_medica/screens/medication/find_medication.dart';
 import 'package:clinica_medica/screens/medication/store_medication_screen.dart';
 import 'package:clinica_medica/utils/app_routes.dart';
 import 'package:clinica_medica/widgets/app_drawer.dart';
@@ -33,7 +34,7 @@ class MedicamentoScreen extends StatelessWidget {
               title: 'Buscar Receita',
               nav: () => Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => null,
+                  builder: (context) => FindMedicationScreen(),
                 ),
               ),
             ),
