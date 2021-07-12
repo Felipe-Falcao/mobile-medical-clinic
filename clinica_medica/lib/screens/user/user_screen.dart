@@ -129,7 +129,7 @@ class _UserScreenState extends State<UserScreen> {
                 bool isEmpty = value.trim().isEmpty;
                 bool isInvalid = value.trim().length < 7;
                 if (isEmpty || isInvalid) {
-                  return 'Informe uma senha válida com no mínimo 7 caracteres!';
+                  return 'Informe uma senha com no mínimo 7 caracteres!';
                 }
                 return null;
               },
@@ -144,7 +144,7 @@ class _UserScreenState extends State<UserScreen> {
                 bool isEmpty = value.trim().isEmpty;
                 bool isInvalid = value.trim().length < 7;
                 if (isEmpty || isInvalid) {
-                  return 'Informe uma senha válida com no mínimo 7 caracteres!';
+                  return 'Informe uma senha com no mínimo 7 caracteres!';
                 }
                 if (value != _formData['password']) {
                   return 'As senhas informadas não conferem';

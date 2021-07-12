@@ -24,6 +24,7 @@ class AuthenticationFB {
       email: authData.email.trim(),
       password: authData.password,
     );
+
     return userCredential;
   }
 
@@ -32,6 +33,14 @@ class AuthenticationFB {
       email: infoFuncionario.email.trim(),
       password: infoFuncionario.senha,
     );
+
+    // TODO - Retirar isso
+    AuthData data = AuthData();
+    data.email = 'adminfelipe@gmail.com';
+    data.password = '12345678';
+    await signIn(data);
+    // -----
+
     return userCredential;
   }
 
