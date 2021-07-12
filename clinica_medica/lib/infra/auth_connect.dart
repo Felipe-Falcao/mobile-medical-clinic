@@ -1,5 +1,6 @@
 import 'package:clinica_medica/models/auth_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class AuthenticationFB {
   final _auth = FirebaseAuth.instance;
@@ -20,11 +21,18 @@ class AuthenticationFB {
    * Função responsável por cadastrar usuário.
    */
   Future<UserCredential> signUp(AuthData authData) async {
-    userCredential = await _auth.createUserWithEmailAndPassword(
-      email: authData.email.trim(),
-      password: authData.password,
-    );
-    return userCredential;
+    FirebaseApp app = await Firebase.initializeApp(
+        name: 'Secondary', options: Firebase.app().options);
+    try {
+      UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+          .createUserWithEmailAndPassword(
+              email: authData.email, password: authData.password);
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+
+    await app.delete();
+    return Future.sync(() => userCredential);
   }
 
   Future<UserCredential> signUpFuncionario(infoFuncionario) async {

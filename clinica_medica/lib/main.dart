@@ -185,19 +185,15 @@ class _MyHomePageState extends State<MyHomePage> {
           InfoProntuario infoProntuario = new InfoProntuario();
           infoProntuario.nota = 'Medicamento receitado. Dor de barriga.';
 
-          // FuncionarioController funcionarioController =
-          //     new FuncionarioController();
-          // Map<String, dynamic> funcionario = await funcionarioController
-          //     .buscarFuncionario('4bAZLX2DLTZ5HjbDOUidRIDQsPG3');
+          AuthData authData = new AuthData();
+          authData.email = 'teste_auth@gmail.com';
+          authData.name = 'Teste Authentication';
+          authData.password = '12345678';
 
-          // var enderecoFuncionario = funcionario['refEndereco'].id;
-
-          // EnderecoController enderecoController = new EnderecoController();
-          // Map<String, dynamic> endereco =
-          //     await enderecoController.buscarEndereco(enderecoFuncionario);
-          // print(endereco);
           AuthenticationFB authenticationFB = new AuthenticationFB();
-          print(await authenticationFB.updatePassword('qwertyu'));
+          print('Antes: ' + authenticationFB.getCurrentUser());
+          // await authenticationFB.signUp(authData);
+          // print('Depois: ' + authenticationFB.getCurrentUser());
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
