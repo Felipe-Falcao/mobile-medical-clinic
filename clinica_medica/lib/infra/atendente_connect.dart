@@ -12,7 +12,7 @@ class AtendenteFB {
       'refFuncionario': db.doc('funcionario/' + funcionarioId),
       'turno': turno,
     };
-    print(userData);
+    // print(userData);
     await FirebaseFirestore.instance
         .collection('atendente')
         .doc(funcionarioId)

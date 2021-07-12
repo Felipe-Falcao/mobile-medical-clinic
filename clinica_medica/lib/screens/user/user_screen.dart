@@ -62,36 +62,37 @@ class _UserScreenState extends State<UserScreen> {
             ),
             Visibility(
               visible: !_editing,
-              child: Container(
-                width: size.width,
-                height: size.height * .6,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: Icon(Icons.email),
-                        title: Text('${userProv.user.email}'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.perm_identity),
-                        title: Text('${userProv.user.cpf}'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.phone),
-                        title: Text('${userProv.user.phoneNumber}'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.lock_open),
-                        title: Text('${userProv.user.type}'),
-                      ),
-                      Spacer(),
-                      ElevatedButton(
-                        onPressed: _logout,
-                        child: Text('Sair'),
-                      ),
-                    ],
+              child: SingleChildScrollView(
+                child: Container(
+                  width: size.width,
+                  height: size.height * .6,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(Icons.email),
+                          title: Text('${userProv.user.email}'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.perm_identity),
+                          title: Text('${userProv.user.cpf}'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.phone),
+                          title: Text('${userProv.user.phoneNumber}'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.lock_open),
+                          title: Text('${userProv.user.type}'),
+                        ),
+                        Spacer(),
+                        ElevatedButton(
+                          onPressed: _logout,
+                          child: Text('Sair'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -203,11 +203,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       backgroundColor: Theme.of(context).primaryColor,
                       child: Icon(icons,
                           color: Theme.of(context).accentColor, size: 30)),
-                  SizedBox(height: 3),
-                  Text(
-                    label,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black87, fontSize: 13),
+                  SizedBox(height: 5),
+                  FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Column(
+                      children: [
+                        Text(
+                          label.split(' ')[0],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.black87),
+                        ),
+                        Text(
+                          label.split(' ')[1],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.black87),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -220,11 +232,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   CircleAvatar(
                       backgroundColor: Colors.black12,
                       child: Icon(icons, color: Colors.black26)),
-                  SizedBox(height: 3),
-                  Text(
-                    label,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey, fontSize: 13),
+                  SizedBox(height: 5),
+                  FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Column(
+                      children: [
+                        Text(
+                          label.split(' ')[0],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        Text(
+                          label.split(' ')[1],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

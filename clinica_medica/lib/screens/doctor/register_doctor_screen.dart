@@ -126,7 +126,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
 
     final doctorProvider = Provider.of<DoctorProvider>(context, listen: false);
 
-    print(doctor.toString());
+    // print(doctor.toString());
 
     try {
       if (_formData['id'] == null) {
@@ -184,7 +184,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
           });
       Navigator.of(context).pop();
     } catch (error) {
-      print(error);
+      // print(error);
       await showDialog<Null>(
           context: context,
           builder: (context) {

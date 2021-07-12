@@ -248,23 +248,14 @@ class _DetailDoctorState extends State<DetailDoctor> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              key,
-              style: TextStyle(color: Colors.black54),
-            ),
+            padding: const EdgeInsets.all(8.0),
+            child: Text(key, style: TextStyle(color: Colors.black54)),
           ),
           Container(
-            width: 150,
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                value,
-                overflow: TextOverflow.fade,
-                style: TextStyle(color: Theme.of(context).accentColor),
-              ),
-            ),
-          )
+            padding: EdgeInsets.all(8),
+            child: Text(value,
+                style: TextStyle(color: Theme.of(context).accentColor)),
+          ),
         ],
       ),
     );

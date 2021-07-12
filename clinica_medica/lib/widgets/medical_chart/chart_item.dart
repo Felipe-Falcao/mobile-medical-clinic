@@ -32,7 +32,7 @@ class ChartItem extends StatelessWidget {
           ),
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        title: Row(
+        title: Wrap(
           children: [
             Text('Paciente: ',
                 style: TextStyle(color: Colors.black54, fontSize: 15)),
