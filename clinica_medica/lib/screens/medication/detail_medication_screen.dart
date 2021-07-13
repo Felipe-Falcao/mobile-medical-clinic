@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+/// Classe responsável por exibir as informações de uma receita na tela.
 class DetailMedicationScreen extends StatefulWidget {
   @override
   _DetailMedicationScreenState createState() => _DetailMedicationScreenState();
