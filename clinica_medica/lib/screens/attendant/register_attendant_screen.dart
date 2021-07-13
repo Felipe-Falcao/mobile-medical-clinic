@@ -10,6 +10,7 @@ import 'package:clinica_medica/widgets/employee/forms/employee_step_3.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//Classe que cria a Tela de cadastro de atendente
 class RegisterAttendantScreen extends StatefulWidget {
   const RegisterAttendantScreen({Key key}) : super(key: key);
 
@@ -28,6 +29,8 @@ class _RegisterAttendantScreenState extends State<RegisterAttendantScreen> {
   bool _isEdit = false;
   bool _isLoading = false;
 
+  //função nativa do flutter que está sendo usada
+  //para verficar se algum dado foi enviado
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -63,6 +66,7 @@ class _RegisterAttendantScreenState extends State<RegisterAttendantScreen> {
     }
   }
 
+  //função que avança uma etapa no cadastro
   void _nextStep() {
     var isValid = _form.currentState.validate();
 
@@ -79,6 +83,7 @@ class _RegisterAttendantScreenState extends State<RegisterAttendantScreen> {
     });
   }
 
+  //função que volta para a etapa anterior do cadastro
   void _previousStep() {
     setState(() {
       _step--;
@@ -86,6 +91,7 @@ class _RegisterAttendantScreenState extends State<RegisterAttendantScreen> {
     });
   }
 
+  //função que salva o formulário de cadastro de atendente
   Future<void> _saveForm() async {
     var isValid = _form.currentState.validate();
     if (!isValid) return;

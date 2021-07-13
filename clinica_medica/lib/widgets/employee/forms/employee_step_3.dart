@@ -3,6 +3,7 @@ import 'package:clinica_medica/widgets/employee/select_date_hiring_date.dart';
 
 import 'package:flutter/material.dart';
 
+//Classe que cria um componente da Tela de cadastro de médico e atendente
 class EmployeeStep3 extends StatelessWidget {
   final GlobalKey<FormState> _form;
   final Map<String, Object> _formData;

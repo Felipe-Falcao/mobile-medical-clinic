@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+//Classe que cria um componente de textFormField customizado
+//para as telas do fluxo de médico e atendente
 class CustomTextFormField extends StatelessWidget {
   final String keyFormData;
   final Map<String, Object> formData;

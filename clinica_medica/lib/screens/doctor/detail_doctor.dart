@@ -6,6 +6,7 @@ import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//Classe que cria a Tela que exibe os detalhes de registro de médico
 class DetailDoctor extends StatefulWidget {
   const DetailDoctor({Key key}) : super(key: key);
 

@@ -5,6 +5,8 @@ import 'package:clinica_medica/widgets/employee/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//Classe que cria a tela onde são listados os médico
+//e onde é feita a busca usando o filtro
 class FindDoctor extends StatefulWidget {
   const FindDoctor({Key key}) : super(key: key);
 

@@ -3,6 +3,8 @@ import 'package:clinica_medica/screens/doctor/register_doctor_screen.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:flutter/material.dart';
 
+//Classe que cria o componente popups que apresenta as opções de editar
+//e excluir na lista de médicos
 class PopupMenu extends StatelessWidget {
   final Doctor doctor;
   final Function callback;

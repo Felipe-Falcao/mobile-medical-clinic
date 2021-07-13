@@ -7,6 +7,7 @@ import 'dart:core';
 
 import 'package:provider/provider.dart';
 
+//Classe que cria um componente da tela de cadastro
 class DoctorStep4 extends StatefulWidget {
   final GlobalKey<FormState> _form;
   final Map<String, Object> _formData;
@@ -21,23 +22,6 @@ class DoctorStep4 extends StatefulWidget {
 class _DoctorStep4State extends State<DoctorStep4> {
   String currentOptionEspecialidade;
   FuncionarioController funcionarioController = FuncionarioController();
-
-  //List<Specialty> specialties = [];
-
-  /*Future<void> loadSpecialties() async {
-    List<dynamic> specialtyList =
-        await funcionarioController.buscarEspecialidades();
-
-    specialties.clear();
-
-    for (var i = 0; i < specialtyList.length; i++) {
-      Specialty specialty = Specialty(
-          id: specialtyList[i]['id'],
-          name: specialtyList[i]['nomeEspecialidade']);
-
-      specialties.add(specialty);
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {

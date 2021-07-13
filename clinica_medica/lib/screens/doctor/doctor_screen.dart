@@ -5,6 +5,8 @@ import 'package:clinica_medica/widgets/app_drawer.dart';
 import 'package:clinica_medica/widgets/menu_tile.dart';
 import 'package:flutter/material.dart';
 
+//Classe que cria a tela de onde são listadas as funcionalidades relacionadas
+//ao médico
 class DoctorScreen extends StatelessWidget {
   const DoctorScreen({Key key}) : super(key: key);
 

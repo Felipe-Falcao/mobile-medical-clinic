@@ -5,6 +5,7 @@ import 'package:clinica_medica/widgets/attendant/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//Classe que cria o componente que apresenta os items da lista de atendentes
 class AttendantItem extends StatelessWidget {
   final Attendant attendant;
   const AttendantItem({@required this.attendant});
