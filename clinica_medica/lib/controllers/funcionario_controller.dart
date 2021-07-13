@@ -7,6 +7,10 @@ import 'package:clinica_medica/infra/auth_connect.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+/*
+ * Classe responsável por realizar o controle das requisições de Funcionário,
+ * Atendente, Médico, Endereço, Especialidade e Autenticação da camada de Infra.
+ */
 class FuncionarioController {
   FuncionarioFB funcionarioFB = new FuncionarioFB();
   AtendenteFB atendenteFB = new AtendenteFB();
@@ -16,6 +20,10 @@ class FuncionarioController {
   AuthenticationFB auth = new AuthenticationFB();
   UserCredential userCredential;
 
+  /*
+   * Função responsável por receber dados de funcionário, atendente e endereço
+   * e chamar as funções de criação de usuário, endereço, funcionário e atendente.
+   */
   Future<void> cadastrarAtendente(
       infoFuncionario, infoAtendente, infoEndereco) async {
     try {
@@ -40,6 +48,10 @@ class FuncionarioController {
     }
   }
 
+  /*
+   * Função responsável por receber dados de funcionário, médico e endereço
+   * e chamar as funções de criação de usuário, endereço, funcionário e médico.
+   */
   Future<void> cadastrarMedico(
       infoFuncionario, infoMedico, infoEndereco) async {
     try {
@@ -69,6 +81,10 @@ class FuncionarioController {
     }
   }
 
+  /*
+   * Função responsável por chamar as funções de busca de funcionários, 
+   * montar um Map de Strings. Retorna o Map obtido com cada funcionário existente.
+   */
   Future<List<dynamic>> buscarFuncionarios() async {
     var result = [];
     var data;
@@ -91,6 +107,10 @@ class FuncionarioController {
     return result;
   }
 
+  /*
+   * Função responsável por chamar as funções de busca de médicos, 
+   * montar um Map de Strings. Retorna o Map obtido com cada médico existente.
+   */
   Future<List<dynamic>> buscarMedicos() async {
     var result = [];
     var data;
@@ -109,6 +129,10 @@ class FuncionarioController {
     return result;
   }
 
+  /*
+   * Função responsável por chamar as funções de busca de atendentes, 
+   * montar um Map de Strings. Retorna o Map obtido com cada atendente existente.
+   */
   Future<List<dynamic>> buscarAtendentes() async {
     var result = [];
     var data;
@@ -126,6 +150,10 @@ class FuncionarioController {
     return result;
   }
 
+  /*
+   * Função responsável por receber dados de funcionário e chamar as funções 
+   * de atualização de dados do funcionário.
+   */
   Future<void> editarDadosPessoais(infoFuncionario) async {
     try {
       funcionarioFB.updatePersonalData(infoFuncionario);
@@ -134,6 +162,10 @@ class FuncionarioController {
     }
   }
 
+  /*
+   * Função responsável por receber dados de funcionário e chamar as funções 
+   * de atualização de dados de trabalho.
+   */
   Future<void> editarDadosTrabalho(infoFuncionario) async {
     try {
       funcionarioFB.updateWorkData(infoFuncionario.carteiraTrabalho,
@@ -143,6 +175,10 @@ class FuncionarioController {
     }
   }
 
+  /*
+   * Função responsável por receber dados de atendente e chamar as funções 
+   * de atualização de dados do atendente.
+   */
   Future<void> editarAtendente(infoAtendente) async {
     try {
       await atendenteFB.update(
@@ -152,6 +188,10 @@ class FuncionarioController {
     }
   }
 
+  /*
+   * Função responsável por receber dados de médico e chamar as funções 
+   * de atualização de dados do médico.
+   */
   Future<void> editarMedico(infoMedico) async {
     try {
       // Cadastrar especialidade
@@ -167,6 +207,10 @@ class FuncionarioController {
     }
   }
 
+  /*
+   * Função responsável por receber dados de médico e funcionário e chamar as funções 
+   * de exclusão de dados de funcionário, médico e endereço. 
+   */
   Future<void> excluirMedico(infoMedico, infoFuncionario) async {
     try {
       // Excluir funcionário
@@ -180,6 +224,10 @@ class FuncionarioController {
     }
   }
 
+  /*
+   * Função responsável por receber dados de atendente e funcionário e chamar as funções 
+   * de exclusão de dados de funcionário, atendente e endereço. 
+   */
   Future<void> excluirAtendente(infoAtendente, infoFuncionario) async {
     try {
       // Excluir funcionário
@@ -193,11 +241,19 @@ class FuncionarioController {
     }
   }
 
+  /*
+   * Função responsável por receber um id de funcionário e retornar o tipo
+   * de funcionário (admin, atendente ou médico).
+   */
   Future<String> buscarTipoFuncionario(funcionarioId) async {
     var funcionario = await funcionarioFB.read(funcionarioId);
     return funcionario['tipoFuncionario'];
   }
 
+  /*
+   * Função responsável por receber um id de funcionario e  chamar a função 
+   * de busca de funcionario. Retorna um Map de strings com os valores obtidos.
+   */
   Future<Map<String, dynamic>> buscarFuncionario(funcionarioId) async {
     try {
       var funcionario = await funcionarioFB.read(funcionarioId);
@@ -208,6 +264,10 @@ class FuncionarioController {
     }
   }
 
+  /*
+   * Função responsável por receber um id de médico e  chamar a função 
+   * de busca de médico. Retorna um Map de strings com os valores obtidos.
+   */
   Future<Map<String, dynamic>> buscarMedico(medicoId) async {
     try {
       var medico = await medicoFB.read(medicoId);
@@ -218,6 +278,10 @@ class FuncionarioController {
     }
   }
 
+  /*
+   * Função responsável por receber um id de atendente e  chamar a função 
+   * de busca de atendente. Retorna um Map de strings com os valores obtidos.
+   */
   Future<Map<String, dynamic>> buscarAtendente(atendenteId) async {
     try {
       return await atendenteFB.read(atendenteId);
@@ -227,6 +291,10 @@ class FuncionarioController {
     }
   }
 
+  /*
+   * Função responsável por chamar as funções de busca de especialidades, 
+   * montar um Map de Strings. Retorna o Map obtido com cada especialidade existente.
+   */
   Future<List<dynamic>> buscarEspecialidades() async {
     var result = [];
     var data;

@@ -3,10 +3,17 @@ import 'package:clinica_medica/infra/consulta_connect.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
+/*
+ * Classe responsável por realizar o controle das requisições de Agendamento e Consulta da camada de Infra.
+ */
 class ConsultaController {
   AgendamentoFB agendamentoFB = new AgendamentoFB();
   ConsultaFB consultaFB = new ConsultaFB();
 
+  /*
+   * Função responsável por receber dados de consulta e chamar as funções 
+   * de criação de agendamento e consulta.
+   */
   Future<void> agendarConsulta(infoConsulta) async {
     try {
       // Cadastrar Agendamento
@@ -28,6 +35,10 @@ class ConsultaController {
     }
   }
 
+  /*
+   * Função responsável por receber dados de consulta e chamar as funções 
+   * de atualização de agendamento e consulta.
+   */
   Future<void> editarConsulta(infoConsulta) async {
     try {
       await consultaFB.update(
@@ -39,6 +50,10 @@ class ConsultaController {
     }
   }
 
+  /*
+   * Função responsável por chamar as funções de busca de consultas, 
+   * montar um Map de Strings. Retorna o Map obtido com cada consulta existente.
+   */
   Future<List<Map<String, dynamic>>> buscarConsultas() async {
     List<Map<String, dynamic>> result = [];
     var data;
@@ -58,6 +73,10 @@ class ConsultaController {
     return result;
   }
 
+  /*
+   * Função responsável por receber um id de agendamento e  chamar a função 
+   * de busca de agendamento. Retorna um Map de strings com os valores obtidos.
+   */
   Future<Map<String, dynamic>> buscarAgendamento(agendamentoId) async {
     try {
       return await agendamentoFB.read(agendamentoId);
@@ -67,6 +86,10 @@ class ConsultaController {
     }
   }
 
+  /*
+   * Função responsável por receber um id de consulta e  chamar a função 
+   * de busca de consulta. Retorna um Map de strings com os valores obtidos.
+   */
   Future<Map<String, dynamic>> buscarConsulta(consultaId) async {
     try {
       return await consultaFB.read(consultaId);
@@ -76,6 +99,10 @@ class ConsultaController {
     }
   }
 
+  /*
+   * Função responsável por receber id's de consulta e agendamento e  chamar as 
+   * funções de delete de consulta e agendamento. 
+   */
   Future<void> excluirConsulta(consultaId, agendamentoId) async {
     try {
       // Excluir paciente

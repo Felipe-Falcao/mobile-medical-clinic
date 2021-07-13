@@ -60,6 +60,10 @@ class AgendamentoFB {
     return doc;
   }
 
+  /*
+   * Função responsável por receber uma data e hora e retornar a referencia do
+   * documento de agendamento.
+   */
   DocumentReference getDocRef(horario, data) {
     var doc = db.collection('agendamento').doc(horario + data);
     return doc;

@@ -6,6 +6,7 @@ import 'package:clinica_medica/widgets/new_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// Classe responsável pela tela de Buscar Receita.
 class FindMedicationScreen extends StatefulWidget {
   @override
   _FindMedicationScreenState createState() => _FindMedicationScreenState();

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+// Classe responsável por exibir um objeto receita e confirmar sua exclusão.
 class MedicationItem extends StatelessWidget {
   final Receita receita;
   MedicationItem({@required this.receita});
