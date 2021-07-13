@@ -55,11 +55,18 @@ class AtendenteFB {
     return doc;
   }
 
+  /*
+   * Função responsável por receber um id de funcionário e retornar a referência do
+   * documento de atendente.
+   */
   DocumentReference getDocRef(funcionarioId) {
     var doc = db.collection('atendente').doc(funcionarioId);
     return doc;
   }
 
+  /*
+   * Função responsável por buscar os dados de todos os atendentes.
+   */
   Future<QuerySnapshot> getAtendentes() async {
     var querySnapshot = await db.collection('atendente').get();
     return querySnapshot;

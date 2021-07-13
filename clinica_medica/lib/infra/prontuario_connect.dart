@@ -66,6 +66,10 @@ class ProntuarioFB {
     return doc;
   }
 
+  /*
+   * Função responsável por retornar todos os dados de prontuários em formato
+   * chave: valor.
+   */
   Future<QuerySnapshot> getProntuarios() async {
     var querySnapshot = await db.collection('prontuario').get();
     return querySnapshot;

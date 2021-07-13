@@ -26,8 +26,6 @@ class FuncionarioFB {
 
   /*
    * Função responsável por modificar dados do funcionário.
-   * Exemplo de chamada:
-   * await func.update(authData, 'BYo4qMI6ZTQkVK4fKhcwCLQuJyP2', 'null', 'null');
    */
   Future<void> update(infoFuncionario, funcionarioId, enderecoId) async {
     final userData = {
@@ -43,6 +41,10 @@ class FuncionarioFB {
     await db.collection("funcionario").doc(funcionarioId).update(userData);
   }
 
+  /*
+   * Função responsável por receber os dados de  funcionário e atualizar
+   * o banco de dados.
+   */
   Future<void> updatePersonalData(infoFuncionario) async {
     final userData = {
       'nome': infoFuncionario.nome,
@@ -54,6 +56,10 @@ class FuncionarioFB {
     await db.collection("funcionario").doc(infoFuncionario.id).update(userData);
   }
 
+  /*
+   * Função responsável por receber os dados de  funcionário e atualizar
+   * o banco de dados.
+   */
   Future<void> updateWorkData(
       carteiraTrabalho, dataContratacao, idFuncionario) async {
     final userData = {
@@ -92,26 +98,22 @@ class FuncionarioFB {
     return doc;
   }
 
+  /*
+   * Função responsável por retornar todos os dados de funcionários do banco
+   * de dados.
+   */
   Future<QuerySnapshot> getFuncionarios() async {
     var querySnapshot = await db.collection('funcionario').get();
     return querySnapshot;
   }
 
+  /*
+   * Função responsável por receber um cpf e retornar os dados do funcionário.
+   */
   Future<String> getFuncionarioId(data) async {
     var querySnapshot =
         await db.collection('funcionario').where('cpf', isEqualTo: data).get();
     return querySnapshot.docs[0].id;
-
-    // db
-    //     .collection('funcionario')
-    //     .where('cpf', isEqualTo: data)
-    //     .get()
-    //     .then((value) => {
-    //           value.docs.forEach((doc) {
-    //             print(doc.id);
-    //             // print(doc.data());
-    //           })
-    //         });
   }
   //https://petercoding.com/firebase/2020/04/04/using-cloud-firestore-in-flutter/
 }

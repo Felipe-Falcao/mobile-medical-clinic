@@ -58,6 +58,10 @@ class ConsultaFB {
     return doc;
   }
 
+  /*
+   * Função responsável por ler todos as consultas existentes e retornar uma
+   * QuerySnapshot com os dados obtidos.
+   */
   Future<QuerySnapshot> getConsultas() async {
     var querySnapshot = await db.collection('consulta').get();
     return querySnapshot;

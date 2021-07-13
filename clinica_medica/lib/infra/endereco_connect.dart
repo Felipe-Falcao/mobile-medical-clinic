@@ -63,6 +63,10 @@ class EnderecoFB {
     return doc;
   }
 
+  /*
+   * Função responsável por receber uma cidade, cep e numero e retornar a referência do
+   * documento de endereco.
+   */
   DocumentReference getDocRef(cidade, cep, numero) {
     var doc = db.collection('endereco').doc(cidade + cep + numero);
     return doc;

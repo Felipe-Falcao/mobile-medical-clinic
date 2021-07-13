@@ -29,6 +29,9 @@ class AuthenticationFB {
     return userCredential;
   }
 
+  /*
+   * Função responsável por cadastrar usuário.
+   */
   Future<UserCredential> signUpFuncionario(infoFuncionario) async {
     FirebaseApp app = await Firebase.initializeApp(
         name: 'SignupFunc', options: Firebase.app().options);
@@ -58,10 +61,16 @@ class AuthenticationFB {
     return _auth.authStateChanges();
   }
 
+  /*
+   * Função responsável por retornar o usuário atual.
+   */
   String getCurrentUser() {
     return _auth.currentUser.uid;
   }
 
+  /*
+   * Função responsável por atualizar senha do usuário.
+   */
   Future<String> updatePassword(newPassword) async {
     User user = _auth.currentUser;
     if (user != null) {

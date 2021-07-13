@@ -60,6 +60,10 @@ class MedicamentoFB {
     return doc;
   }
 
+  /*
+   * Função responsável por retornar todos os dados de medicamentos em formato
+   * chave: valor.
+   */
   Future<QuerySnapshot> getMedicamentos() async {
     var querySnapshot = await db.collection('medicamento').get();
     return querySnapshot;

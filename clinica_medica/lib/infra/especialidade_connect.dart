@@ -52,11 +52,19 @@ class EspecialidadeFB {
     return doc;
   }
 
+  /*
+   * Função responsável por receber nome de especialidade  e retornar a referência do
+   * documento de especialidade.
+   */
   DocumentReference getDocRef(nomeEspecialidade) {
     var doc = db.collection('especialidade').doc(nomeEspecialidade);
     return doc;
   }
 
+  /*
+   * Função responsável por retornar todas as informações de especialidades em 
+   * QuerySnapshot.
+   */
   Future<QuerySnapshot> getEspecialidades() async {
     var querySnapshot = await db.collection('especialidade').get();
     return querySnapshot;
