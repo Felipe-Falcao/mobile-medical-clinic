@@ -9,6 +9,9 @@ import 'package:clinica_medica/widgets/patient/forms/patient_form_step2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/*
+* Responsavel por renderizar a tela de cadastro de um paciente
+*/
 class RegisterPatientScreen extends StatefulWidget {
   @override
   _RegisterPatientScreenState createState() => _RegisterPatientScreenState();

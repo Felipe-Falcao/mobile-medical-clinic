@@ -5,6 +5,9 @@ import 'package:clinica_medica/widgets/patient/patient_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/*
+* Responsavel por renderizar a tela de busca de pacientes
+*/
 class FindPatientScreen extends StatefulWidget {
   @override
   _FindPatientScreenState createState() => _FindPatientScreenState();

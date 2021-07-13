@@ -6,6 +6,9 @@ import 'package:clinica_medica/widgets/medical_chart/chart_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/*
+* Responsavel por renderizar a tela de cadastro de um prontuario
+*/
 class RegisterChartScreen extends StatefulWidget {
   @override
   _RegisterChartScreenState createState() => _RegisterChartScreenState();

@@ -5,17 +5,31 @@ import 'package:clinica_medica/models/patient.dart';
 import 'package:clinica_medica/models/schedule.dart';
 import 'package:flutter/material.dart';
 
+/*
+ * Classe responsavel por fazer a comunicacao da camada View com a 
+ * camada de Controle da aplicaçao em relaçao as funcionalidades de consultas.
+ */
 class Appointments with ChangeNotifier {
   final ConsultaController _appointmentCtrl = ConsultaController();
   List<Appointment> _items = [];
 
+  /*
+  * Retorna uma lista de todas as consultas cadastradas
+  */
   List<Appointment> get items => [..._items];
   int get itemsCount => _items.length;
 
+  /*
+  * Retorna uma consulta dado o ID
+  */
   Appointment getItemById(String id) {
     return _items.singleWhere((item) => item.id == id);
   }
 
+  /*
+  * Retorna uma lista de consulta cujos items contenha um filtro especificado.
+  * Esse filtro pode ser parte do nome ou cpf do paciente.
+  */
   List<Appointment> getItemsWith(String filter, List<Patient> patients) {
     if (filter == null) return [..._items];
     filter = filter.toLowerCase();
@@ -27,6 +41,10 @@ class Appointments with ChangeNotifier {
     }).toList();
   }
 
+  /*
+  * Retorna uma consulta dado um horario, um médico e uma data.
+  * Ou 'null' se nao existir consulta para os paramentros dados.
+  */
   Appointment getByTimeBlock(String timeBlock, String doctorId, DateTime date) {
     if (timeBlock == null || doctorId == null || date == null) return null;
     return _items.singleWhere((item) {
@@ -36,6 +54,9 @@ class Appointments with ChangeNotifier {
     }, orElse: () => null);
   }
 
+  /*
+  * Carrega os dados atualizados das consultas cadastradas
+  */
   Future<void> loadAppointments() async {
     List<Map<String, dynamic>> list = await _appointmentCtrl.buscarConsultas();
     _items.clear();
@@ -61,6 +82,9 @@ class Appointments with ChangeNotifier {
     notifyListeners();
   }
 
+  /*
+  * Cadastra uma nova consulta
+  */
   Future<void> addAppointment(Appointment appointment) async {
     if (appointment == null) return;
     InfoConsulta infoConsulta = InfoConsulta();
@@ -72,6 +96,9 @@ class Appointments with ChangeNotifier {
     await loadAppointments();
   }
 
+  /*
+  * Atualiza uma consulta
+  */
   Future<void> updateAppointment(Appointment appointment) async {
     if (appointment == null || appointment.id == null) return;
     InfoConsulta infoConsulta = InfoConsulta();
@@ -85,6 +112,9 @@ class Appointments with ChangeNotifier {
     await loadAppointments();
   }
 
+  /*
+  * Remove uma consulta
+  */
   Future<void> removeAppointment(Appointment appointment) async {
     if (appointment == null) return;
     await _appointmentCtrl.excluirConsulta(
@@ -93,6 +123,10 @@ class Appointments with ChangeNotifier {
     notifyListeners();
   }
 
+  /*
+  * Remove todas as consultas que tenham referencia para um paciente ou medico,
+  * dado o ID do medico ou paciente.
+  */
   Future<void> removeAppointmentsWith(String id) async {
     for (Appointment appointment in _items) {
       if (appointment.patientId == id || appointment.doctorId == id) {

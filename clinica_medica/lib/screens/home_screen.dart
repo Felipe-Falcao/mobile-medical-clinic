@@ -10,6 +10,9 @@ import 'package:clinica_medica/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/*
+* Responsavel por renderizar a tela inicial da aplicação
+*/
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();

@@ -7,6 +7,9 @@ import 'package:clinica_medica/widgets/patient/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/*
+* Responsavel por renderizar a tela de detalhes de um paciente
+*/
 class DetailPatientScreen extends StatefulWidget {
   @override
   _DetailPatientScreenState createState() => _DetailPatientScreenState();

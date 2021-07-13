@@ -9,6 +9,9 @@ import 'package:clinica_medica/widgets/medical_appointment/appointment_form.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/*
+* Responsavel por renderizar a tela de cadastro de uma consulta
+*/
 class RegisterAppointmentScreen extends StatefulWidget {
   @override
   _RegisterAppointmentScreenState createState() =>

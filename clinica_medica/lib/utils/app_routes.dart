@@ -1,3 +1,6 @@
+/*
+* Define nomes para as rotas da aplicação.
+*/
 class AppRoutes {
   static const HOME_SCREEN = '/home-screen';
   static const PATIENT_SCREEN = '/patient-screen';

@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+/*
+* Responsavel por renderizar a tela para edicao de uma consulta
+*/
 class EditAppointmentScreen extends StatefulWidget {
   @override
   _EditAppointmentScreenState createState() => _EditAppointmentScreenState();
