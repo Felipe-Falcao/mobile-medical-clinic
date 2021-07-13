@@ -3,6 +3,8 @@ import 'package:clinica_medica/screens/medication/store_medication_screen.dart';
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:flutter/material.dart';
 
+/// Classe de Menu responsável por redirecionar para Editar Receita
+/// ou Excluir Receita.
 class ReceitaMenu extends StatelessWidget {
   final Receita receita;
   final Function callback;
