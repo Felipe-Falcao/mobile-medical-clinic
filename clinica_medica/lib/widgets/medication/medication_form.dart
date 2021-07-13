@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../searchable_dropdown.dart';
 
+/// Classe responsável por criar o formulário de cadastrar/alterar receita.
 class MedicationForm extends StatefulWidget {
   final GlobalKey<FormState> form;
   final Map<String, Object> formData;
