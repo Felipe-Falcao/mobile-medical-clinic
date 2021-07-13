@@ -145,21 +145,12 @@ class _DetailPatientScreenState extends State<DetailPatientScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              key,
-              style: TextStyle(color: Colors.black54),
-            ),
+            child: Text(key, style: TextStyle(color: Colors.black54)),
           ),
           Container(
-            width: 150,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                value,
-                overflow: TextOverflow.fade,
-                style: TextStyle(color: Theme.of(context).accentColor),
-              ),
-            ),
+            padding: EdgeInsets.all(8),
+            child: Text(value,
+                style: TextStyle(color: Theme.of(context).accentColor)),
           ),
         ],
       ),

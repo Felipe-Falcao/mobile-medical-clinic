@@ -25,7 +25,7 @@ class DoctorProvider extends ChangeNotifier {
   }
 
   List<Specialty> get itemsSpecialty {
-    print([...specialties]);
+    // print([...specialties]);
     return [...specialties];
   }
 

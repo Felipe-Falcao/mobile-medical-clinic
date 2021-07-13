@@ -140,12 +140,9 @@ class _EditAppointmentScreenState extends State<EditAppointmentScreen> {
             child: Text(key, style: TextStyle(color: Colors.black54)),
           ),
           Container(
-            width: 200,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(value,
-                  style: TextStyle(color: Theme.of(context).accentColor)),
-            ),
+            padding: EdgeInsets.all(8),
+            child: Text(value,
+                style: TextStyle(color: Theme.of(context).accentColor)),
           ),
         ],
       ),

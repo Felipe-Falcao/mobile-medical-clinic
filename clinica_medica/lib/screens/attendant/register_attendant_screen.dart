@@ -176,7 +176,7 @@ class _RegisterAttendantScreenState extends State<RegisterAttendantScreen> {
           });
       Navigator.of(context).pop();
     } catch (error) {
-      print(error);
+      // print(error);
       await showDialog<Null>(
           context: context,
           builder: (context) {

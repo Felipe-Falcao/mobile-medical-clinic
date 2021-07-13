@@ -41,7 +41,7 @@ class Medication with ChangeNotifier {
         await medicamentoController.buscarMedicamentos();
     _items.clear();
     for (var med in listaMedicamentos) {
-      print(med['dataPrescricao']);
+      // print(med['dataPrescricao']);
       Receita receita = Receita(
         dataPrescricao: DateTime.fromMicrosecondsSinceEpoch(
             med['dataPrescricao'].microsecondsSinceEpoch),
