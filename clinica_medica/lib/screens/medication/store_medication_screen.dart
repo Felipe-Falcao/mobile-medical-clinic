@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+/// Classe responsável por realizar o cadastro de uma receita
 class StoreMedicationScreen extends StatefulWidget {
   @override
   _StoreMedicationState createState() => _StoreMedicationState();
@@ -61,6 +62,7 @@ class _StoreMedicationState extends State<StoreMedicationScreen> {
     );
   }
 
+  /// Método chamado quando uma dependência (Estado) do objeto muda.
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -84,6 +86,8 @@ class _StoreMedicationState extends State<StoreMedicationScreen> {
     }
   }
 
+  /// Formulário Cadastrar Receita:
+  /// Campos: Nome, Dose, Data da Prescrição, IDs do médico e paciente.
   Future<void> _saveForm() async {
     var isValid = _form.currentState.validate();
 

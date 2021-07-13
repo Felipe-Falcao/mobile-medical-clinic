@@ -56,11 +56,19 @@ class PacienteFB {
     return doc;
   }
 
+  /*
+   * Função responsável por retornar todos os dados de pacientes em formato
+   * chave: valor.
+   */
   Future<QuerySnapshot> getPacientes() async {
     var querySnapshot = await db.collection('paciente').get();
     return querySnapshot;
   }
 
+  /*
+   * Função responsável por receber um cpf e retornar os dados do paciente 
+   * referente.
+   */
   Future<String> getPacienteId(data) async {
     var querySnapshot =
         await db.collection('paciente').where('cpf', isEqualTo: data).get();

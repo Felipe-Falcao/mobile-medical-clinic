@@ -6,6 +6,8 @@ import 'package:clinica_medica/widgets/menu_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+/// Tela principal de Gerenciar Receita onde é possível escolher as opções de
+/// Cadastrar receita ou buscar receitas.
 class MedicamentoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

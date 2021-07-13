@@ -6,6 +6,7 @@ import 'package:clinica_medica/widgets/doctor/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//Classe que cria o componente que apresenta os items da lista de médicos
 class DoctorItem extends StatelessWidget {
   final Doctor doctor;
   const DoctorItem({@required this.doctor});

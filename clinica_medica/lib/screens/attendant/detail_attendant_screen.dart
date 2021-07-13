@@ -5,6 +5,7 @@ import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//Classe que cria a tela que exibe as informações do atendente
 class DetailAttendantScreen extends StatefulWidget {
   const DetailAttendantScreen({Key key}) : super(key: key);
 

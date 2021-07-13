@@ -3,6 +3,8 @@ import 'package:clinica_medica/screens/attendant/register_attendant_screen.dart'
 import 'package:clinica_medica/widgets/buttons_alerts/alerts.dart';
 import 'package:flutter/material.dart';
 
+//Classe que cria o componente popups que apresenta as opções de editar
+//e excluir na lista de atendentes
 class PopupMenu extends StatelessWidget {
   final Attendant attendant;
   final Function callback;

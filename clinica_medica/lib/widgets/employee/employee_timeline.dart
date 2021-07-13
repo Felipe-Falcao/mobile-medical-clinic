@@ -8,6 +8,8 @@ const completeColor = Color(0xff5e6172);
 // const inProgressColor = Color(0xff5ec792);
 const todoColor = Color(0xffd1d2d7);
 
+//Classe que cria os componente de timeline que apresenta
+// as fases de cadastro de médico e atendente
 class EmployeeTimeline extends StatefulWidget {
   final int _processIndex;
   final List<String> _processes;

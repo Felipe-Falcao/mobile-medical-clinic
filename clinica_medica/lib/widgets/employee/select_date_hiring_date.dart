@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+//Classe que cria um seletor de datas customizado para
+//o cadastro de médico e atendente
 class SelectDateHiringDate extends StatefulWidget {
   final Map<String, Object> _formData;
 

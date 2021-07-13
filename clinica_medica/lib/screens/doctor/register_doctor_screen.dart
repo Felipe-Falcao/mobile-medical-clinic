@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 
 const todoColor = Color(0xffd1d2d7);
 
+//Classe que cria a tela de cadastro de médico
 class RegisterDoctor extends StatefulWidget {
   const RegisterDoctor({Key key}) : super(key: key);
 
@@ -31,6 +32,8 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
   bool _isEdit = false;
   bool _isLoading = false;
 
+  //função nativa do flutter que está sendo usada
+  //para verficar se algum dado foi enviado
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -67,6 +70,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
     }
   }
 
+  //função que avança uma etapa no cadastro
   void _nextStep() {
     var isValid = _form.currentState.validate();
 
@@ -83,6 +87,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
     });
   }
 
+  //função que volta para a etapa anterior do cadastro
   void _previousStep() {
     setState(() {
       _step--;
@@ -90,6 +95,7 @@ class _RegisterDoctorState extends State<RegisterDoctor> {
     });
   }
 
+  //função que salva o formulário de cadastro de médico
   Future<void> _saveForm() async {
     var isValid = _form.currentState.validate();
     if (!isValid) return;

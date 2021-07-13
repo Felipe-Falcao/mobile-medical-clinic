@@ -57,6 +57,10 @@ class MedicoFB {
     return doc;
   }
 
+  /*
+   * Função responsável por retornar todos os dados de medicos em formato
+   * chave: valor.
+   */
   Future<QuerySnapshot> getMedicos() async {
     var querySnapshot = await db.collection('medico').get();
     return querySnapshot;

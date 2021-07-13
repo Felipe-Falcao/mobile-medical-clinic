@@ -4,6 +4,7 @@ import 'package:clinica_medica/widgets/employee/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+//Classe que cria um componente da Tela de cadastro de médico e atendente
 class EmployeeStep1 extends StatelessWidget {
   final GlobalKey<FormState> _form;
   final Map<String, Object> _formData;

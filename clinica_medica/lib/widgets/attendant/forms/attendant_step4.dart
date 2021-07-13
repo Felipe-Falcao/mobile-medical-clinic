@@ -1,6 +1,7 @@
 import 'package:clinica_medica/widgets/employee/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
+//Classe que cria um componente da tela de cadastro de atendente
 class AttendantStep4 extends StatefulWidget {
   final GlobalKey<FormState> _form;
   final Map<String, Object> _formData;
