@@ -10,6 +10,9 @@ import 'package:clinica_medica/widgets/schedule/schedule_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/*
+* Responsavel por renderizar a tela de agendamentos
+*/
 class ScheduleScreen extends StatefulWidget {
   @override
   _ScheduleScreenState createState() => _ScheduleScreenState();

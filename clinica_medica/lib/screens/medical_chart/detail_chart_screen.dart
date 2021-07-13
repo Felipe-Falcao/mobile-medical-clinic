@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+/*
+* Responsavel por renderizar a tela de detalhes de um prontuario
+*/
 class DetailChartScreen extends StatefulWidget {
   @override
   _DetailChartScreenState createState() => _DetailChartScreenState();

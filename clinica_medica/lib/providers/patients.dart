@@ -6,18 +6,32 @@ import 'package:clinica_medica/models/paciente_data.dart';
 import 'package:clinica_medica/models/patient.dart';
 import 'package:flutter/material.dart';
 
+/*
+ * Classe responsavel por fazer a comunicacao da camada View com a 
+ * camada de Controle da aplicaçao em relaçao as funcionalidades de pacientes.
+ */
 class Patients with ChangeNotifier {
   final PacienteController _patientCtrl = PacienteController();
   final EnderecoController _addressCtrl = EnderecoController();
   List<Patient> _items = [];
 
+  /*
+  * Retorna uma lista de todos os pacientes cadastrados
+  */
   List<Patient> get items => [..._items];
   int get itemsCount => _items.length;
 
+  /*
+  * Retorna um paciente dado o ID
+  */
   Patient getItemById(String id) {
     return _items.singleWhere((item) => item.id == id, orElse: () => null);
   }
 
+  /*
+  * Retorna uma lista de pacientes cujos items contenha um filtro especificado.
+  * Esse filtro pode ser parte do nome ou cpf do paciente.
+  */
   List<Patient> getItemsWith(String filter) {
     if (filter == null) return [..._items];
     filter = filter.toLowerCase();
@@ -28,6 +42,9 @@ class Patients with ChangeNotifier {
         .toList();
   }
 
+  /*
+  * Carrega os dados atualizados dos pacientes cadastrados
+  */
   Future<void> loadPatients() async {
     List<Map<String, dynamic>> patientList =
         await _patientCtrl.buscarPacientes();
@@ -57,6 +74,9 @@ class Patients with ChangeNotifier {
     notifyListeners();
   }
 
+  /*
+  * Cadastra um novo paciente
+  */
   Future<void> addPatient(Patient patient) async {
     if (patient == null) return;
     InfoPaciente infoPaciente = InfoPaciente();
@@ -74,6 +94,9 @@ class Patients with ChangeNotifier {
     await loadPatients();
   }
 
+  /*
+  * Atualiza um paciente
+  */
   Future<void> updatePatient(Patient patient) async {
     if (patient == null || patient.id == null) {
       return;
@@ -96,6 +119,9 @@ class Patients with ChangeNotifier {
     await loadPatients();
   }
 
+  /*
+  * Remove um paciente
+  */
   Future<void> removePatient(Patient patient) async {
     if (patient == null) return;
     InfoPaciente infoPaciente = InfoPaciente();

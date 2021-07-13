@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+/*
+ * Classe modelo para um prontuário.
+ */
 class Chart {
   String id;
   String patientId;

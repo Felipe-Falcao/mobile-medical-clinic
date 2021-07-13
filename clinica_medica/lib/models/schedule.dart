@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
+/*
+ * Classe modelo para um agendamento.
+ */
 class Schedule {
   final String id;
   final DateTime date;
@@ -12,6 +15,10 @@ class Schedule {
   });
 }
 
+/*
+ * Lista contendo os possiveis horarios 
+ * de atendimento para uma consulta.
+ */
 const List<String> timeBlocks = [
   '8:00',
   '8:30',

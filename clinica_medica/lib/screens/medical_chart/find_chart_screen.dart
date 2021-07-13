@@ -6,6 +6,9 @@ import 'package:clinica_medica/widgets/new_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/*
+* Responsavel por renderizar a tela de busca de prontuarios
+*/
 class FindChartScreen extends StatefulWidget {
   @override
   _FindChartScreenState createState() => _FindChartScreenState();

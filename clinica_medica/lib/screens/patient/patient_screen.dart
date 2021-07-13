@@ -5,6 +5,9 @@ import 'package:clinica_medica/utils/app_routes.dart';
 import 'package:clinica_medica/widgets/menu_tile.dart';
 import 'package:flutter/material.dart';
 
+/*
+* Responsavel por renderizar a tela princial de gerenciar pacientes
+*/
 class PatientScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

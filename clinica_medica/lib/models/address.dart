@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+/*
+ * Modelo de endereço para pacientes, médicos e atendentes.
+ */
 class Address {
   final String id;
   final String street;

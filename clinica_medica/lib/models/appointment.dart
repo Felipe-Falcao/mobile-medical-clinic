@@ -1,6 +1,9 @@
 import 'package:clinica_medica/models/schedule.dart';
 import 'package:flutter/foundation.dart';
 
+/*
+ * Classe modelo para um agendamento.
+ */
 class Appointment {
   final String id;
   final String certificate;

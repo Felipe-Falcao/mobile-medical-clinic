@@ -3,6 +3,9 @@ import 'package:intl/intl.dart';
 
 import 'address.dart';
 
+/*
+ * Classe modelo para paciente.
+ */
 class Patient {
   final String id;
   final String name;

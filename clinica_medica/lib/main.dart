@@ -24,6 +24,10 @@ import 'package:provider/provider.dart';
 
 bool USE_FIRESTORE_EMULATOR = false;
 
+/*
+* Método responsável por carregar todos os recursos/dependências 
+* e iniciar a aplicação.
+*/
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -34,6 +38,9 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
+/*
+ * Componente raiz da arvore de elementos da aplicação.
+ */
 class MyApp extends StatelessWidget {
   final AuthenticationFB auth = new AuthenticationFB();
 
@@ -68,6 +75,10 @@ class MyApp extends StatelessWidget {
     );
   }
 
+  /*
+  * Metodo responsavel por verificar se existe um usuario logado.
+  * Caso não exista, redireciona para a tela de login.
+  */
   _home() => StreamBuilder(
         stream: auth.isLogged(),
         builder: (ctx, userSnapshot) {

@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+/*
+* Responsavel por renderizar a tela com a lista de prontuarios
+* para o paciente selecionado.
+*/
 class ChartsPatientScreen extends StatelessWidget {
   final Patient patient;
   const ChartsPatientScreen(this.patient);
